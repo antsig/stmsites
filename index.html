@@ -49,8 +49,8 @@
       <button class="nav-mobile-toggle" onclick="toggleMobileNavMenu()"><i class="fa-solid fa-bars"></i></button>
     </div>
 
-    <!-- Mobile Menu Dropdown -->
-    <div id="mobileNavMenu" style="display:none; background:#FFF; border-top:1px solid #E2E8F0; padding:1rem 1.25rem;">
+    <!-- Mobile Menu Dropdown (Floating Overlay agar tidak mendorong konten) -->
+    <div id="mobileNavMenu" class="mobile-nav-dropdown">
       <div style="display:flex; flex-direction:column; gap:0.5rem;">
         <button class="nav-btn" style="text-align:left; justify-content:flex-start;"
           onclick="backToHomeCategories(); toggleMobileNavMenu();"><i class="fa-solid fa-shapes"></i> Kategori
@@ -103,7 +103,7 @@
       <div class="stem-cards-grid">
 
         <!-- 1. Science -->
-        <div class="stem-card sci" onclick="selectCategory('Science')">
+        <div class="stem-card sci" onclick="openGradeSelector('Science')">
           <div class="stem-header-row">
             <div class="stem-icon-box" id="icon-box-Science">
               <i class="fa-solid fa-flask-vial"></i>
@@ -118,7 +118,7 @@
         </div>
 
         <!-- 2. Technology -->
-        <div class="stem-card tec" onclick="selectCategory('Technology')">
+        <div class="stem-card tec" onclick="openGradeSelector('Technology')">
           <div class="stem-header-row">
             <div class="stem-icon-box" id="icon-box-Technology">
               <i class="fa-solid fa-laptop-code"></i>
@@ -133,7 +133,7 @@
         </div>
 
         <!-- 3. Engineering -->
-        <div class="stem-card eng" onclick="selectCategory('Engineering')">
+        <div class="stem-card eng" onclick="openGradeSelector('Engineering')">
           <div class="stem-header-row">
             <div class="stem-icon-box" id="icon-box-Engineering">
               <i class="fa-solid fa-gears"></i>
@@ -148,7 +148,7 @@
         </div>
 
         <!-- 4. Mathematics -->
-        <div class="stem-card mat" onclick="selectCategory('Mathematics')">
+        <div class="stem-card mat" onclick="openGradeSelector('Mathematics')">
           <div class="stem-header-row">
             <div class="stem-icon-box" id="icon-box-Mathematics">
               <i class="fa-solid fa-calculator"></i>
@@ -405,6 +405,88 @@
       </div>
     </div>
   </div>
+
+  <!-- ========================================================================
+       MODAL PILIHAN KELAS RAMAH ANAK (INTERACTIVE GRADE SELECTOR MODAL)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="gradeSelectorModal">
+    <div class="modal-container" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-header-title">
+          <i class="fa-solid fa-graduation-cap" style="color:var(--primary);"></i>
+          <span>Pilih Jenjang Kelas</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeGradeSelectorModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="grade-selector-header">
+          <div class="grade-selector-icon-badge" id="gradeSelectorBadge">
+            <i class="fa-solid fa-flask-vial"></i>
+          </div>
+          <h3 class="grade-selector-title" id="gradeSelectorCategoryName">Eksplorasi Science</h3>
+          <p class="grade-selector-subtitle">Kamu kelas berapa? Pilih jenjang kelasmu untuk membuka materi yang pas:</p>
+        </div>
+
+        <div class="grade-selector-grid">
+          <button class="grade-select-btn all-grades" onclick="chooseGradeAndExplore('')">
+            <i class="fa-solid fa-layer-group"></i> Tampilkan Semua Kelas
+          </button>
+          <button class="grade-select-btn" onclick="chooseGradeAndExplore('1')">
+            <span class="grade-num">Kelas 1</span>
+            <span class="grade-sub">SD</span>
+          </button>
+          <button class="grade-select-btn" onclick="chooseGradeAndExplore('2')">
+            <span class="grade-num">Kelas 2</span>
+            <span class="grade-sub">SD</span>
+          </button>
+          <button class="grade-select-btn" onclick="chooseGradeAndExplore('3')">
+            <span class="grade-num">Kelas 3</span>
+            <span class="grade-sub">SD</span>
+          </button>
+          <button class="grade-select-btn" onclick="chooseGradeAndExplore('4')">
+            <span class="grade-num">Kelas 4</span>
+            <span class="grade-sub">SD</span>
+          </button>
+          <button class="grade-select-btn" onclick="chooseGradeAndExplore('5')">
+            <span class="grade-num">Kelas 5</span>
+            <span class="grade-sub">SD</span>
+          </button>
+          <button class="grade-select-btn" onclick="chooseGradeAndExplore('6')">
+            <span class="grade-num">Kelas 6</span>
+            <span class="grade-sub">SD</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FOOTER RESMI SEKOLAH (NAMA SEKOLAH, KONTAK BANTUAN, HAK CIPTA)
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img id="footerSchoolLogo" src="" alt="Logo Sekolah" class="footer-logo">
+          <div>
+            <div id="footerSchoolName" class="footer-school-name">-</div>
+            <div class="footer-school-tag"><i class="fa-solid fa-atom"></i> Portal Pembelajaran STEM Interaktif</div>
+          </div>
+        </div>
+        <div class="footer-contacts">
+          <a id="footerWaLink" href="#" target="_blank" class="footer-contact-item">
+            <i class="fa-brands fa-whatsapp" style="color:#22C55E;"></i> <span id="footerWaText">-</span>
+          </a>
+          <a id="footerEmailLink" href="#" class="footer-contact-item">
+            <i class="fa-solid fa-envelope" style="color:#38BDF8;"></i> <span id="footerEmailText">-</span>
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; <span id="footerAcademicYear">2026/2027</span> <span id="footerSchoolNameBottom">-</span>. Hak Cipta Dilindungi.</div>
+      </div>
+    </div>
+  </footer>
 
   <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>

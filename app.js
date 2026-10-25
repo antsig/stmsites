@@ -142,7 +142,8 @@ let appState = {
   selectedGrade: "",    // "1" - "6" | ""
   selectedMediaType: "",// "Video" | "Simulasi" | ... | ""
   searchQuery: "",
-  isAdminLoggedIn: false
+  isAdminLoggedIn: false,
+  pendingCategory: ""
 };
 
 // ==============================================================================
@@ -242,6 +243,32 @@ function renderSchoolIdentity() {
   if (heroTitleEl) heroTitleEl.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
   if (heroYearEl) heroYearEl.textContent = s.academic_year || "2026/2027";
   if (heroSloganEl) heroSloganEl.textContent = s.slogan || "Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika!";
+
+  // Footer Resmi Sekolah (Nama Sekolah, Kontak Bantuan, Hak Cipta Tahun Ajaran)
+  const footerLogo = document.getElementById("footerSchoolLogo");
+  const footerSchool = document.getElementById("footerSchoolName");
+  const footerSchoolBottom = document.getElementById("footerSchoolNameBottom");
+  const footerYear = document.getElementById("footerAcademicYear");
+  const footerWaLink = document.getElementById("footerWaLink");
+  const footerWaText = document.getElementById("footerWaText");
+  const footerEmailLink = document.getElementById("footerEmailLink");
+  const footerEmailText = document.getElementById("footerEmailText");
+
+  if (footerLogo && s.logo_url) footerLogo.src = s.logo_url;
+  if (footerSchool) footerSchool.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
+  if (footerSchoolBottom) footerSchoolBottom.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
+  if (footerYear) footerYear.textContent = s.academic_year || "2026/2027";
+
+  if (footerWaLink && footerWaText) {
+    const rawWa = (s.contact_wa || "6281234567890").replace(/\D/g, "");
+    footerWaLink.href = `https://wa.me/${rawWa}`;
+    footerWaText.textContent = `WA Bantuan: +${rawWa}`;
+  }
+  if (footerEmailLink && footerEmailText) {
+    const email = s.contact_email || "stem.harapanbangsa@sekolah.sch.id";
+    footerEmailLink.href = `mailto:${email}`;
+    footerEmailText.textContent = `Email: ${email}`;
+  }
 }
 
 function renderCategoryLogosAndCounts() {
@@ -285,8 +312,48 @@ function renderDefaultIcon(imgEl, cat) {
 }
 
 // ==============================================================================
-// 4. SUB-CATEGORY VIEW RENDERING
+// 4. GRADE SELECTOR MODAL & SUB-CATEGORY VIEW RENDERING
 // ==============================================================================
+function openGradeSelector(category) {
+  appState.pendingCategory = category;
+  const nameEl = document.getElementById("gradeSelectorCategoryName");
+  const badgeEl = document.getElementById("gradeSelectorBadge");
+  const colorMap = {
+    Science: "var(--stem-sci)",
+    Technology: "var(--stem-tec)",
+    Engineering: "var(--stem-eng)",
+    Mathematics: "var(--stem-mat)"
+  };
+
+  if (nameEl) nameEl.textContent = `Eksplorasi ${category}`;
+  if (badgeEl) {
+    badgeEl.style.background = colorMap[category] || "var(--primary)";
+    const customLogo = appState.settings[`logo_${category.toLowerCase()}`];
+    if (customLogo) {
+      badgeEl.innerHTML = `<img src="${escapeHtml(customLogo)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" alt="${category}">`;
+    } else {
+      badgeEl.innerHTML = getDefaultCategoryIcon(category);
+    }
+  }
+
+  const modal = document.getElementById("gradeSelectorModal");
+  if (modal) modal.classList.add("open");
+}
+
+function closeGradeSelectorModal() {
+  const modal = document.getElementById("gradeSelectorModal");
+  if (modal) modal.classList.remove("open");
+}
+
+function chooseGradeAndExplore(grade) {
+  const cat = appState.pendingCategory || "Science";
+  closeGradeSelectorModal();
+  selectCategory(cat);
+  if (grade) {
+    setGradeFilter(grade);
+  }
+}
+
 function selectCategory(category) {
   appState.selectedCategory = category;
   appState.selectedGrade = "";
@@ -536,7 +603,9 @@ function resetFiltersInSubpage() {
 
 function toggleMobileNavMenu() {
   const menu = document.getElementById("mobileNavMenu");
-  if (menu) menu.style.display = menu.style.display === "none" ? "block" : "none";
+  if (!menu) return;
+  const isShown = menu.style.display === "block" || getComputedStyle(menu).display === "block";
+  menu.style.display = isShown ? "none" : "block";
 }
 
 // ==============================================================================

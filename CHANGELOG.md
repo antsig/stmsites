@@ -3,6 +3,21 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.2.0] - 2026-10-25
+
+### Added
+- **Modal Pop-up "Pilih Jenjang Kelas" Ramah Anak**:
+  - Klik pada 4 Card Utama STEM (Science, Technology, Engineering, Mathematics) di beranda membuka pop-up interaktif pemilihan jenjang kelas.
+  - Pilihan tombol besar: *"Tampilkan Semua Kelas"* dan tombol kelas 1 s.d. 6 SD.
+  - Setelah jenjang dipilih, modal otomatis tertutup dan mengarahkan langsung ke halaman sub-kategori dengan filter jenjang kelas tersebut aktif seketika.
+- **Footer Resmi Sekolah Ringkas & Elegan**:
+  - Menampilkan elemen esensial sesuai arahan pengguna: Identitas Sekolah (Logo & Nama Sekolah), Kontak Bantuan langsung (WhatsApp & Email sekolah dinamis dari database settings), serta Hak Cipta Tahun Ajaran Aktif (`© 2026/2027 SD NEGERI HARAPAN BANGSA. Hak Cipta Dilindungi.`).
+
+### Fixed & Enhanced
+- **Perbaikan Hamburger Navigasi Mobile (Bebas Layout Shift)**:
+  - Mengubah dropdown menu mobile menjadi *floating absolute overlay* (`position: absolute; top: 70px; z-index: 90;`) dengan efek backdrop blur dan bayangan halus.
+  - Mengeliminasi pergeseran (*push layout shift*) pada konten hero banner saat menu mobile dibuka maupun ditutup.
+
 ---
 
 ## [1.1.1] - 2026-10-25
