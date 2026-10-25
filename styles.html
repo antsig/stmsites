@@ -524,6 +524,7 @@ button, input, select, textarea { font-family: inherit; }
 textarea.form-control { min-height: 90px; resize: vertical; }
 .form-row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 .form-row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.settings-grid-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start; }
 .code-box-display { background: #0F172A; color: #E2E8F0; padding: 1.2rem; border-radius: var(--radius-md); font-family: monospace; font-size: 0.82rem; overflow-x: auto; position: relative; margin-bottom: 1.5rem; }
 
 .toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200; display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none; }
@@ -539,6 +540,7 @@ textarea.form-control { min-height: 90px; resize: vertical; }
   .admin-sidebar-toggle { display: block; }
   .admin-backdrop-mobile.open { display: block; }
   .form-row-4 { grid-template-columns: repeat(2, 1fr); }
+  .settings-grid-layout { grid-template-columns: 1fr !important; gap: 1.25rem; }
 }
 
 @media (max-width: 767px) {
@@ -559,17 +561,17 @@ textarea.form-control { min-height: 90px; resize: vertical; }
   .home-intro-caption p { font-size: 0.8rem; line-height: 1.4; }
 
   .stem-cards-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.65rem !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
     margin-bottom: 1.75rem;
   }
-  .stem-card { padding: 0.85rem 0.75rem; border-radius: var(--radius-md); }
+  .stem-card { padding: 1.1rem 1rem; border-radius: var(--radius-md); }
   .stem-header-row { margin-bottom: 0.5rem; }
-  .stem-icon-box { width: 38px; height: 38px; font-size: 1.1rem; border-radius: 8px; }
-  .stem-badge-count { font-size: 0.68rem; padding: 0.15rem 0.45rem; }
-  .stem-name { font-size: 0.98rem; margin-bottom: 0.35rem; }
-  .stem-subtitle { display: none; }
-  .stem-action-indicator { font-size: 0.72rem; }
+  .stem-icon-box { width: 42px; height: 42px; font-size: 1.2rem; border-radius: 8px; }
+  .stem-badge-count { font-size: 0.72rem; padding: 0.2rem 0.55rem; }
+  .stem-name { font-size: 1.05rem; margin-bottom: 0.25rem; }
+  .stem-subtitle { display: block !important; font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 0.65rem; }
+  .stem-action-indicator { font-size: 0.76rem; }
 
   .category-subpage-header {
     flex-direction: row;
@@ -616,6 +618,15 @@ textarea.form-control { min-height: 90px; resize: vertical; }
   .grade-select-btn { padding: 0.7rem 0.4rem; }
   .grade-select-btn .grade-num { font-size: 1.05rem; }
   .grade-select-btn.all-grades { padding: 0.75rem; font-size: 0.85rem; }
+
+  /* Admin Responsiveness 1 Kolom */
+  .admin-content-area { padding: 1rem 0.85rem; }
+  .admin-pane-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; margin-bottom: 1.25rem; }
+  .admin-pane-header .nav-btn { width: 100%; justify-content: center; }
+  .admin-filter-bar { flex-direction: column !important; align-items: stretch !important; gap: 0.65rem !important; }
+  .admin-filter-bar input, .admin-filter-bar select { max-width: 100% !important; width: 100% !important; }
+  .admin-preview-sidebar { width: 100% !important; }
+  .table-container { border-radius: var(--radius-md); }
 
   .form-row-2, .form-row-4 { grid-template-columns: 1fr; }
 }

@@ -3,6 +3,20 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.3.0] - 2026-10-26
+
+### Added & Enhanced
+- **Tata Letak Responsif 1 Kolom Penuh Mode Mobile (< 768px)**:
+  - **Admin Settings 1 Kolom**: Kelas `.settings-grid-layout` otomatis runtuh (*collapse*) menjadi 1 kolom (`1fr !important`), form input dan preview tersusun rapi secara vertikal tanpa terpotong atau meluap ke samping (*zero horizontal overflow*).
+  - **4 Card Utama STEM Beranda 1 Kolom**: Tampilan kartu kategori STEM di beranda publik disesuaikan menjadi 1 kolom vertikal (`grid-template-columns: 1fr !important`) dengan padding lega, subtitle deskripsi aktif, dan indikator panah aksi yang jelas.
+  - **Perapian Form & Filter Admin**: Filter bar dan header pada panel admin diselaraskan ke susunan vertikal 1 kolom penuh pada layar smartphone.
+- **Pemurnian Arsitektur Google Apps Script (Zero `.css` & `.js`)**:
+  - Berkas `.css` dan `.js` dihapus sepenuhnya dari repositori (`git rm style.css app.js`).
+  - Proyek kini mematuhi 100% standar berkas Google Apps Script (hanya `.html` dan `.gs`), dengan styling terpusat di `styles.html`, logika di `scripts.html`, dan markup admin di `admin.html`.
+  - Ditambahkan injector fallback lokal cerdas pada `index.html` agar repositori tetap dapat diuji coba di browser lokal (Live Server) tanpa memerlukan server build.
+
+---
+
 ## [1.2.2] - 2026-10-25
 
 ### Added & Enhanced

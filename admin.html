@@ -115,7 +115,7 @@
         </div>
 
         <!-- Filter Bar di Admin Table -->
-        <div style="display:flex; gap:0.75rem; margin-bottom:1rem; flex-wrap:wrap;">
+        <div class="admin-filter-bar" style="display:flex; gap:0.75rem; margin-bottom:1rem; flex-wrap:wrap;">
           <input type="text" id="adminSearchInput" class="form-control" placeholder="Cari materi di tabel..." style="max-width:320px;" oninput="renderAdminTable()">
           <select id="adminStemFilter" class="form-control" style="max-width:180px;" onchange="renderAdminTable()">
             <option value="">Semua STEM</option>
@@ -171,7 +171,7 @@
           </button>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 340px; gap:1.5rem; align-items:start;" class="settings-grid-layout">
+        <div class="settings-grid-layout">
           <!-- Form Area -->
           <div style="display:flex; flex-direction:column; gap:1.5rem;">
             
@@ -257,7 +257,7 @@
           </div>
 
           <!-- Live Preview Area -->
-          <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color); text-align:center;">
+          <div class="admin-preview-sidebar" style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color); text-align:center;">
             <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:1rem; color:var(--text-main);">
               <i class="fa-solid fa-eye"></i> Pratinjau Identitas Sekolah
             </h4>

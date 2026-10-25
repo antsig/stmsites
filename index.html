@@ -15,8 +15,7 @@
   <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-  <!-- Modular Stylesheet (Local Browser & Google Apps Script Support) -->
-  <link rel="stylesheet" href="style.css">
+  <!-- Modular Stylesheet (Google Apps Script Include) -->
   <?!= include('styles'); ?>
 </head>
 
@@ -501,22 +500,59 @@
   </div>
 
   <!-- ========================================================================
-       MODULAR JAVASCRIPT
+       MODULAR JAVASCRIPT (GOOGLE APPS SCRIPT)
        ======================================================================== -->
-  <script src="app.js"></script>
   <?!= include('scripts'); ?>
 
-  <!-- Fallback injector for local file:// testing if admin markup is not yet in DOM -->
+  <!-- Fallback injector untuk lingkungan preview lokal (Live Server / Non-GAS) -->
   <script>
-    if (!document.getElementById("adminView")) {
-      // In standalone local offline mode, ensure admin HTML is available if not rendered via GAS include
-      fetch("admin.html")
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById("adminModuleContainer").innerHTML = html;
-        })
-        .catch(() => { });
-    }
+    (function () {
+      // 1. Injeksi styles.html jika file dijalankan di browser lokal non-GAS
+      if (!document.querySelector("style[data-gas-style='true']") && !window.__gasStylesLoaded) {
+        fetch("styles.html")
+          .then(res => res.text())
+          .then(html => {
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = html;
+            const styleEl = tempDiv.querySelector("style");
+            if (styleEl) {
+              styleEl.setAttribute("data-gas-style", "true");
+              document.head.appendChild(styleEl);
+              window.__gasStylesLoaded = true;
+            }
+          })
+          .catch(() => { });
+      }
+
+      // 2. Injeksi admin.html jika belum ada di DOM
+      if (!document.getElementById("adminView")) {
+        fetch("admin.html")
+          .then(res => res.text())
+          .then(html => {
+            const container = document.getElementById("adminModuleContainer");
+            if (container) container.innerHTML = html;
+          })
+          .catch(() => { });
+      }
+
+      // 3. Injeksi scripts.html jika belum dievaluasi oleh GAS
+      if (typeof appState === "undefined" && !window.__gasScriptsLoaded) {
+        fetch("scripts.html")
+          .then(res => res.text())
+          .then(html => {
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = html;
+            const scriptEl = tempDiv.querySelector("script");
+            if (scriptEl) {
+              const execScript = document.createElement("script");
+              execScript.textContent = scriptEl.textContent;
+              document.body.appendChild(execScript);
+              window.__gasScriptsLoaded = true;
+            }
+          })
+          .catch(() => { });
+      }
+    })();
   </script>
 </body>
 
