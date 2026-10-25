@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Portal Pembelajaran STEM Sekolah</title>
-  
+
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
   <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -17,6 +19,7 @@
   <link rel="stylesheet" href="style.css">
   <?!= include('styles'); ?>
 </head>
+
 <body>
 
   <!-- ========================================================================
@@ -25,7 +28,9 @@
   <nav class="site-nav">
     <div class="container nav-inner">
       <div class="brand-group" onclick="backToHomeCategories()">
-        <img id="navSchoolLogo" src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80" alt="Logo Sekolah" class="school-logo-img">
+        <img id="navSchoolLogo"
+          src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80"
+          alt="Logo Sekolah" class="school-logo-img">
         <div class="brand-text">
           <span id="navSchoolName" class="brand-title">SD NEGERI HARAPAN BANGSA</span>
           <span class="brand-badge"><i class="fa-solid fa-atom"></i> Portal Pembelajaran STEM</span>
@@ -33,9 +38,12 @@
       </div>
 
       <div class="nav-links">
-        <button class="nav-btn" onclick="backToHomeCategories()"><i class="fa-solid fa-shapes"></i> Kategori STEM</button>
-        <button class="nav-btn" onclick="openUserGuideModal()"><i class="fa-solid fa-book-open-reader"></i> Panduan Pengguna</button>
-        <button class="nav-btn admin-btn" onclick="openAdminPinModal()"><i class="fa-solid fa-lock"></i> Masuk Admin</button>
+        <button class="nav-btn" onclick="backToHomeCategories()"><i class="fa-solid fa-shapes"></i> Kategori
+          STEM</button>
+        <button class="nav-btn" onclick="openUserGuideModal()"><i class="fa-solid fa-book-open-reader"></i> Panduan
+          Pengguna</button>
+        <button class="nav-btn admin-btn" onclick="openAdminPinModal()"><i class="fa-solid fa-lock"></i> Masuk
+          Admin</button>
       </div>
 
       <button class="nav-mobile-toggle" onclick="toggleMobileNavMenu()"><i class="fa-solid fa-bars"></i></button>
@@ -44,9 +52,15 @@
     <!-- Mobile Menu Dropdown -->
     <div id="mobileNavMenu" style="display:none; background:#FFF; border-top:1px solid #E2E8F0; padding:1rem 1.25rem;">
       <div style="display:flex; flex-direction:column; gap:0.5rem;">
-        <button class="nav-btn" style="text-align:left; justify-content:flex-start;" onclick="backToHomeCategories(); toggleMobileNavMenu();"><i class="fa-solid fa-shapes"></i> Kategori STEM</button>
-        <button class="nav-btn" style="text-align:left; justify-content:flex-start;" onclick="openUserGuideModal(); toggleMobileNavMenu();"><i class="fa-solid fa-book-open-reader"></i> Panduan Pengguna</button>
-        <button class="nav-btn admin-btn" style="text-align:left; justify-content:flex-start;" onclick="openAdminPinModal(); toggleMobileNavMenu();"><i class="fa-solid fa-lock"></i> Masuk Admin (PIN)</button>
+        <button class="nav-btn" style="text-align:left; justify-content:flex-start;"
+          onclick="backToHomeCategories(); toggleMobileNavMenu();"><i class="fa-solid fa-shapes"></i> Kategori
+          STEM</button>
+        <button class="nav-btn" style="text-align:left; justify-content:flex-start;"
+          onclick="openUserGuideModal(); toggleMobileNavMenu();"><i class="fa-solid fa-book-open-reader"></i> Panduan
+          Pengguna</button>
+        <button class="nav-btn admin-btn" style="text-align:left; justify-content:flex-start;"
+          onclick="openAdminPinModal(); toggleMobileNavMenu();"><i class="fa-solid fa-lock"></i> Masuk Admin
+          (PIN)</button>
       </div>
     </div>
   </nav>
@@ -59,9 +73,9 @@
       <div class="hero-badge-pill">
         <i class="fa-solid fa-graduation-cap"></i> Tahun Ajaran <span id="heroAcademicYear">2026/2027</span>
       </div>
-      <h1 class="hero-title" id="heroSchoolName">SD NEGERI HARAPAN BANGSA</h1>
+      <!-- <h1 class="hero-title" id="heroSchoolName">SD NEGERI HARAPAN BANGSA</h1> -->
       <p class="hero-slogan" id="heroSlogan">Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika Bersama!</p>
-      
+
       <!-- Meta bar ini otomatis disembunyikan pada layar mobile untuk menghemat ruang -->
       <div class="hero-meta-bar">
         <span class="hero-meta-item"><i class="fa-solid fa-users"></i> Khusus Siswa Kelas 1 - 6</span>
@@ -78,15 +92,16 @@
        ======================================================================== -->
   <div id="viewHome">
     <div class="container">
-      
+
       <div class="home-intro-caption">
         <h2>Pilih Bidang STEM untuk Memulai Eksplorasi</h2>
-        <p>Klik salah satu kartu di bawah untuk membuka topik materi, video interaktif, simulasi, dan misi praktikum seru!</p>
+        <p>Klik salah satu kartu di bawah untuk membuka topik materi, video interaktif, simulasi, dan misi praktikum
+          seru!</p>
       </div>
 
       <!-- 4 Card Utama STEM (2 Card per Baris di Mode Mobile) -->
       <div class="stem-cards-grid">
-        
+
         <!-- 1. Science -->
         <div class="stem-card sci" onclick="selectCategory('Science')">
           <div class="stem-header-row">
@@ -159,7 +174,7 @@
        ======================================================================== -->
   <div id="viewCategorySub" style="display:none;">
     <div class="container">
-      
+
       <!-- Header Khusus Sub-Kategori Terpilih dengan Tombol Kembali -->
       <div class="category-subpage-header">
         <div class="category-subpage-title-box">
@@ -167,7 +182,8 @@
             <i class="fa-solid fa-flask-vial"></i>
           </div>
           <div>
-            <h2 id="subpageCategoryTitle" style="font-size:1.35rem; font-weight:800; line-height:1.25; color:var(--text-main);">-</h2>
+            <h2 id="subpageCategoryTitle"
+              style="font-size:1.35rem; font-weight:800; line-height:1.25; color:var(--text-main);">-</h2>
             <p id="subpageCategoryDesc" style="font-size:0.875rem; color:var(--text-muted); margin-top:0.2rem;">-</p>
           </div>
         </div>
@@ -182,7 +198,8 @@
         <div class="search-row">
           <div class="search-input-wrap">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Cari materi atau topik praktikum di kategori ini..." oninput="onSearchChange()">
+            <input type="text" id="searchInput" class="search-input"
+              placeholder="Cari materi atau topik praktikum di kategori ini..." oninput="onSearchChange()">
           </div>
           <select id="mediaFilterSelect" class="media-filter-select" onchange="onMediaFilterChange()">
             <option value="">Semua Jenis Media</option>
@@ -235,7 +252,7 @@
         </div>
         <button class="modal-close-btn" onclick="closeMissionModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      
+
       <div class="modal-body" id="missionModalBody">
         <!-- Dynamic content via openMissionModal(id) -->
       </div>
@@ -284,28 +301,32 @@
             <div class="step-number-badge">1</div>
             <div>
               <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Pilih Kategori STEM</h4>
-              <p style="font-size:0.85rem; color:var(--text-muted);">Di beranda utama, pilih Science, Technology, Engineering, atau Mathematics.</p>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Di beranda utama, pilih Science, Technology,
+                Engineering, atau Mathematics.</p>
             </div>
           </div>
           <div class="step-card-guide">
             <div class="step-number-badge">2</div>
             <div>
               <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Pilih Jenjang Kelas</h4>
-              <p style="font-size:0.85rem; color:var(--text-muted);">Klik tombol jenjang kelasmu (Kelas 1 s.d. 6) agar materi yang muncul sesuai tingkatanmu.</p>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Klik tombol jenjang kelasmu (Kelas 1 s.d. 6) agar
+                materi yang muncul sesuai tingkatanmu.</p>
             </div>
           </div>
           <div class="step-card-guide">
             <div class="step-number-badge">3</div>
             <div>
               <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Mulai Eksplorasi Materi</h4>
-              <p style="font-size:0.85rem; color:var(--text-muted);">Klik "Mulai Eksplorasi 🚀" untuk membuka video, simulasi seru, atau panduan praktikum.</p>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Klik "Mulai Eksplorasi 🚀" untuk membuka video,
+                simulasi seru, atau panduan praktikum.</p>
             </div>
           </div>
           <div class="step-card-guide">
             <div class="step-number-badge">4</div>
             <div>
               <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Selesaikan Misi & Refleksi</h4>
-              <p style="font-size:0.85rem; color:var(--text-muted);">Jawab pertanyaan refleksi di akhir misi untuk menguji pemahaman hebatmu!</p>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Jawab pertanyaan refleksi di akhir misi untuk
+                menguji pemahaman hebatmu!</p>
             </div>
           </div>
         </div>
@@ -315,15 +336,19 @@
           <div class="step-card-guide">
             <div class="step-number-badge"><i class="fa-solid fa-unlock"></i></div>
             <div>
-              <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Akses Terbuka & Ramah Anak (Tanpa Login)</h4>
-              <p style="font-size:0.85rem; color:var(--text-muted);">Portal ini dirancang bebas login agar anak dapat belajar mandiri tanpa memerlukan akun atau email.</p>
+              <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Akses Terbuka & Ramah Anak (Tanpa
+                Login)</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Portal ini dirancang bebas login agar anak dapat
+                belajar mandiri tanpa memerlukan akun atau email.</p>
             </div>
           </div>
           <div class="step-card-guide">
             <div class="step-number-badge"><i class="fa-solid fa-vial"></i></div>
             <div>
-              <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Praktikum dengan Bahan Rumah Tangga</h4>
-              <p style="font-size:0.85rem; color:var(--text-muted);">Materi Engineering & Science menggunakan alat sederhana di rumah (kertas lipat, balon, sedotan). Dampingi anak bereksperimen dengan menyenangkan.</p>
+              <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Praktikum dengan Bahan Rumah Tangga
+              </h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Materi Engineering & Science menggunakan alat
+                sederhana di rumah (kertas lipat, balon, sedotan). Dampingi anak bereksperimen dengan menyenangkan.</p>
             </div>
           </div>
         </div>
@@ -333,15 +358,18 @@
           <div class="step-card-guide">
             <div class="step-number-badge"><i class="fa-solid fa-lightbulb"></i></div>
             <div>
-              <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Apersepsi & PjBL Kurikulum Merdeka</h4>
-              <p style="font-size:0.85rem; color:var(--text-muted);">Gunakan simulasi interaktif PhET atau Blockly Games sebagai pemantik pembelajaran aktif di proyektor kelas.</p>
+              <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Apersepsi & PjBL Kurikulum Merdeka
+              </h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Gunakan simulasi interaktif PhET atau Blockly Games
+                sebagai pemantik pembelajaran aktif di proyektor kelas.</p>
             </div>
           </div>
           <div class="step-card-guide">
             <div class="step-number-badge"><i class="fa-solid fa-pen-ruler"></i></div>
             <div>
               <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.25rem;">Kustomisasi Materi via Admin</h4>
-              <p style="font-size:0.85rem; color:var(--text-muted);">Guru koordinator dapat menambah dan mengedit sub-materi mingguan melalui menu Admin ber-PIN.</p>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Guru koordinator dapat menambah dan mengedit
+                sub-materi mingguan melalui menu Admin ber-PIN.</p>
             </div>
           </div>
         </div>
@@ -354,7 +382,8 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              Ya, portal web ini 100% responsif mobile dan dapat dibuka langsung melalui browser Google Chrome atau Safari di smartphone.
+              Ya, portal web ini 100% responsif mobile dan dapat dibuka langsung melalui browser Google Chrome atau
+              Safari di smartphone.
             </div>
           </div>
           <div class="faq-item">
@@ -363,7 +392,8 @@
               <i class="fa-solid fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-              Masuk ke menu Admin menggunakan PIN, buka Tab "Pengaturan Logo & Sekolah", lalu masukkan tautan URL gambar logo yang diinginkan.
+              Masuk ke menu Admin menggunakan PIN, buka Tab "Pengaturan Logo & Sekolah", lalu masukkan tautan URL gambar
+              logo yang diinginkan.
             </div>
           </div>
         </div>
@@ -403,8 +433,9 @@
         .then(html => {
           document.getElementById("adminModuleContainer").innerHTML = html;
         })
-        .catch(() => {});
+        .catch(() => { });
     }
   </script>
 </body>
+
 </html>

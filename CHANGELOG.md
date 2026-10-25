@@ -5,6 +5,22 @@ Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https:/
 
 ---
 
+## [1.1.1] - 2026-10-25
+
+### Fixed & Enhanced
+- **Penyelarasan Akurat Materi STEM & Simulasi**:
+  - `STEM-SCI01`: Daur Hidup & Metamorfosis Kupu-kupu terhubung ke video pembelajaran animasi siklus hidup lengkap dengan 4 tahap.
+  - `STEM-SCI02`: Eksplorasi Cahaya & Warna Tumbuhan terhubung ke simulasi resmi **PhET Colorado: Color Vision** (eksplorasi spektrum RGB dan pantulan warna hijau daun).
+  - `STEM-TEC01`: Logika Coding Dasar terhubung ke game simulasi algoritma resmi **Google Blockly Games: Maze**.
+  - `STEM-TEC02`: Literasi Digital & Anti-Hoaks terhubung ke simulasi 3D resmi **Google: Interland (Sungai Realitas)**.
+  - `STEM-ENG01`: Rekayasa Keseimbangan Struktur terhubung ke simulasi resmi **PhET Colorado: Balancing Act** (hukum kesetimbangan beban dan titik tumpu).
+  - `STEM-ENG02`: Desain Mobil Bertenaga Dorong Balon terhubung ke simulasi hukum gerak & energi **PhET Colorado: Energy Skate Park** dan panduan praktikum mandiri.
+  - `STEM-MAT01`: Pecahan Pizza & Kue Lezat diperbarui ke tipe `Simulasi` dan terhubung langsung ke simulasi resmi **PhET Colorado: Fractions Intro** (model lingkaran pizza, kue, dan game pecahan interaktif).
+  - `STEM-MAT02`: Arsitek Cilik: Eksplorasi Luas & Keliling terhubung langsung ke simulasi resmi **PhET Colorado: Area Builder** (perancangan denah bangun datar pada petak bergaris).
+- **Auto-Sync Versi Data**: Menambahkan mekanisme sinkronisasi versi data otomatis (`DATA_VERSION: v1.1.1`) agar pengguna yang membuka kembali browser langsung mendapatkan data materi yang akurat tanpa perlu menghapus cache manual.
+
+---
+
 ## [1.1.0] - 2026-10-25
 
 ### Added
