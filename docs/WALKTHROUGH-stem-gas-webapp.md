@@ -45,14 +45,17 @@ Dokumen ini berisi panduan pengujian dan bukti verifikasi fungsional untuk **Por
 - [x] **Hasil yang Diharapkan**:
   - Modal panduan pengguna terbuka dan menu dropdown mobile otomatis menutup.
 
-### 4. Pengujian Footer Resmi Sekolah Ringkas
+### 4. Pengujian Footer Resmi Terpusat (Center Aligned) & WA Langsung Nomor
 - [x] **Langkah 1**: Gulir halaman ke bagian paling bawah.
 - [x] **Hasil yang Diharapkan**:
-  - Footer tampil bersih, elegan, dan proporsional dengan latar gelap profesional.
-  - **Identitas Sekolah**: Menampilkan logo dan Nama Sekolah resmi (`SD NEGERI HARAPAN BANGSA`).
-  - **Kontak Bantuan**: Menampilkan tautan WhatsApp Bantuan resmi (`https://wa.me/6281234567890`) dan tautan Email (`mailto:...`).
-  - **Hak Cipta**: Menampilkan hak cipta tahun ajaran aktif: `© 2026/2027 SD NEGERI HARAPAN BANGSA. Hak Cipta Dilindungi.`
-  - Footer terbebas dari link berlebihan atau elemen yang tidak perlu sesuai arahan pengguna.
+  - Seluruh elemen footer tersusun rapi di tengah (*center aligned*), seimbang, dan elegan.
+  - **Kontak WhatsApp Langsung Nomor**: Menampilkan nomor telepon yang bersih (misal: `+6281234567890`) dengan ikon WhatsApp hijau cerah tanpa awalan teks panjang, dan saat diklik langsung membuka obrolan WhatsApp.
+  - **Email Dihapus**: Tautan email telah dihilangkan sesuai arahan pengguna.
+  - **Hak Cipta Terpusat**: Menampilkan teks hak cipta terpusat di bawah tombol WhatsApp: `© [Nama Sekolah]. Hak Cipta Dilindungi.`
+- [x] **Langkah 2**: Buka DevTools mode mobile (< 480px).
+- [x] **Hasil yang Diharapkan**:
+  - Footer tetap berada di tengah secara proporsional dengan padding yang nyaman tanpa overflow horizontal.
+  - Tipografi seluruh halaman (judul, caption, kartu STEM, banner jenjang, dan modal) proporsional dan ramah mata siswa.
 
 ### 5. Pengujian Jendela Pop-up "Misi Eksplorasi Siswa"
 - [x] **Langkah 1**: Buka salah satu kategori STEM (misal: *Technology*), lalu klik tombol **"Mulai Eksplorasi 🚀"** pada kartu materi "Logika Coding Dasar".

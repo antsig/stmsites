@@ -246,30 +246,28 @@ function renderSchoolIdentity() {
   if (heroYearEl) heroYearEl.textContent = s.academic_year || "2026/2027";
   if (heroSloganEl) heroSloganEl.textContent = s.slogan || "Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika!";
 
-  // Footer Resmi Sekolah (Nama Sekolah, Kontak Bantuan, Hak Cipta Tahun Ajaran)
-  const footerLogo = document.getElementById("footerSchoolLogo");
-  const footerSchool = document.getElementById("footerSchoolName");
+  // Footer Resmi Sekolah (Kontak WA Langsung Nomor & Hak Cipta)
   const footerSchoolBottom = document.getElementById("footerSchoolNameBottom");
-  const footerYear = document.getElementById("footerAcademicYear");
   const footerWaLink = document.getElementById("footerWaLink");
   const footerWaText = document.getElementById("footerWaText");
-  const footerEmailLink = document.getElementById("footerEmailLink");
-  const footerEmailText = document.getElementById("footerEmailText");
 
-  if (footerLogo && s.logo_url) footerLogo.src = s.logo_url;
-  if (footerSchool) footerSchool.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
   if (footerSchoolBottom) footerSchoolBottom.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
-  if (footerYear) footerYear.textContent = s.academic_year || "2026/2027";
 
   if (footerWaLink && footerWaText) {
-    const rawWa = (s.contact_wa || "6281234567890").replace(/\D/g, "");
-    footerWaLink.href = `https://wa.me/${rawWa}`;
-    footerWaText.textContent = `WA Bantuan: +${rawWa}`;
-  }
-  if (footerEmailLink && footerEmailText) {
-    const email = s.contact_email || "stem.harapanbangsa@sekolah.sch.id";
-    footerEmailLink.href = `mailto:${email}`;
-    footerEmailText.textContent = `Email: ${email}`;
+    const rawWa = (s.contact_wa || "081234567890").trim();
+    const cleanDigits = rawWa.replace(/\D/g, "");
+    let waLinkNum = cleanDigits;
+    if (waLinkNum.startsWith("0")) {
+      waLinkNum = "62" + waLinkNum.slice(1);
+    }
+    footerWaLink.href = `https://wa.me/${waLinkNum}`;
+
+    // Tampilkan langsung nomor telepon tanpa teks awalan
+    let displayWa = rawWa;
+    if (!displayWa.startsWith("+") && !displayWa.startsWith("0")) {
+      displayWa = "+" + displayWa;
+    }
+    footerWaText.textContent = displayWa;
   }
 }
 

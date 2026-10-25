@@ -3,6 +3,22 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.2.2] - 2026-10-25
+
+### Added & Enhanced
+- **Footer Resmi Terpusat (*Centered Footer*)**:
+  - Seluruh elemen footer disusun di tengah (*center aligned*) dengan tata letak vertikal yang bersih, seimbang, dan elegan.
+  - Tautan WhatsApp langsung menampilkan nomor telepon resmi tanpa awalan teks panjang (format rapi dan interaktif).
+  - Tautan email resmi dihilangkan dari footer sesuai arahan pengguna.
+  - Hak cipta sekolah tampil terpusat rapi di bawah tombol WhatsApp.
+- **Perapian Tipografi & Tata Letak Mode Mobile**:
+  - Penyesuaian proporsional ukuran font dan padding di semua komponen untuk layar smartphone (< 768px dan < 480px).
+  - Merapikan navbar mobile, hero banner, caption beranda, dan 4 Card Utama STEM (2 card per baris).
+  - Menyelaraskan tombol navigasi *"Menu STEM"*, banner info jenjang kelas, dan input pencarian pada halaman sub-materi.
+  - Menghilangkan elemen yang tidak diperlukan dan memastikan nol scroll horizontal (*zero overflow*).
+
+---
+
 ## [1.2.1] - 2026-10-25
 
 ### Added

@@ -189,7 +189,7 @@
         </div>
 
         <button class="btn-back-home" onclick="backToHomeCategories()">
-          <i class="fa-solid fa-arrow-left"></i> Kembali ke Menu STEM
+          <i class="fa-solid fa-arrow-left"></i> Menu STEM
         </button>
       </div>
 
@@ -201,19 +201,19 @@
             <input type="text" id="searchInput" class="search-input"
               placeholder="Cari materi atau topik praktikum di kategori ini..." oninput="onSearchChange()">
           </div>
-          <select id="mediaFilterSelect" class="media-filter-select" onchange="onMediaFilterChange()">
+          <!-- <select id="mediaFilterSelect" class="media-filter-select" onchange="onMediaFilterChange()">
             <option value="">Semua Jenis Media</option>
             <option value="Video">🎬 Video Interaktif</option>
             <option value="Simulasi">🕹️ Simulasi / Game</option>
             <option value="Praktikum">🧪 Praktikum / Proyek</option>
             <option value="Dokumen">📄 Dokumen / PDF</option>
             <option value="Artikel">📰 Artikel / Cerita</option>
-          </select>
+          </select> -->
         </div>
 
         <!-- Baris Filter Jenjang Kelas (Tampil hanya jika memilih Semua Kelas) -->
         <div class="grade-filter-bar" id="gradeFilterBar">
-          <span class="filter-label"><i class="fa-solid fa-layer-group"></i> Jenjang Kelas:</span>
+          <span class="filter-label"><i class="fa-solid fa-layer-group"></i> Jenjang:</span>
           <button class="grade-pill active" onclick="setGradeFilter('')" id="grade-all">Semua Kelas</button>
           <button class="grade-pill" onclick="setGradeFilter('1')" id="grade-1">Kelas 1</button>
           <button class="grade-pill" onclick="setGradeFilter('2')" id="grade-2">Kelas 2</button>
@@ -227,21 +227,21 @@
         <div id="lockedGradeBanner" class="locked-grade-banner" style="display:none;">
           <div class="locked-grade-info">
             <i class="fa-solid fa-graduation-cap"></i>
-            <span>Materi Khusus: <strong id="lockedGradeText">Kelas 1 SD</strong></span>
+            <span><strong id="lockedGradeText">Kelas 1 SD</strong></span>
           </div>
           <button class="btn-change-grade" type="button" onclick="openGradeSelector(appState.selectedCategory)">
-            <i class="fa-solid fa-arrows-rotate"></i> Ganti Jenjang Kelas
+            <i class="fa-solid fa-arrows-rotate"></i> Ganti Kelas
           </button>
         </div>
 
-        <div class="filter-status-row">
+        <!-- <div class="filter-status-row">
           <div class="active-filter-tags" id="activeFilterTags">
-            <span>Menampilkan seluruh materi</span>
+            <span>Seluruh Materi</span>
           </div>
           <button class="reset-filter-btn" id="resetFilterBtn" style="display:none;" onclick="resetFiltersInSubpage()">
             <i class="fa-solid fa-rotate-left"></i> Reset Filter
           </button>
-        </div>
+        </div> -->
       </div>
 
       <!-- Grid Sub-Card Materi STEM -->
@@ -473,29 +473,17 @@
   </div>
 
   <!-- ========================================================================
-       FOOTER RESMI SEKOLAH (NAMA SEKOLAH, KONTAK BANTUAN, HAK CIPTA)
+       FOOTER RESMI SEKOLAH (KONTAK WA & HAK CIPTA)
        ======================================================================== -->
   <footer class="site-footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <img id="footerSchoolLogo" src="" alt="Logo Sekolah" class="footer-logo">
-          <div>
-            <div id="footerSchoolName" class="footer-school-name">-</div>
-            <div class="footer-school-tag"><i class="fa-solid fa-atom"></i> Portal Pembelajaran STEM Interaktif</div>
-          </div>
-        </div>
-        <div class="footer-contacts">
-          <a id="footerWaLink" href="#" target="_blank" class="footer-contact-item">
-            <i class="fa-brands fa-whatsapp" style="color:#22C55E;"></i> <span id="footerWaText">-</span>
-          </a>
-          <a id="footerEmailLink" href="#" class="footer-contact-item">
-            <i class="fa-solid fa-envelope" style="color:#38BDF8;"></i> <span id="footerEmailText">-</span>
-          </a>
-        </div>
+    <div class="container footer-centered-wrap">
+      <div class="footer-contacts">
+        <a id="footerWaLink" href="#" target="_blank" class="footer-contact-item">
+          <i class="fa-brands fa-whatsapp" style="color:#22C55E;"></i> <span id="footerWaText">-</span>
+        </a>
       </div>
-      <div class="footer-bottom">
-        <div>&copy; <span id="footerAcademicYear">2026/2027</span> <span id="footerSchoolNameBottom">-</span>. Hak Cipta Dilindungi.</div>
+      <div class="footer-copy">
+        &copy; <span id="footerSchoolNameBottom">-</span>. Hak Cipta Dilindungi.
       </div>
     </div>
   </footer>
