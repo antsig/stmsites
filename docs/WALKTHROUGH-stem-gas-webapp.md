@@ -21,13 +21,18 @@ Dokumen ini berisi panduan pengujian dan bukti verifikasi fungsional untuk **Por
 - [x] **Hasil yang Diharapkan**:
   - Muncul pop-up ramah anak *"Pilih Jenjang Kelas"* dengan badge ikon Science.
   - Terdapat tombol besar *"Tampilkan Semua Kelas"* dan 6 tombol jenjang (*Kelas 1 SD* s.d. *Kelas 6 SD*).
-- [x] **Langkah 2**: Klik tombol **"Kelas 4 SD"**.
+- [x] **Langkah 2 (Skenario Kelas Terkunci)**: Klik tombol **"Kelas 4 SD"**.
 - [x] **Hasil yang Diharapkan**:
-  - Modal pop-up otomatis menutup.
-  - Berpindah mulus ke **Halaman Khusus Sub-Kategori Science**.
-  - Pil filter Kelas 4 langsung aktif, dan hanya materi Science untuk Kelas 4 yang ditampilkan.
-  - Siswa dapat mengganti jenjang kelas kapan saja menggunakan pil filter di halaman tersebut.
-- [x] **Langkah 3**: Klik tombol **"⬅️ Kembali ke Kategori Utama STEM"**.
+  - Modal pop-up otomatis menutup dan berpindah ke **Halaman Khusus Sub-Kategori Science**.
+  - **Baris filter tombol kelas disembunyikan** (`#gradeFilterBar` hidden) sehingga tampilan filter sangat bersih.
+  - Muncul banner informatif: **"Materi Khusus: Kelas 4 SD"** lengkap dengan tombol `[ 🔄 Ganti Jenjang Kelas ]`.
+  - Hanya materi Science untuk Kelas 4 yang ditampilkan pada grid.
+  - Mengklik tombol *Reset Filter* hanya mereset kolom pencarian & filter media tanpa membuka kunci kelas.
+- [x] **Langkah 3 (Skenario Ganti Kelas & Semua Kelas)**: Klik tombol `[ 🔄 Ganti Jenjang Kelas ]` > lalu klik **"Tampilkan Semua Kelas"**.
+- [x] **Hasil yang Diharapkan**:
+  - Banner kelas terkunci berganti dan **baris tombol jenjang kelas kembali ditampilkan** (`#gradeFilterBar` flex).
+  - Seluruh materi Science lintas kelas ditampilkan.
+- [x] **Langkah 4**: Klik tombol **"⬅️ Kembali ke Menu STEM"**.
 - [x] **Hasil yang Diharapkan**:
   - Tampilan kembali mulus ke **Beranda Utama** yang bersih dengan 4 Card Utama STEM.
 

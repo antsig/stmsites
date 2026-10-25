@@ -143,7 +143,8 @@ let appState = {
   selectedMediaType: "",// "Video" | "Simulasi" | ... | ""
   searchQuery: "",
   isAdminLoggedIn: false,
-  pendingCategory: ""
+  pendingCategory: "",
+  isGradeLocked: false
 };
 
 // ==============================================================================
@@ -225,6 +226,7 @@ function renderApp() {
     if (homeView) homeView.style.display = "none";
     if (subCategoryView) subCategoryView.style.display = "block";
     renderCategorySubpageHeader();
+    updateGradeFilterBarVisibility();
     renderMaterialsGrid();
     renderActiveFilterStatus();
   }
@@ -350,7 +352,27 @@ function chooseGradeAndExplore(grade) {
   closeGradeSelectorModal();
   selectCategory(cat);
   if (grade) {
+    appState.isGradeLocked = true;
     setGradeFilter(grade);
+  } else {
+    appState.isGradeLocked = false;
+    setGradeFilter("");
+  }
+  updateGradeFilterBarVisibility();
+}
+
+function updateGradeFilterBarVisibility() {
+  const bar = document.getElementById("gradeFilterBar");
+  const banner = document.getElementById("lockedGradeBanner");
+  const text = document.getElementById("lockedGradeText");
+
+  if (appState.isGradeLocked && appState.selectedGrade) {
+    if (bar) bar.style.display = "none";
+    if (banner) banner.style.display = "flex";
+    if (text) text.textContent = `Kelas ${appState.selectedGrade} SD`;
+  } else {
+    if (bar) bar.style.display = "flex";
+    if (banner) banner.style.display = "none";
   }
 }
 
@@ -378,6 +400,7 @@ function backToHomeCategories() {
   appState.selectedGrade = "";
   appState.selectedMediaType = "";
   appState.searchQuery = "";
+  appState.isGradeLocked = false;
   renderApp();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -505,11 +528,16 @@ function renderActiveFilterStatus() {
   const resetBtn = document.getElementById("resetFilterBtn");
   if (!container) return;
 
-  const hasFilters = appState.selectedGrade || appState.selectedMediaType || appState.searchQuery;
+  const hasExtraFilters = appState.selectedMediaType || appState.searchQuery || (!appState.isGradeLocked && appState.selectedGrade);
 
-  if (!hasFilters) {
-    const totalInCat = appState.materials.filter(m => m.stem_category === appState.selectedCategory).length;
-    container.innerHTML = `<span><i class="fa-solid fa-list-check" style="color:var(--primary);"></i> Menampilkan seluruh materi ${appState.selectedCategory} (${totalInCat} sub-materi)</span>`;
+  if (!hasExtraFilters && (!appState.selectedGrade || appState.isGradeLocked)) {
+    const totalMatching = getFilteredMaterials().length;
+    if (appState.isGradeLocked) {
+      container.innerHTML = `<span><i class="fa-solid fa-list-check" style="color:var(--primary);"></i> Menampilkan seluruh materi Kelas ${appState.selectedGrade} SD (${totalMatching} sub-materi)</span>`;
+    } else {
+      const totalInCat = appState.materials.filter(m => m.stem_category === appState.selectedCategory).length;
+      container.innerHTML = `<span><i class="fa-solid fa-list-check" style="color:var(--primary);"></i> Menampilkan seluruh materi ${appState.selectedCategory} (${totalInCat} sub-materi)</span>`;
+    }
     if (resetBtn) resetBtn.style.display = "none";
     return;
   }
@@ -518,7 +546,11 @@ function renderActiveFilterStatus() {
 
   let tagsHtml = [];
   if (appState.selectedGrade) {
-    tagsHtml.push(`<span class="filter-tag">Kelas: ${appState.selectedGrade} <i class="fa-solid fa-xmark" onclick="setGradeFilter('')"></i></span>`);
+    if (appState.isGradeLocked) {
+      tagsHtml.push(`<span class="filter-tag" style="background:#EFF6FF; border:1px solid #BFDBFE; color:#1E3A8A; font-weight:700;"><i class="fa-solid fa-lock" style="color:var(--primary);"></i> Kelas: ${appState.selectedGrade}</span>`);
+    } else {
+      tagsHtml.push(`<span class="filter-tag">Kelas: ${appState.selectedGrade} <i class="fa-solid fa-xmark" onclick="setGradeFilter('')"></i></span>`);
+    }
   }
   if (appState.selectedMediaType) {
     tagsHtml.push(`<span class="filter-tag">Media: ${appState.selectedMediaType} <i class="fa-solid fa-xmark" onclick="clearMediaTypeFilter()"></i></span>`);
@@ -584,7 +616,12 @@ function clearMediaTypeFilter() {
 }
 
 function resetFiltersInSubpage() {
-  appState.selectedGrade = "";
+  if (!appState.isGradeLocked) {
+    appState.selectedGrade = "";
+    document.querySelectorAll(".grade-pill").forEach((btn) => btn.classList.remove("active"));
+    const allBtn = document.getElementById("grade-all");
+    if (allBtn) allBtn.classList.add("active");
+  }
   appState.selectedMediaType = "";
   appState.searchQuery = "";
 
@@ -592,10 +629,6 @@ function resetFiltersInSubpage() {
   if (sInput) sInput.value = "";
   const mSelect = document.getElementById("mediaFilterSelect");
   if (mSelect) mSelect.value = "";
-
-  document.querySelectorAll(".grade-pill").forEach((btn) => btn.classList.remove("active"));
-  const allBtn = document.getElementById("grade-all");
-  if (allBtn) allBtn.classList.add("active");
 
   renderMaterialsGrid();
   renderActiveFilterStatus();

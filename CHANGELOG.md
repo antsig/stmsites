@@ -3,6 +3,19 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.2.1] - 2026-10-25
+
+### Added
+- **Penguncian Jenjang Kelas Otomatis (*Grade Locking*)**:
+  - Ketika siswa memilih jenjang spesifik (Kelas 1 s.d. 6 SD) pada pop-up di beranda, pilihan jenjang langsung dikunci saat memasuki halaman sub-materi.
+  - Baris filter tombol kelas (`.grade-filter-bar`) otomatis disembunyikan agar tampilan bersih dan fokus.
+  - Ditambahkan banner penanda *"Materi Khusus: Kelas X SD"* dengan tombol cepat `[ 🔄 Ganti Jenjang Kelas ]` untuk mengganti kelas kapan saja tanpa harus kembali ke beranda.
+  - Jika siswa memilih *"Tampilkan Semua Kelas"*, baris filter kelas tetap tampil normal untuk eksplorasi bebas.
+- **Isolasi Reset Filter**:
+  - Tombol *Reset Filter* di halaman sub-materi kini hanya mereset pencarian kata kunci dan jenis media, dengan tetap menjaga kelas yang sedang terkunci.
+
+---
+
 ## [1.2.0] - 2026-10-25
 
 ### Added

@@ -211,7 +211,8 @@
           </select>
         </div>
 
-        <div class="grade-filter-bar">
+        <!-- Baris Filter Jenjang Kelas (Tampil hanya jika memilih Semua Kelas) -->
+        <div class="grade-filter-bar" id="gradeFilterBar">
           <span class="filter-label"><i class="fa-solid fa-layer-group"></i> Jenjang Kelas:</span>
           <button class="grade-pill active" onclick="setGradeFilter('')" id="grade-all">Semua Kelas</button>
           <button class="grade-pill" onclick="setGradeFilter('1')" id="grade-1">Kelas 1</button>
@@ -220,6 +221,17 @@
           <button class="grade-pill" onclick="setGradeFilter('4')" id="grade-4">Kelas 4</button>
           <button class="grade-pill" onclick="setGradeFilter('5')" id="grade-5">Kelas 5</button>
           <button class="grade-pill" onclick="setGradeFilter('6')" id="grade-6">Kelas 6</button>
+        </div>
+
+        <!-- Banner Info Jenjang Terkunci (Tampil jika memilih jenjang kelas spesifik) -->
+        <div id="lockedGradeBanner" class="locked-grade-banner" style="display:none;">
+          <div class="locked-grade-info">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Materi Khusus: <strong id="lockedGradeText">Kelas 1 SD</strong></span>
+          </div>
+          <button class="btn-change-grade" type="button" onclick="openGradeSelector(appState.selectedCategory)">
+            <i class="fa-solid fa-arrows-rotate"></i> Ganti Jenjang Kelas
+          </button>
         </div>
 
         <div class="filter-status-row">
