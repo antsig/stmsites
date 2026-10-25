@@ -5,29 +5,35 @@ Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https:/
 
 ---
 
+## [1.1.0] - 2026-10-25
+
+### Added
+- **Arsitektur Pemisahan Modular**:
+  - `styles.html` & `style.css`: Pemisahan modular stylesheet dan variabel CSS.
+  - `scripts.html` & `app.js`: Pemisahan modular logika JavaScript.
+  - `admin.html`: Pemisahan halaman dashboard admin, sidemenu, dan formulir CRUD.
+  - `Code.gs`: Integrasi helper `include()` untuk kompilasi modular Google Apps Script.
+- **Navigasi 2-Tampilan yang Bersih**:
+  - **Beranda Utama Bersih (Home View)**: Hanya memuat identitas sekolah, hero banner ringkas, dan 4 Card Utama STEM. Sub-materi disembunyikan seluruhnya.
+  - **Halaman Khusus Sub-Kategori STEM (Category Sub-Page View)**: Terbuka saat salah satu Card STEM diklik, menyembunyikan 4 Card STEM, dan menghadirkan tombol *"⬅️ Kembali ke Kategori Utama STEM"*, header kategori, filter kelas 1-6, filter media, dan grid materi terkait.
+- **Kustomisasi Logo 4 Kategori STEM di Admin**:
+  - Formulir input URL logo kustom untuk Science, Technology, Engineering, dan Mathematics di Tab Pengaturan Logo & Sekolah.
+  - Kotak *Live Preview* untuk memantau perubahan tampilan logo 4 kategori secara langsung.
+
+### Changed
+- **Optimasi Mode Mobile**:
+  - Menyembunyikan `.hero-meta-bar` pada mode mobile (`display: none !important;`).
+  - Merapikan padding dan tipografi *Hero Banner* pada layar smartphone (< 768px).
+  - Memastikan 4 Card Utama STEM tetap tampil rapi **2 card dalam 1 baris** di layar mobile.
+
+---
+
 ## [1.0.0] - 2026-10-25
 
 ### Added
-- **Header Identitas Sekolah**: Menampilkan logo sekolah, nama sekolah, tahun ajaran aktif, dan slogan interaktif.
-- **4 Card Utama STEM**:
-  - Kartu Science, Technology, Engineering, dan Mathematics dengan indikator jumlah materi dan efek hover lift.
-  - Tampilan responsif mobile **2 kartu dalam 1 baris** di layar smartphone (< 768px).
-  - Integrasi klik untuk filter otomatis grid materi.
-- **Sistem Filter & Pencarian Lengkap**:
-  - Kolom pencarian kata kunci instan (*real-time keyword search*).
-  - Filter Jenjang Kelas 1 sampai Kelas 6 + Semua Kelas.
-  - Filter Jenis Media (Video, Simulasi/Game, Praktikum, Dokumen/PDF, Artikel).
-- **Jendela Pop-up "Misi Eksplorasi Siswa"**:
-  - Modal interaktif yang memuat Tujuan Pembelajaran, Langkah Misi/Praktikum Seru, Tombol Buka Media Materi, dan Pertanyaan Refleksi Cepat.
-- **Menu Panduan Penggunaan untuk User Umum**:
-  - Navigasi atas dengan 4 tab: Siswa SD (4 langkah mudah), Orang Tua / Wali (pendampingan belajar tanpa login), Guru Kelas (pemanfaatan kurikulum merdeka), dan Tanya Jawab (FAQ).
-- **Halaman Admin dengan Layout Sidemenu**:
-  - Proteksi PIN Admin 6 digit (Default: `123456`) dilengkapi tombol instan *"Isi PIN Demo (123456)"*.
-  - Sidemenu responsif (*off-canvas drawer* di mobile dengan tombol toggle hamburger).
-  - **Tab 1: Kelola Card Materi (CRUD)** untuk menambah, mengedit, dan menghapus sub-card materi.
-  - **Tab 2: Pengaturan Logo & Sekolah** dengan fitur *Live Preview* logo dan identitas instansi.
-  - **Tab 3: Panduan Pengaturan & Penggunaan Admin** (konversi URL Google Drive `uc?export=view`, standar tautan media, dan manajemen sheet).
-  - **Tab 4: Step Deploy & Kode GAS** lengkap dengan tombol salin satu-klik seluruh kode `Code.gs` dan `index.html`.
-- **Dual Engine Architecture**:
-  - Berjalan otomatis di Google Apps Script yang terhubung ke Google Sheets.
-  - Berjalan mandiri (*Standalone Demo*) di browser lokal dengan penyimpanan `localStorage`.
+- Rilis perdana portal STEM sekolah berbasis Google Apps Script Web App.
+- Header Identitas Sekolah & 4 Card Utama STEM (Science, Technology, Engineering, Mathematics).
+- Filter kelas 1-6, pencarian kata kunci, dan filter tipe media.
+- Modal Misi Eksplorasi Siswa (Tujuan, Langkah Praktikum, Link Media, dan Refleksi).
+- Panduan pengguna untuk Siswa SD, Orang Tua, Guru Kelas, dan FAQ.
+- Halaman admin ber-PIN dengan sidemenu dan CRUD Google Sheets.

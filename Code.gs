@@ -298,7 +298,11 @@ function initDatabaseIfEmpty() {
       ['logo_url', 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80'],
       ['contact_wa', '6281234567890'],
       ['contact_email', 'stem.harapanbangsa@sekolah.sch.id'],
-      ['admin_pin', DEFAULT_PIN]
+      ['admin_pin', DEFAULT_PIN],
+      ['logo_science', ''],
+      ['logo_technology', ''],
+      ['logo_engineering', ''],
+      ['logo_mathematics', '']
     ];
     for (var s = 0; s < defaultSettings.length; s++) {
       settingsSheet.appendRow(defaultSettings[s]);

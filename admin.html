@@ -1,0 +1,510 @@
+<!-- ========================================================================
+     MODAL: AUTENTIKASI PIN ADMIN
+     ======================================================================== -->
+<div class="modal-backdrop" id="adminPinModal">
+  <div class="modal-container" style="max-width: 440px;">
+    <div class="modal-header">
+      <div class="modal-header-title">
+        <i class="fa-solid fa-shield-halved" style="color:var(--primary);"></i>
+        <span>Autentikasi PIN Admin</span>
+      </div>
+      <button class="modal-close-btn" onclick="closeAdminPinModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="modal-body">
+      <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:1.25rem;">
+        Masukkan 6-digit PIN Admin untuk mengakses pengelolaan materi STEM, pengaturan identitas & logo kategori, serta panduan teknis.
+      </p>
+
+      <div class="form-group">
+        <label class="form-label">PIN Admin</label>
+        <input type="password" id="inputAdminPin" class="form-control" placeholder="Masukkan 6 Digit PIN" maxlength="12" style="font-size:1.25rem; letter-spacing:0.25em; text-align:center;">
+      </div>
+
+      <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:var(--radius-md); padding:0.85rem; margin-bottom:1rem; display:flex; align-items:center; justify-content:space-between; gap:0.5rem;">
+        <div style="font-size:0.8rem; color:#1E40AF;">
+          <strong>PIN Demo:</strong> <code>123456</code>
+        </div>
+        <button type="button" class="nav-btn primary" style="padding:0.35rem 0.75rem; font-size:0.75rem;" onclick="fillDemoPin()">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Isi PIN Demo (123456)
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="nav-btn primary" onclick="submitAdminPin()">
+        <i class="fa-solid fa-right-to-bracket"></i> Masuk Admin
+      </button>
+      <button class="nav-btn" onclick="closeAdminPinModal()">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================
+     HALAMAN UTAMA ADMIN DENGAN SIDEMENU
+     ======================================================================== -->
+<div class="admin-overlay-view" id="adminView">
+  <!-- Topbar Admin -->
+  <div class="admin-topbar">
+    <div class="admin-topbar-left">
+      <button class="admin-sidebar-toggle" onclick="toggleAdminSidebar()"><i class="fa-solid fa-bars"></i></button>
+      <div class="admin-topbar-title">
+        <i class="fa-solid fa-sliders" style="color:var(--primary);"></i>
+        <span>Dashboard Admin STEM</span>
+      </div>
+    </div>
+    <div>
+      <button class="nav-btn" style="color:#FFF; border:1px solid #334155;" onclick="closeAdminView()">
+        <i class="fa-solid fa-globe"></i> Lihat Portal Siswa
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Wrapper with Sidemenu & Content -->
+  <div class="admin-main-wrapper">
+    <!-- Backdrop mobile for sidebar -->
+    <div class="admin-backdrop-mobile" id="adminBackdropMobile" onclick="toggleAdminSidebar()"></div>
+
+    <!-- Sidemenu -->
+    <aside class="admin-sidemenu" id="adminSidebar">
+      <div class="admin-sidemenu-nav">
+        <button class="admin-nav-item active" onclick="switchAdminTab('tab-materi', this)">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <span>Kelola Card Materi</span>
+        </button>
+        
+        <button class="admin-nav-item" onclick="switchAdminTab('tab-settings', this)">
+          <i class="fa-solid fa-school-flag"></i>
+          <span>Pengaturan Logo & Sekolah</span>
+        </button>
+
+        <button class="admin-nav-item" onclick="switchAdminTab('tab-admin-guide', this)">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Panduan Admin</span>
+        </button>
+
+        <button class="admin-nav-item" onclick="switchAdminTab('tab-deploy-gas', this)">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <span>Step Deploy & Kode GAS</span>
+        </button>
+      </div>
+
+      <div class="admin-sidemenu-footer">
+        <button class="admin-nav-item" style="color:#F87171;" onclick="logoutAdmin()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Keluar Admin</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Content Area -->
+    <section class="admin-content-area">
+      
+      <!-- ==================================================================
+           TAB 1: KELOLA CARD MATERI (CRUD)
+           ================================================================== -->
+      <div class="admin-tab-pane active" id="tab-materi">
+        <div class="admin-pane-header">
+          <div class="admin-pane-title">
+            <h2>Kelola Sub-Card Materi STEM</h2>
+            <p>Tambah, edit, atau hapus konten materi pada masing-masing dari 4 Card Utama STEM.</p>
+          </div>
+          <button class="nav-btn primary" onclick="openAddMaterialModal()">
+            <i class="fa-solid fa-plus"></i> Tambah Sub-Card Baru
+          </button>
+        </div>
+
+        <!-- Filter Bar di Admin Table -->
+        <div style="display:flex; gap:0.75rem; margin-bottom:1rem; flex-wrap:wrap;">
+          <input type="text" id="adminSearchInput" class="form-control" placeholder="Cari materi di tabel..." style="max-width:320px;" oninput="renderAdminTable()">
+          <select id="adminStemFilter" class="form-control" style="max-width:180px;" onchange="renderAdminTable()">
+            <option value="">Semua STEM</option>
+            <option value="Science">Science</option>
+            <option value="Technology">Technology</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Mathematics">Mathematics</option>
+          </select>
+          <select id="adminGradeFilter" class="form-control" style="max-width:140px;" onchange="renderAdminTable()">
+            <option value="">Semua Kelas</option>
+            <option value="1">Kelas 1</option>
+            <option value="2">Kelas 2</option>
+            <option value="3">Kelas 3</option>
+            <option value="4">Kelas 4</option>
+            <option value="5">Kelas 5</option>
+            <option value="6">Kelas 6</option>
+          </select>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width:70px;">Thumbnail</th>
+                  <th>Judul Materi</th>
+                  <th>Kategori STEM</th>
+                  <th>Kelas</th>
+                  <th>Media</th>
+                  <th style="text-align:right;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody">
+                <!-- Rendered via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================================================================
+           TAB 2: PENGATURAN LOGO & SEKOLAH (+ PENGATURAN LOGO KATEGORI STEM)
+           ================================================================== -->
+      <div class="admin-tab-pane" id="tab-settings">
+        <div class="admin-pane-header">
+          <div class="admin-pane-title">
+            <h2>Pengaturan Identitas, Logo Sekolah & Logo Kategori STEM</h2>
+            <p>Kustomisasi informasi sekolah, logo instansi, URL logo masing-masing dari 4 kategori STEM, kontak bantuan, dan PIN Admin.</p>
+          </div>
+          <button class="nav-btn primary" onclick="saveSchoolSettings()">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan
+          </button>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 340px; gap:1.5rem; align-items:start;" class="settings-grid-layout">
+          <!-- Form Area -->
+          <div style="display:flex; flex-direction:column; gap:1.5rem;">
+            
+            <!-- Box 1: Identitas Sekolah -->
+            <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
+              <h3 style="font-size:1.05rem; font-weight:800; margin-bottom:1rem; color:var(--text-main);">
+                <i class="fa-solid fa-school" style="color:var(--primary);"></i> Identitas Sekolah & Keamanan
+              </h3>
+
+              <div class="form-group">
+                <label class="form-label">Nama Sekolah</label>
+                <input type="text" id="settingSchoolName" class="form-control" placeholder="Contoh: SD NEGERI HARAPAN BANGSA" oninput="previewSettings()">
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label">Tahun Ajaran</label>
+                  <input type="text" id="settingAcademicYear" class="form-control" placeholder="Contoh: 2026/2027" oninput="previewSettings()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Ganti PIN Admin Baru (6 Digit)</label>
+                  <input type="password" id="settingAdminPin" class="form-control" placeholder="Biarkan kosong jika tidak diubah" maxlength="12">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Slogan / Tagline Sekolah</label>
+                <input type="text" id="settingSlogan" class="form-control" placeholder="Slogan motivasi belajar siswa" oninput="previewSettings()">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">URL Tautan Logo Utama Sekolah</label>
+                <input type="url" id="settingLogoUrl" class="form-control" placeholder="https://..." oninput="previewSettings()">
+                <small style="color:var(--text-muted); font-size:0.75rem; margin-top:0.3rem; display:block;">
+                  *Gunakan direct image link atau format Google Drive <code>https://drive.google.com/uc?export=view&id=FILE_ID</code>.
+                </small>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label">No. WhatsApp Bantuan</label>
+                  <input type="text" id="settingContactWa" class="form-control" placeholder="Contoh: 6281234567890">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email Sekolah</label>
+                  <input type="email" id="settingContactEmail" class="form-control" placeholder="Contoh: stem@sekolah.sch.id">
+                </div>
+              </div>
+            </div>
+
+            <!-- Box 2: Pengaturan Logo / Ikon 4 Kategori STEM (FITUR BARU) -->
+            <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
+              <h3 style="font-size:1.05rem; font-weight:800; margin-bottom:0.5rem; color:var(--text-main);">
+                <i class="fa-solid fa-icons" style="color:#7C3AED;"></i> Kustomisasi Logo / Gambar 4 Kategori STEM
+              </h3>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">
+                Anda dapat mengganti logo ikon bawaan masing-masing kategori STEM dengan gambar/logo kustom sekolah Anda (masukkan tautan URL gambar). Jika dikosongkan, ikon default FontAwesome akan otomatis digunakan.
+              </p>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" style="color:var(--stem-sci);"><i class="fa-solid fa-flask-vial"></i> URL Logo Kategori Science</label>
+                  <input type="url" id="settingLogoSci" class="form-control" placeholder="Kosongkan untuk ikon bawaan" oninput="previewSettings()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" style="color:var(--stem-tec);"><i class="fa-solid fa-laptop-code"></i> URL Logo Kategori Technology</label>
+                  <input type="url" id="settingLogoTec" class="form-control" placeholder="Kosongkan untuk ikon bawaan" oninput="previewSettings()">
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" style="color:var(--stem-eng);"><i class="fa-solid fa-gears"></i> URL Logo Kategori Engineering</label>
+                  <input type="url" id="settingLogoEng" class="form-control" placeholder="Kosongkan untuk ikon bawaan" oninput="previewSettings()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" style="color:var(--stem-mat);"><i class="fa-solid fa-calculator"></i> URL Logo Kategori Mathematics</label>
+                  <input type="url" id="settingLogoMat" class="form-control" placeholder="Kosongkan untuk ikon bawaan" oninput="previewSettings()">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Live Preview Area -->
+          <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color); text-align:center;">
+            <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:1rem; color:var(--text-main);">
+              <i class="fa-solid fa-eye"></i> Pratinjau Identitas Sekolah
+            </h4>
+            <div style="padding:1rem; background:#F8FAFC; border:1px dashed var(--border-color); border-radius:var(--radius-md); margin-bottom:1.25rem;">
+              <img id="previewLogoImg" src="" alt="Pratinjau Logo" style="width:70px; height:70px; object-fit:cover; border-radius:var(--radius-sm); margin-bottom:0.75rem; border:1px solid #CBD5E1;">
+              <h5 id="previewSchoolName" style="font-weight:800; font-size:1rem; line-height:1.2; margin-bottom:0.25rem;">-</h5>
+              <span id="previewAcademicYear" style="font-size:0.75rem; font-weight:700; color:var(--primary); display:block; margin-bottom:0.5rem;">-</span>
+              <p id="previewSlogan" style="font-size:0.8rem; color:var(--text-muted); line-height:1.4;">-</p>
+            </div>
+
+            <h4 style="font-size:0.9rem; font-weight:800; margin-bottom:0.75rem; color:var(--text-main);">
+              Pratinjau Ikon 4 Card STEM
+            </h4>
+            <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.5rem; text-align:center; font-size:0.75rem;">
+              <div style="padding:0.6rem; background:var(--stem-sci-bg); border-radius:var(--radius-sm); border:1px solid #A7F3D0;">
+                <div id="previewIconSci" style="width:36px; height:36px; margin:0 auto 0.25rem; display:flex; align-items:center; justify-content:center; color:var(--stem-sci); font-size:1.2rem;">
+                  <i class="fa-solid fa-flask-vial"></i>
+                </div>
+                <strong>Science</strong>
+              </div>
+              <div style="padding:0.6rem; background:var(--stem-tec-bg); border-radius:var(--radius-sm); border:1px solid #BAE6FD;">
+                <div id="previewIconTec" style="width:36px; height:36px; margin:0 auto 0.25rem; display:flex; align-items:center; justify-content:center; color:var(--stem-tec); font-size:1.2rem;">
+                  <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <strong>Technology</strong>
+              </div>
+              <div style="padding:0.6rem; background:var(--stem-eng-bg); border-radius:var(--radius-sm); border:1px solid #FDE68A;">
+                <div id="previewIconEng" style="width:36px; height:36px; margin:0 auto 0.25rem; display:flex; align-items:center; justify-content:center; color:var(--stem-eng); font-size:1.2rem;">
+                  <i class="fa-solid fa-gears"></i>
+                </div>
+                <strong>Engineering</strong>
+              </div>
+              <div style="padding:0.6rem; background:var(--stem-mat-bg); border-radius:var(--radius-sm); border:1px solid #DDD6FE;">
+                <div id="previewIconMat" style="width:36px; height:36px; margin:0 auto 0.25rem; display:flex; align-items:center; justify-content:center; color:var(--stem-mat); font-size:1.2rem;">
+                  <i class="fa-solid fa-calculator"></i>
+                </div>
+                <strong>Mathematics</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================================================================
+           TAB 3: PANDUAN PENGATURAN & PENGGUNAAN ADMIN
+           ================================================================== -->
+      <div class="admin-tab-pane" id="tab-admin-guide">
+        <div class="admin-pane-header">
+          <div class="admin-pane-title">
+            <h2>Panduan Pengaturan & Penggunaan Admin</h2>
+            <p>Petunjuk operasional lengkap untuk pengelola sistem dan guru koordinator STEM.</p>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:1.25rem; max-width:860px;">
+          
+          <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
+            <h3 style="font-size:1.1rem; font-weight:800; color:var(--text-main); margin-bottom:0.5rem;">
+              <i class="fa-brands fa-google-drive" style="color:#10B981;"></i> 1. Cara Mengambil URL Logo dari Google Drive
+            </h3>
+            <p style="font-size:0.875rem; color:var(--text-muted); line-height:1.6; margin-bottom:0.75rem;">
+              Jika logo sekolah atau gambar kartu disimpan di Google Drive, lakukan langkah berikut agar gambar dapat tampil secara publik:
+            </p>
+            <ol style="font-size:0.875rem; color:#334155; line-height:1.7; padding-left:1.25rem;">
+              <li>Upload gambar logo ke Google Drive.</li>
+              <li>Klik kanan pada file gambar &gt; <strong>Bagikan (Share)</strong> &gt; ubah Akses Umum menjadi <strong>"Siapa saja yang memiliki link" (Anyone with link)</strong>.</li>
+              <li>Salin ID file dari link tersebut (contoh link: <code>https://drive.google.com/file/d/<strong>1A2B3C4D5E6F</strong>/view?usp=sharing</code>).</li>
+              <li>Ubah format link menjadi direct download link: <br>
+                <code style="background:#F1F5F9; padding:0.2rem 0.5rem; border-radius:4px; font-weight:700; color:#2563EB;">https://drive.google.com/uc?export=view&id=<strong>ID_FILE_ANDA</strong></code>
+              </li>
+              <li>Tempelkan format link tersebut ke kolom URL Logo di Pengaturan Admin.</li>
+            </ol>
+          </div>
+
+          <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
+            <h3 style="font-size:1.1rem; font-weight:800; color:var(--text-main); margin-bottom:0.5rem;">
+              <i class="fa-solid fa-link" style="color:var(--primary);"></i> 2. Standar Format Tautan Media Interaktif
+            </h3>
+            <ul style="font-size:0.875rem; color:#334155; line-height:1.7; padding-left:1.25rem;">
+              <li><strong>Video YouTube:</strong> Gunakan link watch biasa atau link pendek (misal: <code>https://www.youtube.com/watch?v=...</code>).</li>
+              <li><strong>Simulasi Sains / Matematika PhET:</strong> Salin link langsung simulasi HTML5 dari <em>phet.colorado.edu</em>.</li>
+              <li><strong>Simulasi Coding Blockly / Scratch:</strong> Gunakan tautan project online (misal: <code>https://blockly.games/maze</code>).</li>
+              <li><strong>Dokumen / PDF Panduan Praktikum:</strong> Simpan file PDF di Google Drive dengan akses <em>Anyone with link</em>.</li>
+            </ul>
+          </div>
+
+          <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
+            <h3 style="font-size:1.1rem; font-weight:800; color:var(--text-main); margin-bottom:0.5rem;">
+              <i class="fa-solid fa-table" style="color:#059669;"></i> 3. Mengelola Materi Massal Langsung di Google Sheets
+            </h3>
+            <p style="font-size:0.875rem; color:var(--text-muted); line-height:1.6;">
+              Anda dapat mengedit atau mengimpor ratusan materi sekaligus langsung melalui lembar <strong>Google Spreadsheet</strong> yang terhubung pada sheet <code>Materi</code>. Kolom yang tersedia:
+            </p>
+            <div style="background:#F1F5F9; padding:0.75rem 1rem; border-radius:var(--radius-md); font-family:monospace; font-size:0.8rem; margin-top:0.5rem; overflow-x:auto;">
+              id | stem_category | title | grade | media_type | media_url | thumbnail_url | description | mission_goals | mission_steps | mission_reflection | created_at
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==================================================================
+           TAB 4: STEP DEPLOY & KODE GAS
+           ================================================================== -->
+      <div class="admin-tab-pane" id="tab-deploy-gas">
+        <div class="admin-pane-header">
+          <div class="admin-pane-title">
+            <h2>Panduan Deploy Web App ke Google Apps Script</h2>
+            <p>Langkah mudah menerbitkan aplikasi ini secara gratis menggunakan akun Google Anda.</p>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:1.25rem; max-width:860px;">
+          
+          <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
+            <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.5rem;"><i class="fa-solid fa-list-check" style="color:var(--primary);"></i> 4 Langkah Deploy Mudah:</h4>
+            <ol style="font-size:0.875rem; color:#334155; line-height:1.8; padding-left:1.25rem;">
+              <li>Buka <a href="https://sheets.new" target="_blank" style="color:var(--primary); font-weight:700;">Google Spreadsheet Baru</a> di browser Anda dan beri nama (misal: <em>Database Portal STEM</em>).</li>
+              <li>Pada menu atas Spreadsheet, klik menu <strong>Ekstensi (Extensions)</strong> &gt; pilih <strong>Apps Script</strong>.</li>
+              <li>Di dalam editor Apps Script buat berkas berikut:
+                <ul>
+                  <li>File Script: <code>Code.gs</code></li>
+                  <li>File HTML: <code>index</code>, <code>admin</code>, <code>styles</code>, dan <code>scripts</code></li>
+                </ul>
+              </li>
+              <li>Klik tombol biru <strong>Terapkan (Deploy)</strong> &gt; pilih <strong>Penerapan Baru (New Deployment)</strong>:
+                <ul>
+                  <li>Jenis: <strong>Aplikasi Web (Web App)</strong>.</li>
+                  <li>Jalankan sebagai: <strong>Saya (Me)</strong>.</li>
+                  <li>Siapa yang memiliki akses: <strong>Siapa saja (Anyone)</strong>.</li>
+                  <li>Klik <strong>Deploy</strong> dan salin URL Web App yang dihasilkan!</li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+
+          <!-- Box Kode Code.gs -->
+          <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
+              <h4 style="font-size:0.95rem; font-weight:800;"><i class="fa-solid fa-code"></i> Kode Backend (Code.gs)</h4>
+              <button class="nav-btn primary" style="font-size:0.78rem; padding:0.35rem 0.8rem;" onclick="copyBackendCode()">
+                <i class="fa-solid fa-copy"></i> Salin Code.gs
+              </button>
+            </div>
+            <textarea id="codeGsSource" readonly class="code-box-display" style="width:100%; height:160px; resize:none;"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+  </div>
+</div>
+
+<!-- ========================================================================
+     MODAL: FORM TAMBAH / EDIT SUB-CARD MATERI
+     ======================================================================== -->
+<div class="modal-backdrop" id="materialFormModal">
+  <div class="modal-container" style="max-width: 660px;">
+    <div class="modal-header">
+      <div class="modal-header-title">
+        <i class="fa-solid fa-pen-to-square" style="color:var(--primary);"></i>
+        <span id="materialFormModalTitle">Tambah Sub-Card Materi STEM</span>
+      </div>
+      <button class="modal-close-btn" onclick="closeMaterialFormModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="modal-body">
+      <input type="hidden" id="formMaterialId">
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">Bidang STEM *</label>
+          <select id="formStemCategory" class="form-control">
+            <option value="Science">Science (Sains Alam)</option>
+            <option value="Technology">Technology (Teknologi)</option>
+            <option value="Engineering">Engineering (Rekayasa)</option>
+            <option value="Mathematics">Mathematics (Matematika)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Jenjang Kelas *</label>
+          <select id="formGrade" class="form-control">
+            <option value="1">Kelas 1</option>
+            <option value="2">Kelas 2</option>
+            <option value="3">Kelas 3</option>
+            <option value="4">Kelas 4</option>
+            <option value="5">Kelas 5</option>
+            <option value="6">Kelas 6</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Judul Materi *</label>
+        <input type="text" id="formTitle" class="form-control" placeholder="Contoh: Petualangan Daur Hidup Kupu-kupu">
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">Jenis Media *</label>
+          <select id="formMediaType" class="form-control">
+            <option value="Video">Video Interaktif</option>
+            <option value="Simulasi">Simulasi / Game</option>
+            <option value="Praktikum">Praktikum / Percobaan</option>
+            <option value="Dokumen">Dokumen / PDF</option>
+            <option value="Artikel">Artikel / Cerita</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">URL Tautan Media Pembelajaran *</label>
+          <input type="url" id="formMediaUrl" class="form-control" placeholder="https://youtube.com/... atau https://phet...">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">URL Gambar Thumbnail</label>
+        <input type="url" id="formThumbnailUrl" class="form-control" placeholder="https://images.unsplash.com/... atau tautan gambar">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Deskripsi Singkat</label>
+        <textarea id="formDescription" class="form-control" placeholder="Deskripsi menarik untuk menarik minat siswa membaca..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label"><i class="fa-solid fa-bullseye" style="color:var(--stem-sci);"></i> Tujuan Pembelajaran Siswa</label>
+        <textarea id="formMissionGoals" class="form-control" placeholder="1. Mengenal...\n2. Memahami..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label"><i class="fa-solid fa-list-check" style="color:var(--stem-tec);"></i> Langkah Misi / Tantangan Praktikum</label>
+        <textarea id="formMissionSteps" class="form-control" placeholder="1. Tonton video...\n2. Ambil bahan...\n3. Catat hasil pengamatanmu..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label"><i class="fa-solid fa-circle-question" style="color:var(--stem-mat);"></i> Pertanyaan Refleksi Cepat</label>
+        <textarea id="formMissionReflection" class="form-control" placeholder="Mengapa hal tersebut dapat terjadi? Apa yang kamu rasakan setelah mencoba?"></textarea>
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button class="nav-btn primary" onclick="submitMaterialForm()">
+        <i class="fa-solid fa-check"></i> Simpan Materi
+      </button>
+      <button class="nav-btn" onclick="closeMaterialFormModal()">Batal</button>
+    </div>
+  </div>
+</div>

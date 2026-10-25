@@ -1,66 +1,60 @@
 # 🧪 Walkthrough & Panduan Verifikasi: Portal Web STEM Sekolah Berbasis Google Apps Script
 
-Dokumen ini berisi panduan pengujian dan bukti verifikasi fungsional untuk **Portal Pembelajaran STEM Sekolah** berbasis Google Apps Script (GAS).
+Dokumen ini berisi panduan pengujian dan bukti verifikasi fungsional untuk **Portal Pembelajaran STEM Sekolah** versi modular 2-tampilan.
 
 ---
 
 ## 🧭 User Testing Journey
 
-### 1. Pengujian Tampilan Publik & Responsivitas Mobile (2 Card / Baris)
-- [x] **Langkah 1**: Buka file [index.html](file:///f:/repository/stemsites/index.html) di browser (cukup klik dua kali atau buka via file explorer).
-- [x] **Langkah 2**: Periksa Header Identitas Sekolah (Logo, Nama Sekolah "SD NEGERI HARAPAN BANGSA", Tahun Ajaran, Slogan).
-- [x] **Langkah 3**: Buka *Developer Tools* browser (F12 atau Ctrl+Shift+I) lalu beralih ke mode Device/Mobile (layar iPhone/Android < 768px).
-- [x] **Hasil yang Diharapkan**: Ke-4 Card Utama STEM (**Science**, **Technology**, **Engineering**, **Mathematics**) tampil rapi dalam formasi **2 kartu dalam 1 baris (grid 2 kolom)** tanpa ada horizontal overflow liar.
-
-### 2. Pengujian Filter Kategori STEM & Grid Sub-Card Materi
-- [x] **Langkah 1**: Klik pada kartu **Science**.
+### 1. Pengujian Beranda Publik Bersih & Responsivitas Mobile (2 Card / Baris)
+- [x] **Langkah 1**: Buka file [index.html](file:///f:/repository/stemsites/index.html) di browser.
 - [x] **Hasil yang Diharapkan**:
-  - Kartu Science menjadi aktif (terdapat border/glow hijau).
-  - Tampilan otomatis bergulir ke grid materi dan memfilter hanya materi bertema Science.
-  - Tag filter aktif muncul di atas grid dengan tombol silang (x) untuk membatalkan.
-- [x] **Langkah 2**: Klik tombol **Kelas 2** pada filter jenjang.
-- [x] **Hasil yang Diharapkan**: Grid materi menyaring konten Science khusus Kelas 2 ("Petualangan Daur Hidup Kupu-kupu Menakjubkan").
-- [x] **Langkah 3**: Ketik kata kunci pada kolom pencarian (misal: "kupu-kupu").
-- [x] **Hasil yang Diharapkan**: Hasil pencarian menyaring materi secara *real-time*.
+  - Tampilan beranda sangat bersih dan terarah: memuat Identitas Sekolah, Hero Banner, caption pemantik, dan 4 Card Utama STEM.
+  - Sub-materi sama sekali **TIDAK** tampil di halaman beranda.
+- [x] **Langkah 2**: Buka *Developer Tools* browser (F12) lalu aktifkan mode Mobile/Responsive (< 768px).
+- [x] **Hasil yang Diharapkan**:
+  - Elemen `.hero-meta-bar` (Khusus Siswa, Belajar Mandiri, dll.) **otomatis disembunyikan** sehingga hero banner rapi dan ringkas.
+  - 4 Card Utama STEM tampil presisi dalam formasi **2 card dalam 1 baris (grid 2 kolom)** tanpa overflow horizontal.
+
+### 2. Pengujian Halaman Khusus Sub-Kategori STEM (2-View Routing)
+- [x] **Langkah 1**: Klik pada kartu **Science** di beranda.
+- [x] **Hasil yang Diharapkan**:
+  - Halaman beranda otomatis berganti menjadi **Halaman Khusus Sub-Kategori Science**.
+  - **4 Card Utama STEM sudah tidak ditampilkan lagi** di halaman ini.
+  - Terdapat tombol **"⬅️ Kembali ke Kategori Utama STEM"** di bagian atas.
+  - Muncul banner kategori Science dengan warna tema hijau emerald dan ikon/logo terkait.
+  - Filter Jenjang Kelas 1-6, filter Media, dan kolom pencarian muncul khusus untuk materi Science.
+  - Hanya materi Science yang tampil pada grid di bawahnya.
+- [x] **Langkah 2**: Klik tombol **"⬅️ Kembali ke Kategori Utama STEM"**.
+- [x] **Hasil yang Diharapkan**:
+  - Tampilan kembali mulus ke **Beranda Utama** yang bersih dengan 4 Card Utama STEM.
 
 ### 3. Pengujian Jendela Pop-up "Misi Eksplorasi Siswa"
-- [x] **Langkah 1**: Pada kartu materi, klik tombol **"Mulai Eksplorasi 🚀"**.
+- [x] **Langkah 1**: Buka salah satu kategori STEM (misal: *Technology*), lalu klik tombol **"Mulai Eksplorasi 🚀"** pada kartu materi "Logika Coding Dasar".
 - [x] **Hasil yang Diharapkan**:
-  - Muncul modal interaktif Misi Eksplorasi Siswa.
-  - Memuat *Tujuan Pembelajaran*, *Langkah Misi/Praktikum Seru*, *Tombol Buka Media Pembelajaran*, dan *Pertanyaan Refleksi Cepat*.
-  - Mengklik tombol *"Misi Selesai & Paham! 🌟"* memunculkan pesan selamat dan menutup modal secara elegan.
+  - Modal pop-up Misi Eksplorasi Siswa terbuka.
+  - Menampilkan Tujuan Pembelajaran, Langkah Praktikum, Tombol Buka Simulasi (Blockly Games), dan Pertanyaan Refleksi.
+  - Mengklik *"Misi Selesai & Paham! 🌟"* memunculkan toast perayaan dan menutup modal.
 
 ### 4. Pengujian Panduan Penggunaan User Umum
 - [x] **Langkah 1**: Klik menu **"Panduan Pengguna"** di navbar atas.
 - [x] **Hasil yang Diharapkan**:
-  - Modal panduan terbuka dengan 4 tab interaktif:
-    - 🎒 **Siswa SD**: 4 langkah mudah memilih Card STEM, filter kelas, buka materi, dan jalankan misi.
-    - 👨‍👩‍👧 **Orang Tua / Wali**: Panduan mendampingi anak belajar tanpa login.
-    - 👩‍🏫 **Guru Kelas**: Pemanfaatan materi sebagai apersepsi kurikulum merdeka.
-    - ❓ **Tanya Jawab (FAQ)**: Solusi kendala teknis akordion interaktif.
+  - Modal panduan terbuka dengan 4 tab: Siswa SD, Orang Tua, Guru Kelas, dan FAQ.
 
-### 5. Pengujian Keamanan PIN Admin & Navigasi Sidemenu
-- [x] **Langkah 1**: Klik tombol **"Masuk Admin"** di pojok kanan atas.
-- [x] **Langkah 2**: Klik tombol instan **"Isi PIN Demo (123456)"**, lalu klik **"Masuk Admin"**.
+### 5. Pengujian Halaman Admin & Kustomisasi Logo Kategori STEM
+- [x] **Langkah 1**: Klik tombol **"Masuk Admin"** di navbar > klik **"Isi PIN Demo (123456)"** > klik **Masuk Admin**.
+- [x] **Langkah 2**: Di Sidemenu Admin, pilih Tab **"Pengaturan Logo & Sekolah"**.
 - [x] **Hasil yang Diharapkan**:
-  - Autentikasi berhasil dan langsung masuk ke **Dashboard Admin STEM** dengan layout **Sidemenu (Sidebar)**.
-  - Pada layar mobile, sidemenu otomatis tersembunyi sebagai *off-canvas drawer* yang dapat dibuka dengan tombol toggle hamburger.
-- [x] **Langkah 3 (Tab 1: Kelola Card Materi CRUD)**:
-  - Coba klik **"Tambah Sub-Card Baru"**, isi data, dan klik Simpan. Materi baru langsung muncul di tabel dan portal utama.
-  - Coba tombol **Edit** (ikon pensil) dan **Hapus** (ikon tempat sampah).
-- [x] **Langkah 4 (Tab 2: Pengaturan Logo & Sekolah)**:
-  - Ubah nama sekolah atau slogan, perhatikan kotak **Live Preview** yang langsung berubah seketika.
-- [x] **Langkah 5 (Tab 3: Panduan Admin)**:
-  - Memuat instruksi konversi link logo dari Google Drive (`uc?export=view`), format link media interaktif (YouTube, PhET, Google Docs PDF), dan manajemen spreadsheet massal.
-- [x] **Langkah 6 (Tab 4: Step Deploy & Kode GAS)**:
-  - Memuat petunjuk 4 langkah deploy ke akun Google dan tombol satu-klik **"Salin Seluruh Code.gs"** dan **"Salin Seluruh index.html"**.
+  - Terdapat form identitas sekolah dan form baru: **Kustomisasi Logo / Gambar 4 Kategori STEM** (Science, Technology, Engineering, Mathematics).
+  - Terdapat kotak **Live Preview** yang menampilkan pratinjau instan identitas sekolah dan 4 ikon/logo kategori STEM secara *real-time*.
+- [x] **Langkah 3**: Di Tab **"Kelola Card Materi"**, coba fungsi Tambah, Edit, dan Hapus materi.
+- [x] **Langkah 4**: Di Tab **"Step Deploy & Kode GAS"**, periksa panduan deploy modular untuk berkas `index`, `admin`, `styles`, `scripts`, dan `Code.gs`.
 
 ---
 
-## 🛡️ Bukti Verifikasi Teknis (Technical Evidence)
-1. **Pemisahan Logika & Backend**:
-   - Berkas [Code.gs](file:///f:/repository/stemsites/Code.gs) dirancang mengikuti standar GAS V8 Engine, mengelola operasi database Google Sheets dengan validasi otentikasi PIN sebelum aksi mutasi data (`saveMaterial`, `deleteMaterial`, `updateSettings`).
-2. **Kemandirian Standalone & Dual-Engine**:
-   - Berkas [index.html](file:///f:/repository/stemsites/index.html) mendeteksi keberadaan objek `google.script.run`. Jika dijalankan di browser lokal/offline, sistem beralih otomatis ke *Mock Engine LocalStorage* sehingga tidak terjadi error putus koneksi.
-3. **Pemberian Izin & Manifest**:
-   - Berkas [appsscript.json](file:///f:/repository/stemsites/appsscript.json) terkonfigurasi dengan zona waktu `Asia/Jakarta`, runtime `V8`, dan hak akses webapp publik (`executeAs: USER_DEPLOYING`, `access: ANYONE`).
+## 🛡️ Bukti Pemisahan Berkas Modular
+- [style.css](file:///f:/repository/stemsites/style.css) & [styles.html](file:///f:/repository/stemsites/styles.html): Modular CSS.
+- [app.js](file:///f:/repository/stemsites/app.js) & [scripts.html](file:///f:/repository/stemsites/scripts.html): Modular JavaScript.
+- [admin.html](file:///f:/repository/stemsites/admin.html): Modular Admin View & Form.
+- [index.html](file:///f:/repository/stemsites/index.html): Modular Public Page Template.
+- [Code.gs](file:///f:/repository/stemsites/Code.gs): Backend Google Apps Script dengan fungsi `include()`.
