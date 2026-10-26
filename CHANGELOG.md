@@ -11,7 +11,9 @@ Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https:/
 - **Tipografi Judul Navbar Proporsional**:
   - Menyesuaikan ukuran font judul navbar admin menjadi `0.82rem` dengan `white-space: nowrap !important; text-overflow: ellipsis;` agar seimbang dan nyaman dipandang.
 - **Perampingan Tombol Navigasi Portal**:
-  - Mengubah label tombol menjadi *"Portal Siswa"* dengan padding kompak (`0.35rem 0.55rem`) dan font `0.72rem`, menjaga keterbacaan tinggi tanpa memakan ruang berlebih.
+- **Pembaruan Dokumen Proposal Sesuai Status Riil Sistem (v1.4.3 Siap Pakai)**:
+  - Memutakhirkan dokumen [PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md](file:///f:/repository/stemsites/docs/01-proposals/PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md) agar mencerminkan 100% kapabilitas sistem yang telah selesai dikembangkan (portal siswa 2 kolom, selektor kelas 1-6 SD, dashboard admin mandiri, filter 1 baris, bottom action buttons, self-deployment hub 7 langkah, dan interactive code viewer 5 berkas).
+  - Menghilangkan bagian rencana pengembangan masa depan (*future roadmap*) dan memfokuskan penawaran investasi pada paket lisensi kode sumber, pemasangan di akun Google sekolah, kustomisasi identitas, dan pelatihan guru.
 
 ---
 
