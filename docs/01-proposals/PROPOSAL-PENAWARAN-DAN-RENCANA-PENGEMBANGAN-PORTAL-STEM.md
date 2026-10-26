@@ -4,7 +4,7 @@
 
 ---
 
-**Nomor Dokumen**: `PROP-STEM/2026/X/002`  
+**Nomor Dokumen**: `PROP-STEM/2026/X/002-REV1`  
 **Tanggal**: 26 Oktober 2026  
 **Status**: Proposal Resmi & Dokumen Spesifikasi Sistem Siap Pakai  
 **Disusun Oleh**: Tim Rekayasa Perangkat Lunak & Konsultan EdTech (Virtual Engineering Team)  
@@ -27,7 +27,7 @@ Penerapan pendekatan **STEM (*Science, Technology, Engineering, Mathematics*)** 
 4. **Desain Mobile-First & Ergonomis**:  
    Antarmuka beranda mengadopsi formasi 2 kolom kartu STEM yang seimbang di ponsel, filter 1 baris kompak, serta penempatan tombol aksi di bawah formulir demi kemudahan jangkauan jempol pengguna di perangkat bergerak.
 
-Dokumen ini memaparkan **Spesifikasi Teknis Sistem Saat Ini (v1.4.3)**, **Struktur Arsitektur**, **Alur Pemasangan (*Deployment*)**, serta **Rincian Paket Penawaran Serah Terima & Implementasi Sistem** secara transparan.
+Dokumen ini memaparkan **Spesifikasi Teknis Sistem Saat Ini (v1.4.3)**, **Ruang Lingkup Aplikasi (*Scope of Work*)**, **Rincian Estimasi Biaya Berdasarkan Peran & Fitur (Anggaran Rp 3.500.000,-)**, serta **Alur Pelaksanaan dan Serah Terima Sistem**.
 
 ---
 
@@ -82,47 +82,108 @@ Platform terdiri atas 5 berkas inti yang terstruktur secara bersih:
 
 ---
 
-## 2. Fitur & Kapabilitas Sistem Saat Ini (Rilis v1.4.3)
+## 2. Ruang Lingkup Aplikasi (*Scope of Work*)
 
-Sistem telah rampung dikembangkan, diuji, dan diverifikasi dengan fitur-fitur operasional berikut:
+Untuk memberikan kepastian batasan teknis dan hasil kerja (*deliverables*), ruang lingkup aplikasi dirumuskan secara tegas:
 
-### 2.1 Modul Portal Pembelajaran Siswa
-- **Formasi 2 Kolom Kartu STEM Ramah Ponsel**: 4 Pilar Utama STEM (*Science, Technology, Engineering, Mathematics*) disajikan dalam formasi kartu 2 kolom yang padat dan menarik di smartphone, meminimalkan kebutuhan menggulir (*scrolling*).
-- **Penguncian Jenjang Kelas (*Grade-Locking Selector*)**: Siswa dapat memilih jenjang kelas (Kelas 1 hingga Kelas 6 SD) untuk secara instan memfilter materi yang relevan dengan kurikulum tingkatannya.
-- **Modal Misi Eksplorasi Interaktif**: Setiap sub-card materi dilengkapi jendela misi belajar terstruktur:
-  - *Tujuan Pembelajaran*: Poin capaian kompetensi dasar yang ringkas.
-  - *Langkah Praktikum*: Panduan aktivitas mandiri langkah-demi-langkah.
-  - *Media Interaktif*: Tautan video pembelajaran dan tombol simulasi langsung (mendukung PhET Interactive Simulations, Blockly Games, Google Earth, YouTube Kids, dll.).
-  - *Pertanyaan Refleksi*: Kolom evaluasi mandiri untuk memicu nalar kritis siswa.
-- **Desain Universal Bebas Distraksi**: Tipografi ramah anak, tombol sentuh berukuran proporsional (*minimum 44x44px*), dan performa *rendering* instan tanpa *loading* berat.
+```mermaid
+graph LR
+    subgraph InScope["Ruang Lingkup Termasuk (IN-SCOPE)"]
+        I1["Portal Siswa: 4 Pilar STEM, 2 Kolom Mobile, Filter Kelas 1-6"]
+        I2["Modal Misi Eksplorasi: Panduan Praktikum, Video, Simulasi PhET/Blockly"]
+        I3["Dashboard Admin Guru: PIN Guard, CRUD Materi, Filter 1 Baris"]
+        I4["Ergonomi Mobile: Topbar 1 Baris, Tombol Aksi di Bawah Form"]
+        I5["Kustomisasi: Logo Sekolah & Logo 4 STEM dengan Live Preview"]
+        I6["Pusat Panduan Deploy: Panduan 7 Langkah & Penampil 5 Berkas"]
+        I7["Dual Mode: Online Google Apps Script & Offline Standalone"]
+        I8["Instalasi Akun Sekolah, Input Materi Awal, Pelatihan & Garansi 3 Bulan"]
+    end
 
-### 2.2 Modul Dashboard Manajemen Guru & Administrator
-- **Autentikasi PIN Keamanan Terpadu**: Dilindungi PIN admin (PIN Demo `123456` bawaan yang dapat diganti sewaktu-waktu oleh sekolah melalui formulir pengaturan).
-- **Topbar Admin 1 Baris Penuh (*No-Wrap Topbar*)**: Seluruh elemen navigasi atas (toggle sidemenu, judul panel, dan tombol kembali ke portal siswa) terkunci rapi dalam 1 baris horizontal di seluruh resolusi layar ponsel (360px–480px).
-- **Manajemen Materi Praktikum STEM (CRUD Lengkap)**:
-  - Guru dapat **Menambah**, **Mengedit**, dan **Menghapus** konten kartu materi STEM secara visual.
-  - Metadata lengkap: Kategori STEM, Judul, Jenjang Kelas (1–6 / Semua Kelas), URL Thumbnail, Panduan Langkah, Tautan Video, Tautan Simulasi, dan Refleksi.
-- **Filter Tabel 1 Baris Kompak**:
-  - Kolom pencarian kata kunci, dropdown Kategori STEM, dan dropdown Jenjang Kelas tersusun sejajar dalam 1 baris horizontal responsif, menghemat ruang layar vertikal hingga 65%.
-- **Ergonomi Akses Ponsel (*Thumb-Zone Friendly*)**:
-  - Tombol aksi utama (`+ Tambah Sub-Card Baru`) diletakkan di bawah baris filter.
-  - Tombol aksi `Simpan Pengaturan` diletakkan di bawah formulir pengaturan, memudahkan guru menyelesaikan pengisian data menggunakan jempol di ponsel tanpa perlu menggulir kembali ke atas.
-- **Kustomisasi Identitas & Logo Sekolah Terpadu**:
-  - Nama Sekolah, Tahun Ajaran Aktif, Slogan Sekolah, dan Nomor WhatsApp Bantuan.
-  - Kustomisasi tautan Logo Utama Sekolah dan logo khusus untuk masing-masing dari 4 kategori STEM.
-  - *Live Preview Panel*: Pratinjau visual perubahan logo dan identitas secara waktu-nyata (*real-time*) sebelum disimpan.
+    subgraph OutScope["Di Luar Ruang Lingkup (OUT-OF-SCOPE)"]
+        O1["Pengadaan Perangkat Keras Fisik (Smartphone, Laptop, Tablet Siswa)"]
+        O2["Penyediaan Koneksi Internet / Jaringan Wi-Fi Sekolah"]
+        O3["Integrasi Sistem Pembayaran Berbayar (Payment Gateway)"]
+        O4["Modifikasi Akun Domain Berbayar Pihak Ketiga di Luar Google"]
+    end
+```
 
-### 2.3 Modul Panduan Deploy Mandiri & Interactive Code Viewer
-- **Panduan Penerapan 7 Langkah (*Self-Deployment Hub*)**: Panduan bergambar terstruktur langsung di dalam panel admin yang memandu guru menghubungkan spreadsheet dan mempublikasikan web app ke Google Apps Script.
-- **Penampil Kode Sumber 5 Berkas Interaktif**: Menyajikan kode sumber lengkap dari 5 berkas sistem (`Code.gs`, `index.html`, `styles.html`, `admin.html`, `scripts.html`) lengkap dengan tombol **"Salin Kode"** 1-klik (*copy to clipboard*).
+### 2.1 Batasan Pekerjaan Termasuk (*In-Scope Deliverables*)
+1. **Modul Portal Pembelajaran Siswa**:
+   - Tampilan beranda interaktif dengan kartu 4 pilar STEM (Science, Technology, Engineering, Mathematics) formasi 2 kolom ponsel.
+   - Selektor jenjang kelas (*Grade-Locking Mechanism*) Kelas 1 hingga Kelas 6 SD.
+   - Jendela modal misi eksplorasi (Tujuan Pembelajaran, Langkah Praktikum, Tautan Media Video & Simulasi PhET/Blockly/Games, serta Refleksi).
+2. **Modul Dashboard Manajemen Guru & Keamanan**:
+   - Autentikasi PIN Keamanan Admin (PIN demo default `123456` dan fitur ganti PIN baru).
+   - Topbar admin terkunci 1 baris horizontal (*single-row no-wrap*) di ponsel.
+   - Manajemen Konten Sub-Card Materi STEM (CRUD: Tambah, Edit, Hapus) dengan filter tabel 1 baris kompak.
+   - Penempatan tombol aksi di bawah formulir/filter (*thumb-zone ergonomics*).
+   - Kustomisasi profil sekolah (Nama, Tahun Ajaran, Slogan, No. WhatsApp Bantuan) dan logo sekolah serta logo khusus 4 pilar STEM dengan *Live Preview*.
+3. **Pusat Penerapan Mandiri (*Self-Deployment Hub*)**:
+   - Panduan 7 langkah deploy langsung di panel admin.
+   - Penampil kode sumber interaktif (*Interactive Code Viewer*) untuk 5 berkas sumber dengan tombol salin 1-klik (*copy to clipboard*).
+4. **Layanan Pemasangan, Pelatihan & Garansi**:
+   - Pemasangan langsung (*setup/deployment*) ke akun Google resmi sekolah.
+   - Konfigurasi pangkalan data Google Sheets sekolah.
+   - Input data materi awal kurikulum STEM sekolah (12 materi percontohan).
+   - 1 sesi pelatihan daring bagi guru dan staf IT sekolah (durasi 2 jam).
+   - Masa garansi perbaikan bebas bug (*free bug-fixing*) selama 3 bulan penuh.
 
-### 2.4 Dukungan Dual-Mode (Online GAS & Offline Standalone)
-- **Mode Cloud GAS**: Berjalan terintegrasi dengan Google Sheets sebagai basis data awan.
-- **Mode Offline Standalone**: Berkas `admin.html` dan `index.html` dapat dibuka langsung di peramban secara lokal tanpa kendala blokir CORS (*Cross-Origin Resource Sharing*), didukung skrip web server lokal ringan (`server.js`).
+### 2.2 Batasan di Luar Pekerjaan (*Out-of-Scope*)
+- Pengadaan perangkat keras fisik (*hardware*) seperti smartphone, tablet, komputer, atau proyektor.
+- Penyediaan paket kuota data internet atau infrastruktur jaringan Wi-Fi sekolah.
+- Integrasi sistem pembayaran komersial / *payment gateway* (portal dirancang murni non-komersial untuk edukasi siswa).
 
 ---
 
-## 3. Analisis Efisiensi Biaya (TCO - Total Cost of Ownership)
+## 3. Rincian Estimasi Biaya Berdasarkan Peran & Fitur
+
+Struktur estimasi investasi dirancang secara transparan, akuntabel, dan terukur berdasarkan alokasi peran tim rekayasa perangkat lunak serta komponen fitur aplikasi, dengan **Total Anggaran Tetap: Rp 3.500.000,- (Tiga Juta Lima Ratus Ribu Rupiah)**:
+
+### 3.1 Rincian Estimasi Biaya Berdasarkan Komponen Fitur Aplikasi
+
+| No | Modul & Komponen Fitur | Spesifikasi Pekerjaan & Deliverables | Bobot | Alokasi Biaya (IDR) |
+|:---:|---|---|:---:|:---:|
+| 1 | **Modul Frontend Portal Siswa** | Formasi 2 kolom mobile, selektor kelas 1–6 SD, modal misi praktikum terstruktur, integrasi simulasi PhET/Blockly/Video, fluid typography. | 24,3% | **Rp 850.000,-** |
+| 2 | **Modul Dashboard Admin Guru & Keamanan** | Autentikasi PIN guard, topbar mobile 1 baris, CRUD materi STEM, filter tabel 1 baris kompak, tombol aksi di bawah formulir (*thumb-zone*). | 27,1% | **Rp 950.000,-** |
+| 3 | **Modul Kustomisasi Sekolah & Backend GAS** | Integrasi Google Sheets database, otomatisasi skema tabel, kustomisasi logo & identitas sekolah dengan *live preview real-time*, mode offline standalone CORS-free. | 21,4% | **Rp 750.000,-** |
+| 4 | **Pusat Panduan Deploy & Interactive Code Viewer** | Panduan deploy 7 langkah bergambar di panel admin, penampil kode 5 berkas sumber (`Code.gs`, `index.html`, `styles.html`, `admin.html`, `scripts.html`), tombol salin 1-klik. | 12,9% | **Rp 450.000,-** |
+| 5 | **Quality Assurance, Pelatihan Guru & Garansi** | Pengujian responsivitas lintas perangkat (smartphone, tablet, laptop), sesi pelatihan daring guru (2 jam), panduan operasional PDF, dan garansi bug-free 3 bulan. | 14,3% | **Rp 500.000,-** |
+| **TOTAL** | **Seluruh Komponen Fitur Aplikasi** | **Sistem Lengkap Siap Pakai (v1.4.3 Ready-to-Use)** | **100%** | **Rp 3.500.000,-** |
+
+---
+
+### 3.2 Rincian Estimasi Biaya Berdasarkan Peran Tim Rekayasa Perangkat Lunak
+
+| No | Peran Spesialis Tim | Tanggung Jawab & Lingkup Tugas | Alokasi Waktu | Alokasi Biaya (IDR) |
+|:---:|---|---|:---:|:---:|
+| 1 | **Solution Architect & Project Lead** | Desain arsitektur serverless Google Apps Script, perancangan skema relasi Google Sheets, tata kelola keamanan PIN, dan supervisi integrasi. | 6 Jam | **Rp 900.000,-** |
+| 2 | **Senior Frontend & Mobile UI/UX Engineer** | Pengembangan CSS universal mobile-first, formasi 2 kolom kartu STEM, filter 1 baris kompak, topbar 1 baris no-wrap, dan ergonomi sentuh jempol. | 8 Jam | **Rp 1.050.000,-** |
+| 3 | **Backend & GAS Integration Specialist** | Logika mikro-servis `Code.gs`, routing web app `doGet`, serialisasi data Sheets API, penanganan offline CORS standalone, dan optimasi performa V8. | 6 Jam | **Rp 750.000,-** |
+| 4 | **EdTech Specialist & Curriculum Curator** | Kurasi 12 materi awal STEM ramah anak SD, penulisan langkah praktikum mandiri, serta kurasi tautan resmi simulasi PhET & video edukasi. | 4 Jam | **Rp 450.000,-** |
+| 5 | **QA Tester & Deployment Facilitator** | Uji coba fungsional lintas peramban/perangkat, penyusunan berkas panduan deploy, fasilitasi setup di akun sekolah, dan pemanduan sesi pelatihan guru. | 4 Jam | **Rp 350.000,-** |
+| **TOTAL** | **Virtual Engineering Team** | **Total Alokasi Tim Terintegrasi (28 Jam Kerja)** | **28 Jam** | **Rp 3.500.000,-** |
+
+---
+
+### 3.3 Skema Jadwal Pembayaran (*Payment Terms*)
+
+Pembayaran dibagi ke dalam 2 termin yang seimbang dan transparan:
+
+```mermaid
+graph LR
+    A["Persetujuan Proposal / SPK"] -->|"Termin I: DP 50%<br>(Rp 1.750.000,-)"| B["Pemasangan Akun Sekolah & Input Materi"]
+    B -->|"Verifikasi UAT & Pelatihan Guru"| C["Serah Terima 100% & Hak Akses Penuh"]
+    C -->|"Termin II: Pelunasan 50%<br>(Rp 1.750.000,-)"| D["Go-Live & Masa Garansi 3 Bulan"]
+```
+
+1. **Termin I (Uang Muka / Down Payment - 50%)**:  
+   Sebesar **Rp 1.750.000,-** dibayarkan saat penandatanganan lembar persetujuan proposal / penerbitan Surat Perintah Kerja (SPK).
+2. **Termin II (Pelunasan Akhir - 50%)**:  
+   Sebesar **Rp 1.750.000,-** dibayarkan setelah seluruh sistem berhasil terpasang di akun Google sekolah, berfungsi 100%, dan sesi pelatihan daring guru selesai dilaksanakan.
+
+---
+
+## 4. Analisis Efisiensi Biaya (TCO - Total Cost of Ownership)
 
 Perbandingan pengeluaran operasional infrastruktur sistem Portal STEM berbasis Google Apps Script dibandingkan sistem web konvensional selama 3 tahun operasional:
 
@@ -143,49 +204,24 @@ graph LR
     end
 ```
 
-> **Keuntungan Finansial Institusi**: Memilih arsitektur Google Apps Script mengeliminasi 100% beban biaya operasional server, menghemat kas sekolah **lebih dari Rp 30.000.000,-** selama 3 tahun masa pakai.
-
----
-
-## 4. Paket Penawaran Biaya Implementasi & Serah Terima Sistem
-
-Karena seluruh platform perangkat lunak **telah selesai dibangun dan berstatus siap pakai (v1.4.3)**, struktur penawaran difokuskan pada lisensi kode sumber, jasa penyiapan (*setup/deployment*) di akun Google sekolah, kustomisasi identitas, serta pelatihan guru:
-
-### 4.1 Matriks Paket Penawaran
-
-| Komponen Layanan & Serah Terima | Paket A: Mandiri (Source Code & Guide) | Paket B: Profesional (Setup Penuh & Kustomisasi) | Paket C: Enterprise (Pendampingan & Optimasi Penuh) |
-|---|:---:|:---:|:---:|
-| **Paket Kode Sumber Lengkap v1.4.3** (`Code.gs`, `index.html`, `styles.html`, `admin.html`, `scripts.html`) | ✅ Termasuk | ✅ Termasuk | ✅ Termasuk |
-| **Dokumen Panduan Deploy & Operasional Guru** | ✅ Termasuk | ✅ Termasuk | ✅ Termasuk |
-| **Pemasangan (*Setup*) Langsung di Akun Google Sekolah** | ❌ Mandiri | ✅ Ditangani Tim | ✅ Ditangani Tim |
-| **Konfigurasi Database Google Sheets Sekolah** | ❌ Mandiri | ✅ Ditangani Tim | ✅ Ditangani Tim |
-| **Kustomisasi Profil Sekolah, Logo & Nomor Bantuan** | ❌ Mandiri | ✅ Dikonfigurasi | ✅ Dikonfigurasi |
-| **Input Data Awal Materi STEM Kurikulum Sekolah** | ❌ Mandiri | ✅ 12 Materi Awal | ✅ 24 Materi Lengkap |
-| **Sesi Pelatihan Daring untuk Guru & Tim IT** | ❌ Tidak Ada | 1 Sesi (2 Jam) | 2 Sesi (Pendampingan Praktik) |
-| **Optimasi Tautan Media Google Drive Sekolah** | ❌ Tidak Ada | ✅ Termasuk | ✅ Termasuk |
-| **Masa Garansi & Pemeliharaan Bebas Bug** | 1 Bulan | 3 Bulan | 6 Bulan |
-| **Dukungan Konsultasi Teknis WhatsApp Group** | 1 Bulan | 3 Bulan | 6 Bulan |
-| **Estimasi Waktu Pemasangan & Go-Live** | **Instan (1 Hari)** | **2–3 Hari Kerja** | **3–5 Hari Kerja** |
-| **Total Investasi (IDR)** | **Rp 2.500.000,-** | **Rp 4.750.000,-** | **Rp 7.500.000,-** |
-
-*(Catatan: Harga di atas adalah tarif bersih / all-in jasa implementasi dan hak penggunaan kode sumber, **tanpa ada biaya berlangganan bulanan atau tahunan apa pun ke depannya**).*
+> **Keuntungan Finansial Institusi**: Memilih arsitektur Google Apps Script mengeliminasi 100% beban biaya operasional server, menghemat kas sekolah **lebih dari Rp 30.000.000,-** selama 3 tahun masa pakai. Total investasi Rp 3.500.000,- adalah biaya satu kali (*one-time fee*) tanpa biaya bulanan apa pun ke depannya.
 
 ---
 
 ## 5. Alur Pelaksanaan & Serah Terima (*Onboarding Workflow*)
 
-Karena sistem sudah berstatus siap pakai, proses penyiapan hingga peluncuran resmi di sekolah dapat diselesaikan dalam waktu sangat singkat:
+Karena perangkat lunak telah selesai dibangun dan teruji (v1.4.3), proses penerapan hingga peluncuran (*go-live*) di sekolah dapat diselesaikan dalam waktu **2 hingga 3 hari kerja**:
 
 ```
 Hari ke-1: Penyelarasan & Penyiapan Akun
 ├── Kick-off singkat via daring bersama perwakilan sekolah
-├── Penerimaan data identitas sekolah (Nama, Slogan, Logo, Nomor WhatsApp)
+├── Penerimaan data identitas sekolah (Nama, Slogan, Logo, Nomor WhatsApp Bantuan)
 └── Penyiapan Google Spreadsheet dan Google Drive di akun Google sekolah
 
 Hari ke-2: Deployment & Kustomisasi
 ├── Pemasangan skrip backend Code.gs dan berkas HTML di Google Apps Script sekolah
 ├── Konfigurasi hak akses web app (*Anyone with Google Account / Anyone*)
-├── Input materi praktikum awal dan pengujian fungsi tombol/simulasi
+├── Input 12 materi praktikum awal dan pengujian fungsi tombol/simulasi
 └── Penyesuaian PIN Admin sesuai permintaan pihak sekolah
 
 Hari ke-3: Verifikasi Bersama & Pelatihan
@@ -197,17 +233,15 @@ Hari ke-3: Verifikasi Bersama & Pelatihan
 
 ---
 
-## 6. Syarat & Ketentuan Pembayaran (*Commercial Terms*)
+## 6. Syarat & Ketentuan Layanan (*Service Terms*)
 
-1. **Jadwal Pembayaran**:
-   - **Uang Muka (Down Payment - 50%)**: Dibayarkan saat persetujuan proposal / penerbitan Surat Perintah Kerja (SPK).
-   - **Pelunasan (50%)**: Dibayarkan setelah sistem berhasil terpasang di akun Google sekolah, berfungsi 100%, dan sesi pelatihan selesai dilaksanakan.
-2. **Kebutuhan Teknis dari Pihak Sekolah**:
-   - 1 Akun Google / Google Workspace for Education milik sekolah (gratis dari Google / Kemendikbudristek).
-   - File logo sekolah (format PNG/JPG) dan daftar kontak resmi sekolah.
-3. **Jaminan Kualitas (SLA & Garansi)**:
-   - Jaminan perbaikan bebas biaya (*free bug-fixing*) sesuai periode garansi paket yang dipilih.
-   - Hak kepemilikan data 100% berada di bawah kendali akun Google resmi sekolah tanpa pihak ketiga.
+1. **Kebutuhan Teknis Pihak Sekolah**:
+   - 1 Akun Google / Google Workspace for Education resmi sekolah (gratis dari Google / Kemendikbudristek).
+   - Berkas logo resmi sekolah (PNG/JPG) dan daftar kontak bantuan.
+2. **Jaminan Kualitas & Garansi (SLA)**:
+   - Jaminan perbaikan bebas biaya (*free bug-fixing*) selama 3 bulan terhitung sejak tanggal *go-live*.
+   - Hak kepemilikan data 100% berada di bawah kendali akun Google resmi sekolah tanpa perantara pihak ketiga.
+   - Bantuan konsultasi teknis operasional melalui grup WhatsApp khusus.
 
 ---
 
