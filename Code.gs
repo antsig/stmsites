@@ -47,8 +47,12 @@ function findColumnIndex(headers, columnName) {
  * Entry point Web App (GET Request)
  */
 function doGet(e) {
-  // Inisialisasi spreadsheet jika tabel belum ada
-  initDatabaseIfEmpty();
+  // Inisialisasi database secara aman tanpa memblokir penyajian halaman
+  try {
+    initDatabaseIfEmpty();
+  } catch (err) {
+    console.warn('Inisialisasi database ditangguhkan (menunggu otorisasi admin): ' + err);
+  }
 
   // 1. Prioritaskan penyajian berkas index.html mandiri secara langsung (tanpa overhead template parser)
   try {
@@ -119,12 +123,20 @@ function getInitialData() {
 }
 
 /**
- * Verifikasi PIN Admin
+ * Verifikasi PIN Admin (Tangguh: otomatis fallback ke DEFAULT_PIN jika sheet belum diotorisasi)
  */
 function verifyPin(inputPin) {
   try {
-    var settings = getSettingsMap();
-    var currentPin = settings.admin_pin || DEFAULT_PIN;
+    var currentPin = DEFAULT_PIN;
+    try {
+      var settings = getSettingsMap();
+      if (settings && settings.admin_pin) {
+        currentPin = String(settings.admin_pin).trim();
+      }
+    } catch (e) {
+      currentPin = DEFAULT_PIN;
+    }
+
     if (String(inputPin).trim() === String(currentPin).trim()) {
       return { success: true };
     }

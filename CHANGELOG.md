@@ -3,6 +3,18 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.5.9] - 2026-10-27
+
+### Fixed & Hardened
+- **Resolusi Total Kendala `createOAuthDialog=true` pada Pembukaan Halaman Admin**:
+  - **Filter Global Error Boundary**: Memperbarui `window.onerror` di [index.html](file:///f:/repository/stemsites/index.html) untuk menyaring tantangan OAuth internal iframe Google Apps Script (`createOAuthDialog=true` / `userCodeAppPanel`), mencegah kemunculan spanduk error merah palsu (*false-positive*) `Uncaught SyntaxError: Invalid or unexpected token` pada peramban.
+  - **Inisialisasi Non-Blocking pada `doGet()`**: Membungkus pemanggilan `initDatabaseIfEmpty()` dalam blok `try...catch` pada [Code.gs](file:///f:/repository/stemsites/Code.gs) agar saat Web App pertama kali dibuka sebelum otorisasi editor, halaman HTML portal tetap disajikan secara instan tanpa memicu kegagalan OAuth di tingkat server.
+  - **Autentikasi PIN Tangguh & Mandiri**: Memperbarui `verifyPin()` di [Code.gs](file:///f:/repository/stemsites/Code.gs) dan `submitAdminPin()` di [index.html](file:///f:/repository/stemsites/index.html) agar tetap dapat memverifikasi PIN default (`123456`) meskipun lembar spreadsheet belum selesai diotorisasi, sehingga guru/admin tidak pernah terkunci di luar panel.
+  - **Penghapusan Eksekusi Latar Belakang `openAdminView()`**: Menghapus pemanggilan awal `initDeployCodeViewer()` saat membuka admin view agar tidak memicu pemanggilan RPC latar belakang yang tidak perlu.
+  - **Deklarasi Eksplisit OAuth Scopes**: Menambahkan cakupan `oauthScopes` eksplisit untuk Google Spreadsheet pada [appsscript.json](file:///f:/repository/stemsites/appsscript.json) guna mencegah Google Apps Script memicu permintaan izin dinamis yang ambigu di dalam iframe.
+
+---
+
 ## [1.5.8] - 2026-10-27
 
 ### Fixed & Enhanced
