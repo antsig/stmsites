@@ -3,6 +3,19 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.5.5] - 2026-10-26
+
+### Fixed & Added
+- **Solusi Tuntas Freeze / Unclickable & Standalone 1-File Bundle di Google Apps Script**:
+  - **Standalone 1-File Bundle (`dist/index.html`)**: Menghasilkan berkas gabungan mandiri utuh (196 KB) melalui skrip otomatis `bundle.js`, memungkinkan pengguna melakukan deployment hanya dengan **2 berkas** di Google Apps Script (`Code.gs` dan `index.html`) tanpa ketergantungan `include()`.
+  - **Fungsi `include()` Ultra-Resilient di `Code.gs`**: Memperbarui loader parsial di backend dengan pencarian multi-kandidat (`filename`, `cleanName`, `.html`, `.html.html`), kebal terhadap kesalahan penambahan ekstensi ganda di editor Apps Script.
+  - **Visual On-Screen Error Boundary di `index.html`**: Memasang event listener error global di bagian atas `<head>` yang otomatis memunculkan banner diagnostik merah di layar jika terjadi kesalahan JavaScript di lingkungan iframe Google Apps Script.
+  - **Default Statis 6 Materi per Kategori**: Memperbarui angka awal pada keempat kartu STEM di HTML statis menjadi `6 Materi` (Science, Technology, Engineering, Mathematics) agar tampilan awal tidak pernah berstatus `0 Materi`.
+  - **Tab Standalone pada Panel Admin**: Menambahkan tombol tab khusus `📦 index.html (Standalone 1-File)` pada modal penyalin kode deploy di [admin.html](file:///f:/repository/stemsites/admin.html) dan [scripts.html](file:///f:/repository/stemsites/scripts.html).
+  - **Pembaruan Panduan Deployment**: Menambahkan instruksi tegas di [PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md](file:///f:/repository/stemsites/docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md) mengenai keharusan memilih *Versi Baru (New Version)* saat memperbarui deployment Web App agar tidak freeze di cache versi lama.
+
+---
+
 ## [1.5.4] - 2026-10-26
 
 ### Fixed & Enhanced

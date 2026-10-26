@@ -10,10 +10,20 @@
 
 ---
 
-## 📋 Daftar Berkas yang Dibutuhkan
+## 📋 Dua Pilihan Metode Deployment di Google Apps Script
 
-Di dalam editor Google Apps Script, Anda hanya perlu membuat **5 berkas** berikut:
+Anda dapat memilih salah satu dari 2 metode berikut:
 
+### 🌟 Opsi A: Metode Standalone (PALING DIREKOMENDASIKAN - HANYA 2 BERKAS)
+Hanya butuh membuat **2 berkas** di Google Apps Script:
+1. **`Code.gs`** (Script)
+2. **`index.html`** (HTML) — *Salin dari berkas `dist/index.html` yang sudah menggabungkan seluruh tampilan, CSS, dan JavaScript secara otomatis!*
+> ✅ **Keuntungan**: Tidak perlu membuat `styles`, `admin`, atau `scripts`. Bebas dari risiko salah penamaan berkas atau error `include()`.
+
+---
+
+### 🗂️ Opsi B: Metode Modular (5 Berkas Terpisah)
+Jika Anda ingin kode tetap terpisah rapi menjadi 5 berkas:
 | No | Tipe Berkas di Apps Script | Nama Berkas di Apps Script | Fungsi & Deskripsi |
 |:---:|:---:|:---:|---|
 | 1 | **Script (`.gs`)** | `Code` | Backend Controller, Autentikasi PIN, Akses Google Sheets Database, API CRUD. |
@@ -22,7 +32,20 @@ Di dalam editor Google Apps Script, Anda hanya perlu membuat **5 berkas** beriku
 | 4 | **HTML (`.html`)** | `admin` | Antarmuka panel kendali guru, kelola materi, pengaturan logo, dan panduan. |
 | 5 | **HTML (`.html`)** | `scripts` | Logika interaktif JavaScript, pemfilter materi, state management, dan pemutihan cache. |
 
-> ⚠️ **PENTING**: Di Google Apps Script, saat membuat file HTML (tombol `+` > `HTML`), **cukup ketik namanya saja tanpa `.html`** (misal ketik `index`, `styles`, `admin`, `scripts`). Google Apps Script akan otomatis memberikan ekstensi `.html`.
+> ⚠️ **PENTING UNTUK OPSI B**: Di Google Apps Script, saat membuat file HTML (tombol `+` > `HTML`), **cukup ketik namanya saja tanpa `.html`** (misal ketik `index`, `styles`, `admin`, `scripts`). Google Apps Script akan otomatis memberikan ekstensi `.html`.
+
+---
+
+## ⚠️ CARA MEMPERBARUI KODE JIKA SUDAH PERNAH DI-DEPLOY (AGAR TIDAK FREEZE)
+Jika Anda mengedit atau menempelkan kode baru di Google Apps Script, **menekan tombol Simpan (Ctrl+S) TIDAK otomatis memperbarui URL Web App (`/exec`)**. URL tersebut akan tetap mengunci versi lama.
+
+**Langkah wajib update versi di Apps Script:**
+1. Klik tombol **Terapkan (Deploy)** di pojok kanan atas editor.
+2. Pilih **Kelola penerapan (Manage deployments)**.
+3. Klik ikon **Pensil ✏️ (Edit)** di kanan atas dialog.
+4. Pada dropdown **Versi (Version)**, pilih **Versi baru (New version)**.
+5. Klik **Terapkan (Deploy)**. Selesai!
+*(Atau uji langsung via link `/dev` di menu **Deploy > Uji penerapan (Test deployments)**)*
 
 ---
 

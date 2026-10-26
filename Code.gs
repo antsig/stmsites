@@ -28,10 +28,27 @@ function doGet(e) {
 }
 
 /**
- * Menyertakan file HTML parsial jika diperlukan (misal: CSS / JS terpisah)
+ * Menyertakan file HTML parsial secara tangguh (resilient).
+ * Mendukung pencarian otomatis jika berkas di Apps Script dinamai tanpa ekstensi,
+ * dengan ekstensi .html, maupun ekstensi ganda (.html.html).
  */
 function include(filename) {
-  return HtmlService.createHtmlOutputFromFile(filename).getContent();
+  var cleanName = filename.replace(/\.html$/i, '');
+  var candidates = [
+    filename,
+    cleanName,
+    cleanName + '.html',
+    cleanName + '.html.html'
+  ];
+
+  for (var i = 0; i < candidates.length; i++) {
+    try {
+      return HtmlService.createHtmlOutputFromFile(candidates[i]).getContent();
+    } catch (e) {
+      // Coba kandidat nama berikutnya
+    }
+  }
+  return '<!-- Berkas parsial ' + filename + ' tidak ditemukan di Google Apps Script -->';
 }
 
 /**

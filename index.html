@@ -15,6 +15,21 @@
   <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
+  <!-- On-Screen Diagnostic Error Boundary -->
+  <script>
+    window.addEventListener('error', function(e) {
+      console.error('Portal Global Error:', e.message, e.filename, e.lineno);
+      var existing = document.getElementById('portalErrorBanner');
+      if (!existing && document.body) {
+        var banner = document.createElement('div');
+        banner.id = 'portalErrorBanner';
+        banner.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;background:#DC2626;color:#FFF;padding:12px 16px;border-radius:10px;z-index:999999;font-size:12px;font-family:sans-serif;box-shadow:0 10px 25px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:space-between;gap:10px;';
+        banner.innerHTML = '<div>⚠️ <b>Terjadi Kendala Skrip:</b> ' + (e.message || 'Error tidak diketahui') + ' <br><small style="opacity:0.85;">Baris ' + (e.lineno || '?') + ' (' + (e.filename || 'skrip') + ')</small></div><button onclick="this.parentElement.remove()" style="background:#FFF;color:#DC2626;border:none;padding:4px 8px;border-radius:6px;cursor:pointer;font-weight:bold;">Tutup</button>';
+        document.body.appendChild(banner);
+      }
+    });
+  </script>
+
   <!-- Modular Stylesheet (Google Apps Script Include) -->
   <?!= include('styles'); ?>
 
@@ -108,7 +123,7 @@
             <div class="stem-icon-box" id="icon-box-Science">
               <i class="fa-solid fa-flask-vial"></i>
             </div>
-            <span class="stem-badge-count" id="count-Science">0 Materi</span>
+            <span class="stem-badge-count" id="count-Science">6 Materi</span>
           </div>
           <h3 class="stem-name">Science</h3>
           <p class="stem-subtitle">Sains Alam, Makhluk Hidup, Fotosintesis, & Eksperimen Ilmiah</p>
@@ -123,7 +138,7 @@
             <div class="stem-icon-box" id="icon-box-Technology">
               <i class="fa-solid fa-laptop-code"></i>
             </div>
-            <span class="stem-badge-count" id="count-Technology">0 Materi</span>
+            <span class="stem-badge-count" id="count-Technology">6 Materi</span>
           </div>
           <h3 class="stem-name">Technology</h3>
           <p class="stem-subtitle">Logika Coding, Robotika Komputasi, & Literasi Digital Cerdas</p>
@@ -138,7 +153,7 @@
             <div class="stem-icon-box" id="icon-box-Engineering">
               <i class="fa-solid fa-gears"></i>
             </div>
-            <span class="stem-badge-count" id="count-Engineering">0 Materi</span>
+            <span class="stem-badge-count" id="count-Engineering">6 Materi</span>
           </div>
           <h3 class="stem-name">Engineering</h3>
           <p class="stem-subtitle">Rekayasa Struktur, Rancang Bangun Jembatan, & Mobil Balon</p>
@@ -153,7 +168,7 @@
             <div class="stem-icon-box" id="icon-box-Mathematics">
               <i class="fa-solid fa-calculator"></i>
             </div>
-            <span class="stem-badge-count" id="count-Mathematics">0 Materi</span>
+            <span class="stem-badge-count" id="count-Mathematics">6 Materi</span>
           </div>
           <h3 class="stem-name">Mathematics</h3>
           <p class="stem-subtitle">Pola Angka, Pecahan Pizza Lezat, Detektif Sudut, & Geometri</p>
