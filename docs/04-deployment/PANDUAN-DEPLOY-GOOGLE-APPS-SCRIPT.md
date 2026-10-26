@@ -151,10 +151,27 @@ function doGet(e) {
 }
 
 /**
- * Menyertakan file HTML parsial jika diperlukan (misal: CSS / JS terpisah)
+ * Menyertakan file HTML parsial secara tangguh (resilient).
+ * Mendukung pencarian otomatis jika berkas di Apps Script dinamai tanpa ekstensi,
+ * dengan ekstensi .html, maupun ekstensi ganda (.html.html).
  */
 function include(filename) {
-  return HtmlService.createHtmlOutputFromFile(filename).getContent();
+  var cleanName = filename.replace(/\.html$/i, '');
+  var candidates = [
+    filename,
+    cleanName,
+    cleanName + '.html',
+    cleanName + '.html.html'
+  ];
+
+  for (var i = 0; i < candidates.length; i++) {
+    try {
+      return HtmlService.createHtmlOutputFromFile(candidates[i]).getContent();
+    } catch (e) {
+      // Coba kandidat nama berikutnya
+    }
+  }
+  return '<!-- Berkas parsial ' + filename + ' tidak ditemukan di Google Apps Script -->';
 }
 
 /**
@@ -558,7 +575,16 @@ function getDeployFileCode(filename) {
 
 ---
 
-### Kode 2: `index.html`
+### 🌟 KODE STANDALONE (DISARANKAN - HANYA 2 BERKAS): `dist/index.html`
+*(File HTML - Nama di Apps Script: `index`)*
+
+> **CARA PALING MUDAH & BEBAS ERROR**:
+> Buka file [dist/index.html](file:///f:/repository/stemsites/dist/index.html) di repositori Anda, salin seluruh isinya (**Ctrl + A** lalu **Ctrl + C**), dan tempelkan ke file HTML `index` di Google Apps Script.
+> *(Anda TIDAK PERLU membuat `styles`, `admin`, atau `scripts` jika menggunakan file ini!)*
+
+---
+
+### Kode 2: `index.html` (Modular)
 *(File HTML - Nama di Apps Script: `index`)*
 
 > Buka file [index.html](file:///f:/repository/stemsites/index.html) di repositori Anda, salin seluruh isinya, dan tempelkan ke file HTML `index` di Google Apps Script.
@@ -608,7 +634,8 @@ function getDeployFileCode(filename) {
    - Perbarui berkas `index`, `admin`, dan `scripts` dengan kode terbaru dari repositori ini, lalu buat penerapan baru (*New Version*).
 
 5. **Halaman tampil tetapi tombol tidak bisa diklik dan materi bertuliskan 0 Materi / kosong?**
-   - Pastikan Anda menggunakan versi `v1.5.4`.
-   - Hal ini disebabkan oleh duplikasi skrip yang membuat browser mendeteksi variabel dideklarasikan ganda sehingga proses JavaScript macet.
-   - Pada versi `v1.5.4`, `admin.html` dan `index.html` telah dimurnikan menjadi struktur modular murni tanpa script ganda, data 24 materi diinisialisasi instan (*zero delay*), dan sistem inisialisasi aman dipicu di semua status dokumen.
-   - Perbarui kelima berkas (`Code.gs`, `index`, `styles`, `admin`, `scripts`) lalu deploy Versi Baru.
+   - **Penyebab Utama**: Google Apps Script masih menyajikan cache versi lama pada URL `/exec` karena Anda belum membuat versi baru setelah menyimpan kode.
+   - **Solusi Tuntas (Versi v1.5.5)**:
+     1. Gunakan opsi **Standalone 1-File** [dist/index.html](file:///f:/repository/stemsites/dist/index.html) (cukup buat 2 berkas di Apps Script: `Code.gs` dan `index`).
+     2. Di editor Apps Script: klik **Deploy > Manage deployments > Edit ✏️ > Version: New version > Deploy**.
+     3. Pada `v1.5.5`, nilai awal kartu sudah langsung disetel **6 Materi**, fungsi `include()` kebal terhadap kesalahan penamaan ekstensi, dan dilengkapi *on-screen error detector* di layar.

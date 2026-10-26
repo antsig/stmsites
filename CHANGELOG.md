@@ -13,6 +13,7 @@ Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https:/
   - **Default Statis 6 Materi per Kategori**: Memperbarui angka awal pada keempat kartu STEM di HTML statis menjadi `6 Materi` (Science, Technology, Engineering, Mathematics) agar tampilan awal tidak pernah berstatus `0 Materi`.
   - **Tab Standalone pada Panel Admin**: Menambahkan tombol tab khusus `📦 index.html (Standalone 1-File)` pada modal penyalin kode deploy di [admin.html](file:///f:/repository/stemsites/admin.html) dan [scripts.html](file:///f:/repository/stemsites/scripts.html).
   - **Pembaruan Panduan Deployment**: Menambahkan instruksi tegas di [PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md](file:///f:/repository/stemsites/docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md) mengenai keharusan memilih *Versi Baru (New Version)* saat memperbarui deployment Web App agar tidak freeze di cache versi lama.
+  - **Sinkronisasi Seluruh Berkas Pendukung**: Memperbarui [README.md](file:///f:/repository/stemsites/README.md), tab panduan deployment di [admin.html](file:///f:/repository/stemsites/admin.html), dan mengkompilasi ulang bundle mandiri [dist/index.html](file:///f:/repository/stemsites/dist/index.html) (202 KB) agar 100% konsisten.
 
 ---
 

@@ -1760,21 +1760,35 @@ textarea.form-control { min-height: 90px; resize: vertical; }
 
         <div style="display:flex; flex-direction:column; gap:1.25rem; max-width:960px;">
           
-          <!-- Panduan 7 Langkah Mudah -->
+          <!-- Panduan Deployment Mudah -->
           <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
             <h4 style="font-size:1.05rem; font-weight:800; margin-bottom:0.75rem; color:var(--text-main); display:flex; align-items:center; gap:0.5rem;">
-              <i class="fa-solid fa-cloud-arrow-up" style="color:var(--primary);"></i> 7 Langkah Penerapan ke Akun Google Anda:
+              <i class="fa-solid fa-cloud-arrow-up" style="color:var(--primary);"></i> Langkah Penerapan ke Akun Google Anda:
             </h4>
+            
+            <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:var(--radius-md); padding:1rem; margin-bottom:1rem; font-size:0.875rem;">
+              <strong style="color:#1E40AF; display:flex; align-items:center; gap:0.4rem; margin-bottom:0.35rem;">
+                <i class="fa-solid fa-star"></i> METODE TERMUDAH (HANYA 2 BERKAS DI APPS SCRIPT):
+              </strong>
+              <p style="color:#1E3A8A; margin-bottom:0.5rem;">
+                Anda cukup membuat <strong>2 berkas saja</strong> di editor Apps Script:
+              </p>
+              <ol style="color:#1E3A8A; padding-left:1.25rem; line-height:1.7;">
+                <li>Berkas Script: <code>Code.gs</code> &mdash; klik tab <strong>Code.gs</strong> di bawah, lalu klik <em>Salin Kode Ini</em>.</li>
+                <li>Berkas HTML: <code>index</code> &mdash; klik tab <strong>📦 index.html (Standalone 1-File)</strong> di bawah, lalu klik <em>Salin Kode Ini</em>.</li>
+              </ol>
+              <small style="color:#2563EB;">✨ Seluruh CSS, modal admin, dan logika JavaScript sudah terintegrasi rapi dalam berkas standalone ini!</small>
+            </div>
+
             <ol style="font-size:0.875rem; color:#334155; line-height:1.8; padding-left:1.25rem;">
               <li>Buka <a href="https://sheets.new" target="_blank" style="color:var(--primary); font-weight:700;">Google Spreadsheet Baru (sheets.new)</a> dan beri judul, misal: <em>Database Portal STEM Sekolah</em>. Biarkan sheet kosong.</li>
               <li>Pada menu atas Spreadsheet, klik <strong>Ekstensi (Extensions)</strong> &gt; pilih <strong>Apps Script</strong>.</li>
-              <li>Di editor Apps Script, buat total <strong>5 berkas</strong>:
+              <li>Salin kode ke Apps Script:
                 <ul style="margin-top:0.25rem; margin-bottom:0.25rem;">
-                  <li>File Script: <code>Code.gs</code></li>
-                  <li>File HTML (klik tanda <code>+</code> &gt; pilih <em>HTML</em>): ketik <code>index</code>, <code>styles</code>, <code>admin</code>, dan <code>scripts</code> <em>(cukup ketik nama tanpa .html)</em>.</li>
+                  <li><strong>Metode Standalone (Disarankan)</strong>: Buat file Script <code>Code.gs</code> dan file HTML <code>index</code>.</li>
+                  <li><strong>Metode Modular (5 Berkas)</strong>: Buat <code>Code.gs</code> dan 4 file HTML: <code>index</code>, <code>styles</code>, <code>admin</code>, <code>scripts</code> <em>(ketik nama tanpa .html)</em>.</li>
                 </ul>
               </li>
-              <li>Salin dan tempelkan seluruh kode untuk masing-masing berkas menggunakan tombol <strong>Salin Kode</strong> pada tab di bawah ini.</li>
               <li>Tekan tombol disket <strong>Simpan proyek (Ctrl + S)</strong>.</li>
               <li>Klik tombol biru <strong>Terapkan (Deploy)</strong> di kanan atas &gt; pilih <strong>Penerapan baru (New deployment)</strong>:
                 <ul style="margin-top:0.25rem; margin-bottom:0.25rem;">
@@ -1785,6 +1799,12 @@ textarea.form-control { min-height: 90px; resize: vertical; }
               </li>
               <li>Klik <strong>Terapkan</strong> &gt; lakukan otorisasi izin akun Google (klik <em>Advanced / Lanjutan</em> &gt; <em>Go to Portal STEM (unsafe)</em> &gt; <em>Izinkan</em>), lalu salin URL Web App yang dihasilkan!</li>
             </ol>
+
+            <div style="background:#FEF2F2; border:1px solid #FECACA; border-radius:var(--radius-md); padding:0.85rem; margin-top:1rem; font-size:0.82rem; color:#991B1B;">
+              <strong>⚠️ PENTING: Cara Memperbarui Kode (Agar Tidak Freeze di Versi Lama):</strong><br>
+              Jika Anda mengedit/menempelkan kode baru di Apps Script, <strong>menekan Ctrl+S saja TIDAK memperbarui URL Web App</strong>.
+              Wajib klik <strong>Deploy &gt; Manage deployments &gt; Edit (ikon pensil) &gt; Versi: New version &gt; Deploy</strong>!
+            </div>
           </div>
 
           <!-- Selector Berkas Kode Lengkap -->

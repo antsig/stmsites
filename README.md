@@ -52,32 +52,52 @@ Tersedia di bilah navigasi atas (Navbar) dengan 4 tab:
     - Mengubah nama sekolah, tahun ajaran, slogan, URL logo utama sekolah (dengan *Live Preview*), kontak WhatsApp, email, dan PIN Admin.
     - **Kustomisasi Logo 4 Kategori STEM**: Pengaturan URL logo/ikon kustom untuk Science, Technology, Engineering, dan Mathematics dengan *Live Preview*.
   - **Tab 3: Panduan Pengaturan & Penggunaan Admin**: Petunjuk konversi gambar Google Drive (`uc?export=view`), format link media interaktif (YouTube, PhET simulations, Google Docs/PDF), dan kelola tabel massal di Google Sheets.
-  - **Tab 4: Step Deploy & Kode GAS**: Panduan langkah deploy dan tombol satu-klik salin seluruh kode dari 5 berkas proyek (`Code.gs`, `index.html`, `styles.html`, `admin.html`, `scripts.html`).
+  - **Tab 4: Step Deploy & Kode GAS**: Panduan langkah deploy dan tombol satu-klik salin kode proyek (termasuk opsi Standalone 1-File dan 5 berkas modular).
 
 ---
 
-## 🛠️ Panduan Deploy ke Akun Google Anda
+## 🛠️ Panduan Deploy ke Akun Google Anda (Versi v1.5.5)
 
+### 🌟 Opsi A: Metode Standalone (PALING DIREKOMENDASIKAN - HANYA 2 BERKAS)
 1. Buka browser dan buat spreadsheet baru di **[Google Sheets](https://sheets.new)**. Beri nama, misalnya: `Database Portal STEM`.
-   *(Biarkan kosong; sistem akan otomatis membuat sheet `Settings` dan `Materi` serta mengisi ke-24 materi kurikulum STEM SD secara otomatis!)*
+   *(Biarkan sheet kosong; sistem akan otomatis membuat sheet `Settings` dan `Materi` serta mengisi 24 materi kurikulum STEM SD secara otomatis!)*
 2. Klik menu **Ekstensi (Extensions)** &gt; **Apps Script**.
 3. Di dalam editor Apps Script:
-   - File Script `Code.gs`: Tempelkan isi [Code.gs](file:///f:/repository/stemsites/Code.gs).
-   - Buat 4 berkas HTML baru (klik ikon **+** &gt; **HTML**):
-     1. Berkas `index`: Tempelkan isi [index.html](file:///f:/repository/stemsites/index.html).
-     2. Berkas `admin`: Tempelkan isi [admin.html](file:///f:/repository/stemsites/admin.html).
-     3. Berkas `styles`: Tempelkan isi [styles.html](file:///f:/repository/stemsites/styles.html).
-     4. Berkas `scripts`: Tempelkan isi [scripts.html](file:///f:/repository/stemsites/scripts.html).
-4. Klik tombol **Terapkan (Deploy)** di pojok kanan atas &gt; pilih **Penerapan Baru (New Deployment)**:
+   - File Script `Code.gs`: Tempelkan seluruh isi dari [Code.gs](file:///f:/repository/stemsites/Code.gs).
+   - Buat 1 File HTML (klik tanda **`+`** &gt; pilih **HTML**), beri nama **`index`**: Tempelkan seluruh isi dari [dist/index.html](file:///f:/repository/stemsites/dist/index.html).
+4. Klik tombol biru **Terapkan (Deploy)** di pojok kanan atas &gt; pilih **Penerapan Baru (New Deployment)**:
    - Jenis: **Aplikasi Web (Web app)**.
-   - Deskripsi: `Portal STEM Sekolah v1.5.0`.
-   - Jalankan sebagai (*Execute as*): **Saya / Akun Anda** (*User deploying*).
-   - Siapa yang memiliki akses (*Who has access*): **Siapa saja** (*Anyone*).
+   - Deskripsi: `Portal Pembelajaran STEM Sekolah v1.5.5`.
+   - Jalankan sebagai (*Execute as*): **Saya (email Anda)**.
+   - Siapa yang memiliki akses (*Who has access*): **Siapa saja (Anyone)** *(wajib agar siswa dapat membuka tanpa login khusus)*.
    - Klik **Deploy (Terapkan)**.
-5. Berikan otorisasi akun Google Anda jika diminta.
-6. Salin **URL Aplikasi Web** yang diberikan. Begitu URL dibuka, seluruh 24 materi kurikulum STEM SD langsung terbaca dan tampil seketika!
+5. Berikan otorisasi izin akun Google Anda (klik *Advanced / Lanjutan* &gt; *Go to Portal STEM (unsafe)* &gt; *Izinkan*).
+6. Salin **URL Aplikasi Web** yang diberikan dan bagikan ke siswa!
+
+---
+
+### 🗂️ Opsi B: Metode Modular (5 Berkas Terpisah)
+Jika ingin kode terpisah rapi:
+1. File Script: `Code.gs` &rarr; tempelkan [Code.gs](file:///f:/repository/stemsites/Code.gs).
+2. 4 File HTML (klik tanda `+` &gt; pilih *HTML*, cukup ketik nama tanpa `.html`):
+   - `index` &rarr; tempelkan [index.html](file:///f:/repository/stemsites/index.html).
+   - `styles` &rarr; tempelkan [styles.html](file:///f:/repository/stemsites/styles.html).
+   - `admin` &rarr; tempelkan [admin.html](file:///f:/repository/stemsites/admin.html).
+   - `scripts` &rarr; tempelkan [scripts.html](file:///f:/repository/stemsites/scripts.html).
+3. Lakukan deploy seperti pada Opsi A di atas.
+
+---
+
+### ⚠️ PENTING: Cara Memperbarui Kode Setelah Deploy (Agar Tidak Freeze)
+Jika Anda mengedit/menempelkan kode baru di editor Google Apps Script, **menekan tombol Simpan (Ctrl+S) TIDAK otomatis memperbarui URL Web App**.
+**Langkah wajib update versi di Apps Script:**
+1. Klik tombol **Deploy (Terapkan)** di pojok kanan atas.
+2. Pilih **Manage deployments (Kelola deployment)**.
+3. Klik ikon **Pensil ✏️ (Edit)** di kanan atas popup.
+4. Pada dropdown **Version (Versi)**, pilih **New version (Versi baru)**.
+5. Klik **Deploy (Terapkan)**. Selesai!
 
 ---
 
 ## 💻 Pengujian Lokal / Standalone Demo
-Cukup buka folder `f:\repository\stemsites\` dan klik dua kali berkas [index.html](file:///f:/repository/stemsites/index.html) di browser Anda atau akses melalui `http://localhost:3000/`. Aplikasi otomatis berjalan menggunakan *Interactive Mock Engine* (`localStorage`) sehingga Anda bisa langsung menguji seluruh fitur, animasi, responsivitas mobile 2 kartu/baris, filter kelas 1–6, pop-up misi, dan CRUD Admin secara instan!
+Cukup buka folder `f:\repository\stemsites\` dan klik dua kali berkas [dist/index.html](file:///f:/repository/stemsites/dist/index.html) di browser Anda atau jalankan `node server.js` dan buka `http://localhost:3000/`. Seluruh fitur, animasi, responsivitas mobile, filter kelas 1–6, pop-up misi, dan CRUD Admin langsung dapat diuji seketika!
