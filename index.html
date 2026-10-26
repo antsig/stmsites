@@ -638,6 +638,46 @@ textarea.form-control { min-height: 90px; resize: vertical; }
   .grade-select-btn .grade-num { font-size: 1.05rem; }
   .grade-select-btn.all-grades { padding: 0.75rem; font-size: 0.85rem; }
 
+  /* Admin Topbar 1 Baris Penuh & Kompak */
+  .admin-topbar {
+    height: 52px !important;
+    padding: 0 0.65rem !important;
+    gap: 0.4rem !important;
+    flex-wrap: nowrap !important;
+  }
+  .admin-topbar-left {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    gap: 0.4rem !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+  }
+  .admin-sidebar-toggle {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 0.9rem !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+  .admin-topbar-title {
+    font-size: 0.82rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    gap: 0.35rem !important;
+    letter-spacing: -0.01em !important;
+  }
+  .admin-topbar .nav-btn {
+    font-size: 0.72rem !important;
+    padding: 0.35rem 0.55rem !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    gap: 0.3rem !important;
+  }
+
   /* Admin Responsiveness Mobile & Thumb-Zone Friendly */
   .admin-content-area { padding: 0.85rem 0.65rem; }
   .admin-pane-header { flex-direction: column; align-items: stretch; gap: 0.35rem; margin-bottom: 0.65rem; }
@@ -1364,7 +1404,7 @@ textarea.form-control { min-height: 90px; resize: vertical; }
     </div>
     <div>
       <button class="nav-btn" style="color:#FFF; border:1px solid #334155;" onclick="closeAdminView()">
-        <i class="fa-solid fa-globe"></i> Lihat Portal Siswa
+        <i class="fa-solid fa-globe"></i> <span>Portal Siswa</span>
       </button>
     </div>
   </div>

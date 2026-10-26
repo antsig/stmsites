@@ -3,6 +3,18 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.4.3] - 2026-10-26
+
+### Fixed & Enhanced
+- **Navbar Admin Terkunci 1 Baris Horizontal (*Single-Row Topbar*)**:
+  - Memaksa seluruh elemen navbar dashboard admin (toggle menu, judul *"Dashboard Admin STEM"*, dan tombol *"Portal Siswa"*) terkunci dalam 1 baris horizontal rapi tanpa teks ter-wrap ke baris kedua pada semua ukuran viewport smartphone (360px – 480px).
+- **Tipografi Judul Navbar Proporsional**:
+  - Menyesuaikan ukuran font judul navbar admin menjadi `0.82rem` dengan `white-space: nowrap !important; text-overflow: ellipsis;` agar seimbang dan nyaman dipandang.
+- **Perampingan Tombol Navigasi Portal**:
+  - Mengubah label tombol menjadi *"Portal Siswa"* dengan padding kompak (`0.35rem 0.55rem`) dan font `0.72rem`, menjaga keterbacaan tinggi tanpa memakan ruang berlebih.
+
+---
+
 ## [1.4.2] - 2026-10-26
 
 ### Fixed & Enhanced
