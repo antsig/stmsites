@@ -3,6 +3,17 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.5.3] - 2026-10-26
+
+### Fixed & Hardened
+- **Pencegahan Error Fatal "Exception: Konten HTML rusak" di Google Apps Script**:
+  - Merefaktor fungsi `getLocalDomContent(filename)` pada [index.html](file:///f:/repository/stemsites/index.html), [admin.html](file:///f:/repository/stemsites/admin.html), dan [scripts.html](file:///f:/repository/stemsites/scripts.html) dari multiline template literal mentah menjadi *safe string concatenation*.
+  - Menghilangkan kemunculan literal teks `</body>` dan `</html>` di dalam skrip JavaScript yang sebelumnya menyebabkan parser HTML Google Apps Script (`HtmlService`) menganggap dokumen HTML telah ditutup lebih awal, sehingga script setelahnya dianggap teks liar di luar tag penutup.
+  - Menghilangkan kemunculan tag mentah `<?!= include('...'); ?>` di dalam JavaScript helper yang sebelumnya berisiko memicu evaluasi rekursif pada template engine Google Apps Script.
+  - Memperbarui [PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md](file:///f:/repository/stemsites/docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md) dengan panduan penanganan troubleshoot FAQ terkait error tersebut.
+
+---
+
 ## [1.5.2] - 2026-10-26
 
 ### Fixed & Enhanced

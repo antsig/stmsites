@@ -1457,7 +1457,7 @@ function updateDeployCharCount(text) {
 function getLocalDomContent(filename) {
   if (filename === 'styles.html') {
     const st = document.querySelector('style[data-gas-style="true"]') || document.querySelector('style');
-    return st ? '<style>\n' + st.textContent.trim() + '\n</style>' : '<!-- styles.html -->';
+    return st ? '<style>\n' + st.textContent.trim() + '\n<' + '/style>' : '<!-- styles.html -->';
   }
   if (filename === 'admin.html') {
     const adm = document.getElementById('adminModuleContainer') || document.getElementById('adminView');
@@ -1468,25 +1468,25 @@ function getLocalDomContent(filename) {
     return sc ? '<script>\n' + sc.textContent.trim() + '\n<' + '/script>' : '<script>// scripts.html<' + '/script>';
   }
   if (filename === 'index.html') {
-    return `<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Portal Pembelajaran STEM Sekolah</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <?!= include('styles'); ?>
-</head>
-<body>
-  <div id="adminModuleContainer">
-    <?!= include('admin'); ?>
-  </div>
-  <?!= include('scripts'); ?>
-</body>
-</html>`;
+    return '<!DOCTYPE html>\n' +
+      '<html lang="id">\n' +
+      '<head>\n' +
+      '  <meta charset="UTF-8">\n' +
+      '  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n' +
+      '  <title>Portal Pembelajaran STEM Sekolah</title>\n' +
+      '  <link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+      '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+      '  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">\n' +
+      '  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">\n' +
+      '  <' + '?!= include(\'styles\'); ?' + '>\n' +
+      '<' + '/head>\n' +
+      '<body>\n' +
+      '  <div id="adminModuleContainer">\n' +
+      '    <' + '?!= include(\'admin\'); ?' + '>\n' +
+      '  </div>\n' +
+      '  <' + '?!= include(\'scripts\'); ?' + '>\n' +
+      '<' + '/body>\n' +
+      '<' + '/html>';
   }
   return '';
 }
