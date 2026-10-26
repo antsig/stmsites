@@ -3,6 +3,20 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.5.1] - 2026-10-26
+
+### Added & Enhanced
+- **Mekanisme Tri-Guard Auto-Seeding Materi Kurikulum di Google Apps Script (GAS)**:
+  - **Backend Auto-Seeding Tanpa Syarat (`Code.gs`)**: Pengecekan inisialisasi sheet `Materi` kini mendeteksi kondisi sheet kosong (`getLastRow() <= 1`), sehingga otomatis men-seed 24 materi kurikulum STEM SD lengkap ke spreadsheet tanpa memerlukan tindakan manual.
+  - **Menu Kustom Google Spreadsheet (`onOpen`)**: Menambahkan menu otomatis `🌟 Portal STEM` pada antarmuka spreadsheet dengan opsi `📥 Muat Ulang 24 Materi Kurikulum SD` dan `⚙️ Periksa & Perbaiki Sheet Database`.
+  - **Instant Frontend Fallback Protection (`scripts.html`, `index.html`, `admin.html`)**: Memastikan jika data materi dari spreadsheet masih kosong saat pertama kali diakses, frontend secara otomatis memuat `INITIAL_MATERIALS` (24 materi), sehingga tampilan portal tidak pernah kosong.
+  - **Tombol Sinkronisasi Materi di Panel Admin**: Menambahkan tombol `🔄 Muat Ulang 24 Materi SD` pada header dan action row mobile untuk memaksa sinkronisasi 24 materi kurikulum ke Google Sheets kapan saja.
+- **Pemutakhiran Komprehensif Seluruh Panduan**:
+  - Memperbarui [PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md](file:///f:/repository/stemsites/docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md) dengan kode `Code.gs` terbaru dan panduan mekanisme auto-seeding.
+  - Memperbarui [README.md](file:///f:/repository/stemsites/README.md) dan [PROPOSAL](file:///f:/repository/stemsites/docs/01-proposals/PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md) agar selaras dengan rilis operasional.
+
+---
+
 ## [1.5.0] - 2026-10-26
 
 ### Added & Enhanced
