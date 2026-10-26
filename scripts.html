@@ -19,116 +19,332 @@ const DEFAULT_SETTINGS = {
 };
 
 const INITIAL_MATERIALS = [
-  // 1. SCIENCE
+  // ============================================================================
+  // 1. SCIENCE VIRTUAL (Laboratorium Maya - Kemdikbud IPAS SD)
+  // ============================================================================
   {
     id: "STEM-SCI01",
     stem_category: "Science",
-    title: "Petualangan Daur Hidup Kupu-kupu",
-    grade: "2",
-    media_type: "Video",
-    media_url: "https://www.youtube.com/watch?v=O1S8WzwLPlM",
-    thumbnail_url: "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=600&auto=format&fit=crop&q=80",
-    description: "Yuk amati metamorfosis sempurna dari telur, ulat yang rakus, kepompong tidur, hingga menjadi kupu-kupu bersayap indah!",
-    mission_goals: "1. Mengenal 4 tahap metamorfosis kupu-kupu.\n2. Menjelaskan perubahan bentuk ulat hingga menjadi kupu-kupu.",
-    mission_steps: "1. Tonton video animasi daur hidup kupu-kupu.\n2. Siapkan kertas origami atau plastisin.\n3. Buatlah 4 replika tahap metamorfosis dan susun berurutan di buku gambarmu!",
-    mission_reflection: "Mengapa ulat harus beristirahat di dalam kepompong sebelum sayapnya tumbuh indah?"
+    title: "Eksplorasi Anatomi Tubuh 3D & 5 Panca Indra",
+    grade: "1",
+    media_type: "Lab Maya",
+    media_url: "https://human.biodigital.com/",
+    thumbnail_url: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80",
+    description: "Laboratorium 3D interaktif untuk menjelajah organ tubuh manusia, panca indra (mata, telinga, kulit), kerangka tulang, dan sistem peredaran darah.",
+    mission_goals: "1. Mengidentifikasi 5 panca indra manusia dan letak organnya secara 3 dimensi.\n2. Menjelaskan cara merawat panca indra dan tubuh agar senantiasa sehat.",
+    mission_steps: "1. Buka laboratorium anatomi 3D BioDigital Human.\n2. Putar model 3D tubuh manusia dan perbesar organ mata dan telinga.\n3. Amati bagian-bagian panca indra dan catat fungsinya pada lembar kerja sains!",
+    mission_reflection: "Mengapa menjaga kebersihan panca indra sangat penting untuk kesehatan tubuh kita?"
   },
   {
     id: "STEM-SCI02",
     stem_category: "Science",
-    title: "Eksplorasi Fotosintesis: Mengapa Daun Berwarna Hijau?",
+    title: "Percobaan Listrik Statis Balon & Sweater Ajaib",
+    grade: "2",
+    media_type: "Simulasi",
+    media_url: "https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity_all.html",
+    thumbnail_url: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80",
+    description: "Laboratorium maya PhET: gesekkan balon ke sweater rajut wol untuk mengamati muatan listrik positif dan negatif yang saling tarik-menarik!",
+    mission_goals: "1. Mengenal muatan listrik positif (+) dan negatif (-) secara visual.\n2. Memahami peristiwa listrik statis di sekitar kita (rambut tertarik balon).",
+    mission_steps: "1. Buka simulasi Balon dan Listrik Statis PhET.\n2. Gosokkan balon kuning ke baju hangat wol beberapa kali.\n3. Dekatkan balon ke dinding atau sweater dan amati fenomena gaya tarik-menariknya!",
+    mission_reflection: "Mengapa balon yang sudah digosokkan ke rambut bisa menempel sendiri di dinding kamar?"
+  },
+  {
+    id: "STEM-SCI03",
+    stem_category: "Science",
+    title: "Eksplorasi Wujud Zat: Padat, Cair, dan Gas",
+    grade: "3",
+    media_type: "Simulasi",
+    media_url: "https://phet.colorado.edu/sims/html/states-of-matter-basics/latest/states-of-matter-basics_all.html",
+    thumbnail_url: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+    description: "Laboratorium maya PhET untuk mengamati molekul zat saat dipanaskan dan didinginkan (membeku, mencair, menguap).",
+    mission_goals: "1. Membedakan karakteristik dan wujud benda padat, cair, dan gas.\n2. Mengamati perubahan jarak dan gerak partikel zat pada suhu panas dan dingin.",
+    mission_steps: "1. Buka simulasi wujud zat PhET.\n2. Pilih molekul Air (Water) atau Neon.\n3. Geser tuas pemanas (Heat) dan amati bagaimana partikel bergerak saling menjauh menjadi uap gas!",
+    mission_reflection: "Mengapa es batu yang dibiarkan di suhu ruangan lama-kelamaan mencair menjadi air?"
+  },
+  {
+    id: "STEM-SCI04",
+    stem_category: "Science",
+    title: "Rahasia Fotosintesis: Mengapa Daun Berwarna Hijau?",
     grade: "4",
     media_type: "Simulasi",
     media_url: "https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light_all.html",
     thumbnail_url: "https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop&q=80",
     description: "Temukan bagaimana klorofil menyerap cahaya matahari dan mengubah air serta karbon dioksida menjadi oksigen segar!",
-    mission_goals: "1. Menjelaskan fungsi klorofil dalam proses fotosintesis.\n2. Mengidentifikasi peran penting tumbuhan bagi udara di bumi.",
-    mission_steps: "1. Ambil 2 helai daun tanaman di taman sekolah.\n2. Tutup salah satu bagian daun dengan kertas timah selama 2 hari.\n3. Amati perubahan warna daun saat terkena sinar matahari!",
-    mission_reflection: "Apa yang akan terjadi pada udara di bumi jika pohon-pohon hijau berkurang?"
+    mission_goals: "1. Menjelaskan fungsi klorofil dalam proses fotosintesis tumbuhan.\n2. Mengidentifikasi peran penting tumbuhan sebagai penghasil oksigen di bumi.",
+    mission_steps: "1. Buka laboratorium maya molekul dan cahaya PhET.\n2. Sorotkan cahaya pada molekul dan amati interaksinya.\n3. Simpulkan pentingnya sinar matahari dan air bagi fotosintesis tanaman!",
+    mission_reflection: "Apa yang akan terjadi pada udara di bumi jika pohon-pohon hijau semakin berkurang?"
+  },
+  {
+    id: "STEM-SCI05",
+    stem_category: "Science",
+    title: "Virtual Tour Gunung Berapi & Lapisan Kerak Bumi",
+    grade: "5",
+    media_type: "Lab Maya",
+    media_url: "https://earth.google.com/web/search/Volcanoes",
+    thumbnail_url: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop&q=80",
+    description: "Terbang keliling gunung berapi aktif di Indonesia dan dunia secara 3D menggunakan satelit Google Earth.",
+    mission_goals: "1. Mengidentifikasi struktur gunung berapi (kawah, magma, pipa kepundan, lava).\n2. Memahami letak jalur cincin api (ring of fire) di kepulauan Indonesia.",
+    mission_steps: "1. Buka tautan jelajah 3D Google Earth.\n2. Telusuri kawah Gunung Bromo, Krakatau, atau Merapi.\n3. Amati bentang alam kaldera dan bekas jalur aliran lava dari citra satelit!",
+    mission_reflection: "Mengapa tanah di sekitar lereng gunung berapi biasanya sangat subur untuk pertanian?"
+  },
+  {
+    id: "STEM-SCI06",
+    stem_category: "Science",
+    title: "Menjelajah Tata Surya & Orbit Planet Antariksa",
+    grade: "6",
+    media_type: "Simulasi",
+    media_url: "https://eyes.nasa.gov/apps/solar-system/",
+    thumbnail_url: "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=600&auto=format&fit=crop&q=80",
+    description: "Eksplorasi interaktif 3D NASA Eyes: terbangkan satelit virtual mengitari Matahari, Bumi, Mars, hingga cincin Saturnus.",
+    mission_goals: "1. Mengenal urutan 8 planet dalam sistem tata surya berdasarkan jarak dari matahari.\n2. Menjelaskan fenomena rotasi dan revolusi planet mengelilingi matahari.",
+    mission_steps: "1. Buka simulasi antariksa resmi NASA Eyes di browser.\n2. Klik planet Bumi dan Mars, lalu perbesar untuk mengamati atmosfernya.\n3. Percepat waktu simulasi untuk mengamati pergerakan orbit planet-planet!",
+    mission_reflection: "Mengapa planet yang paling dekat dengan matahari memiliki periode revolusi paling cepat?"
   },
 
-  // 2. TECHNOLOGY
+  // ============================================================================
+  // 2. TECHNOLOGY VIRTUAL (Coding & AI Tanpa Robot)
+  // ============================================================================
   {
     id: "STEM-TEC01",
     stem_category: "Technology",
-    title: "Logika Coding Dasar: Algoritma Robot Pembawa Pesan",
-    grade: "3",
+    title: "Bermain AI Ceria: Mesin Cerdas Penebak Gambar",
+    grade: "1",
     media_type: "Simulasi",
-    media_url: "https://blockly.games/maze",
-    thumbnail_url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&auto=format&fit=crop&q=80",
-    description: "Belajar logika berpikir komputasional dengan menyusun blok perintah langkah demi langkah agar robot mencapai tujuan.",
-    mission_goals: "1. Memahami konsep urutan perintah (sequence) dalam pemrograman.\n2. Melatih logika pemecahan masalah secara runtut.",
-    mission_steps: "1. Buka simulasi labirin blok melalui tautan materi.\n2. Pandu robot agar berhasil keluar labirin dengan perintah: Maju, Belok Kiri, Belok Kanan.\n3. Tuliskan kode langkah terbaikmu di buku catatan!",
-    mission_reflection: "Mengapa komputer atau robot harus diberi perintah yang sangat runtut tanpa boleh ada yang terbalik?"
+    media_url: "https://quickdraw.withgoogle.com/",
+    thumbnail_url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
+    description: "Bermain tebak gambar dengan kecerdasan buatan (Artificial Intelligence) dari Google! Cukup gambar dengan mouse/jari.",
+    mission_goals: "1. Mengenal teknologi kecerdasan buatan (AI) secara visual dan menyenangkan.\n2. Melatih koordinasi motorik anak dalam menggambar objek sederhana.",
+    mission_steps: "1. Klik tombol Mulai di Quick, Draw! by Google.\n2. Gambar objek yang diminta (misal: apel, pohon, mobil) dalam waktu 20 detik.\n3. Perhatikan bagaimana jaringan saraf tiruan AI menebak gambarmu secara instan!",
+    mission_reflection: "Bagaimana komputer bisa mengenali bahwa gambar coretanmu adalah sebuah pohon?"
   },
   {
     id: "STEM-TEC02",
     stem_category: "Technology",
-    title: "Jelajah Internet Cerdas: Cara Mencari Fakta & Menghindari Hoaks",
+    title: "Logika Algoritma Labirin: Memandu Karakter Melangkah",
+    grade: "2",
+    media_type: "Simulasi",
+    media_url: "https://blockly.games/maze",
+    thumbnail_url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80",
+    description: "Belajar logika berpikir komputasional tingkat awal: susun balok perintah Maju, Belok Kiri, Belok Kanan.",
+    mission_goals: "1. Memahami konsep instruksi berurutan (sequence) dalam pemrograman.\n2. Melatih logika pemecahan masalah (problem solving) secara terstruktur.",
+    mission_steps: "1. Buka permainan labirin blok di Blockly Games.\n2. Susun balok: [Maju], [Belok Kiri], [Maju] untuk memandu avatar ke titik finish.\n3. Klik tombol Jalankan Program dan amati jalannya robot!",
+    mission_reflection: "Mengapa komputer tidak bisa bergerak jika urutan perintah kita ada yang tertukar?"
+  },
+  {
+    id: "STEM-TEC03",
+    stem_category: "Technology",
+    title: "Animasi Kartun Perdanaku: Gerak Karakter Kucing Scratch",
+    grade: "3",
+    media_type: "Simulasi",
+    media_url: "https://scratch.mit.edu/projects/editor/",
+    thumbnail_url: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80",
+    description: "Seret dan tempel balok warna-warni di Scratch MIT untuk membuat karakter kartun berjalan, bersuara, dan berganti kostum.",
+    mission_goals: "1. Mengenal antarmuka pemrograman visual Scratch (Sprites, Blocks, Stage).\n2. Membuat animasi gerak sederhana menggunakan blok 'Ketika bendera hijau diklik'.",
+    mission_steps: "1. Buka editor online Scratch MIT.\n2. Tarik blok [Gerak 10 langkah] dan [Mainkan suara meow].\n3. Klik bendera hijau dan saksikan karakter kucingmu hidup dan bergerak!",
+    mission_reflection: "Jika kita ingin karakter bergerak selamanya, balok kontrol apa yang harus kita pasang?"
+  },
+  {
+    id: "STEM-TEC04",
+    stem_category: "Technology",
+    title: "Coding Petualangan Karakter Minecraft di Code.org",
+    grade: "4",
+    media_type: "Simulasi",
+    media_url: "https://code.org/minecraft",
+    thumbnail_url: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&auto=format&fit=crop&q=80",
+    description: "Pandu Steve atau Alex menjelajahi dunia Minecraft menggunakan logika perulangan (loops) dan kondisi (if-else).",
+    mission_goals: "1. Memahami konsep perulangan (loop) untuk mengotomatisasi perintah berulang.\n2. Menyelesaikan teka-teki logika coding bertema petualangan Minecraft.",
+    mission_steps: "1. Buka petualangan Minecraft di Code.org.\n2. Pilih karakter Steve atau Alex.\n3. Gunakan blok perulangan [Ulangi 5 kali: Tebang pohon] untuk mengumpulkan kayu secara efisien!",
+    mission_reflection: "Mengapa menggunakan blok perulangan membuat kode kita jauh lebih ringkas?"
+  },
+  {
+    id: "STEM-TEC05",
+    stem_category: "Technology",
+    title: "Desain Rumah 3D Digital di Browser (Tinkercad)",
     grade: "5",
-    media_type: "Artikel",
-    media_url: "https://id.wikipedia.org/wiki/Literasi_digital",
-    thumbnail_url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80",
-    description: "Kiat aman berselancar di dunia maya, mengenali sumber informasi tepercaya, dan menjaga data privasi.",
-    mission_goals: "1. Siswa mampu membedakan informasi fakta dan berita bohong.\n2. Mengetahui pentingnya merahasiakan password dan data pribadi.",
-    mission_steps: "1. Baca artikel ringkasan literasi digital.\n2. Periksa sebuah berita online menggunakan rumus 5W+1H.\n3. Buat kartu pengingat: 3 Langkah Cek Fakta di Internet!",
-    mission_reflection: "Mengapa kita tidak boleh sembarangan mengklik tautan hadiah yang tidak jelas pengirimnya?"
+    media_type: "Simulasi",
+    media_url: "https://www.tinkercad.com/",
+    thumbnail_url: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&auto=format&fit=crop&q=80",
+    description: "Menjadi arsitek cilik! Gabungkan balok, silinder, dan atap piramida 3D di Tinkercad untuk merancang bangunan impian.",
+    mission_goals: "1. Mengenal konsep pemodelan spasial 3 dimensi (sumbu X, Y, Z).\n2. Melatih kreativitas desain prototipe bangunan menggunakan peramban web gratis.",
+    mission_steps: "1. Buka kanvas 3D Tinkercad di browser.\n2. Tarik bentuk Kotak merah ke atas Workplane.\n3. Pasang bentuk Atap prisma segitiga di atas kotak dan beri warna sesuai seleramu!",
+    mission_reflection: "Apa perbedaan antara menggambar rumah di kertas 2D dengan merancangnya di ruang 3D?"
+  },
+  {
+    id: "STEM-TEC06",
+    stem_category: "Technology",
+    title: "Merancang Game Edukasi Interaktif Multi-Level di Scratch",
+    grade: "6",
+    media_type: "Simulasi",
+    media_url: "https://scratch.mit.edu/projects/editor/",
+    thumbnail_url: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop&q=80",
+    description: "Rancang game tangkap apel jatuh menggunakan variabel skor, sensor sentuh (sensing), dan kondisi menang-kalah.",
+    mission_goals: "1. Memahami penggunaan Variabel (Score) dan Operator Logika.\n2. Mengintegrasikan sensor sentuh (Touching Sprite) dalam mekanisme game edukatif.",
+    mission_steps: "1. Buat dua sprite: Keranjang dan Apel.\n2. Buat variabel bernama 'Skor'.\n3. Beri kode: jika Apel menyentuh Keranjang, tambah Skor sebesar 1 dan mainkan suara ting!",
+    mission_reflection: "Bagaimana cara mengatur tingkat kesulitan game agar semakin lama apel jatuh semakin cepat?"
   },
 
-  // 3. ENGINEERING
+  // ============================================================================
+  // 3. ENGINEERING VIRTUAL (Merakit di Dunia Maya)
+  // ============================================================================
   {
     id: "STEM-ENG01",
     stem_category: "Engineering",
-    title: "Rekayasa Jembatan Kertas Kokoh Penahan Beban",
+    title: "Keseimbangan Menara Balok & Ayunan Jungkat-Jungkit",
     grade: "1",
-    media_type: "Praktikum",
-    media_url: "https://www.youtube.com/watch?v=7b7pS6X9V1g",
-    thumbnail_url: "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&auto=format&fit=crop&q=80",
-    description: "Bagaimana melipat selembar kertas biasa agar mampu menahan beban koin atau mobil mainan? Temukan rahasia struktur lipatan!",
-    mission_goals: "1. Mengenal konsep dasar struktur teknik (lipatan zig-zag/akordeon).\n2. Melatih kreativitas rancang bangun dengan bahan sederhana.",
-    mission_steps: "1. Siapkan 3 lembar kertas HVS bekas dan 2 cangkir sebagai tiang penyangga.\n2. Buat jembatan pertama mendatar biasa, dan jembatan kedua dengan lipatan zig-zag.\n3. Letakkan koin satu demi satu di atas jembatan sampai roboh. Catat jembatan mana yang paling kokoh!",
-    mission_reflection: "Mengapa lipatan zig-zag dapat membuat kertas tipis menjadi jauh lebih kuat menahan beban?"
+    media_type: "Simulasi",
+    media_url: "https://phet.colorado.edu/sims/html/balancing-act/latest/balancing-act_all.html",
+    thumbnail_url: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=600&auto=format&fit=crop&q=80",
+    description: "Laboratorium maya PhET untuk menguji keseimbangan papan ayunan: letakkan balok berat dan ringan pada jarak berbeda!",
+    mission_goals: "1. Mengenal konsep titik tumpu dan keseimbangan beban.\n2. Mengamati pengaruh jarak benda dari titik tengah jungkat-jungkit.",
+    mission_steps: "1. Buka simulasi Balancing Act PhET.\n2. Taruh tong sampah 10 kg di sisi kanan papan ayunan.\n3. Cari posisi balok 5 kg di sisi kiri agar papan ayunan seimbang sejajar!",
+    mission_reflection: "Mengapa anak yang badannya lebih ringan harus duduk lebih jauh ke ujung agar jungkat-jungkit seimbang?"
   },
   {
     id: "STEM-ENG02",
     stem_category: "Engineering",
-    title: "Desain Mobil Bertenaga Balon Udara (Hukum Gerak)",
-    grade: "6",
-    media_type: "Praktikum",
-    media_url: "https://www.youtube.com/watch?v=Kz6E1B6VvG8",
+    title: "Desain Perahu Apung Anti Tenggelam (Hukum Apung)",
+    grade: "2",
+    media_type: "Simulasi",
+    media_url: "https://phet.colorado.edu/sims/html/buoyancy/latest/buoyancy_all.html",
+    thumbnail_url: "https://images.unsplash.com/photo-1508873696983-2df5703bc20d?w=600&auto=format&fit=crop&q=80",
+    description: "Mengapa perahu kayu besar bisa mengapung sedangkan koin kecil tenggelam? Uji massa jenis benda di kolam virtual.",
+    mission_goals: "1. Menjelaskan peristiwa terapung, melayang, dan tenggelam.\n2. Mengidentifikasi hubungan antara bentuk lambung kapal dengan kemampuan menahan beban.",
+    mission_steps: "1. Buka simulasi Buoyancy PhET.\n2. Jatuhkan balok kayu, apel, dan balok besi ke dalam air virtual.\n3. Perhatikan gaya angkat air yang mendorong benda ke permukaan!",
+    mission_reflection: "Mengapa kapal laut yang terbuat dari besi berat tetap bisa mengapung di lautan luas?"
+  },
+  {
+    id: "STEM-ENG03",
+    stem_category: "Engineering",
+    title: "Pesawat Sederhana: Mengangkat Beban dengan Katrol & Tuas",
+    grade: "3",
+    media_type: "Simulasi",
+    media_url: "https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_all.html",
     thumbnail_url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80",
-    description: "Rancang mobil balap ramah lingkungan dari botol bekas yang meluncur kencang akibat semburan udara dari balon!",
-    mission_goals: "1. Memahami prinsip aksi-reaksi (dorongan udara keluar menghasilkan gerak maju).\n2. Menguji coba aerodinamika bentuk bodi kendaraan sederhana.",
-    mission_steps: "1. Siapkan botol plastik bekas, sedotan, 4 tutup botol sebagai roda, dan 1 buah balon.\n2. Rakit poros roda menggunakan tusuk sate dan sedotan.\n3. Tiup balon di atas mobil, lalu lepaskan di lantai licin dan ukur jarak luncurnya!",
-    mission_reflection: "Bagaimana cara memodifikasi bentuk mobil agar meluncur lebih lurus dan jauh?"
+    description: "Eksplorasi tuas pengungkit, katrol, dan bidang miring untuk memudahkan manusia memindahkan benda yang sangat berat.",
+    mission_goals: "1. Memahami prinsip kerja tuas dan keuntungan mekanis pesawat sederhana.\n2. Mengenal contoh pesawat sederhana di sekitar (gunting, linggis, katrol tiang bendera).",
+    mission_steps: "1. Buka simulasi gaya dan gerak PhET.\n2. Dorong peti seberat 100 kg di lantai datar.\n3. Bandingkan tenaga yang dibutuhkan saat menggunakan bidang miring!",
+    mission_reflection: "Mengapa menaikkan drum minyak ke bak truk lebih mudah menggunakan papan kayu miring daripada diangkat langsung?"
+  },
+  {
+    id: "STEM-ENG04",
+    stem_category: "Engineering",
+    title: "Arsitektur Jembatan Rangka Baja Kokoh Penahan Beban",
+    grade: "4",
+    media_type: "Game",
+    media_url: "https://armorgames.com/play/4962/cargo-bridge",
+    thumbnail_url: "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&auto=format&fit=crop&q=80",
+    description: "Menjadi insinyur sipil! Rancang jembatan rangka segitiga (truss bridge) melintasi jurang dan uji apakah kuat dilewati truk.",
+    mission_goals: "1. Mengenal struktur rangka segitiga sebagai struktur teknik paling kokoh.\n2. Mengoptimalkan anggaran bahan konstruksi agar efisien namun tetap aman.",
+    mission_steps: "1. Masuk ke game konstruksi jembatan Cargo Bridge.\n2. Hubungkan simpul tiang menggunakan balok kayu dan tali baja berbentuk segitiga.\n3. Uji jembatan dengan pekerja pembawa beban. Perbaiki rangka yang patah!",
+    mission_reflection: "Mengapa bentuk segitiga lebih kokoh daripada bentuk persegi saat menahan tekanan beban berat?"
+  },
+  {
+    id: "STEM-ENG05",
+    stem_category: "Engineering",
+    title: "Laboratorium Sirkuit Listrik Rumah Pintar Virtual",
+    grade: "5",
+    media_type: "Simulasi",
+    media_url: "https://phet.colorado.edu/sims/html/circuit-construction-kit-dc/latest/circuit-construction-kit-dc_all.html",
+    thumbnail_url: "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?w=600&auto=format&fit=crop&q=80",
+    description: "Rangkai kabel, baterai, sakelar, dan lampu bohlam di PhET. Uji coba rangkaian seri dan paralel tanpa takut tersetrum!",
+    mission_goals: "1. Membedakan karakteristik rangkaian listrik seri dan paralel.\n2. Mengidentifikasi konduktor dan isolator listrik di laboratorium virtual.",
+    mission_steps: "1. Buka simulasi Circuit Construction Kit DC PhET.\n2. Hubungkan 1 baterai, sakelar, dan 2 lampu dalam satu jalur lurus (rangkaian seri).\n3. Tutup sakelar dan amati apa yang terjadi jika salah satu lampu dilepas!",
+    mission_reflection: "Mengapa instalasi lampu di rumah-rumah dipasang menggunakan rangkaian paralel?"
+  },
+  {
+    id: "STEM-ENG06",
+    stem_category: "Engineering",
+    title: "Rancang Bangun Sekolah Impian Ramah Lingkungan",
+    grade: "6",
+    media_type: "Lab Maya",
+    media_url: "https://education.minecraft.net/",
+    thumbnail_url: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80",
+    description: "Kolaborasi rekayasa arsitektur di Minecraft Education / Tinkercad: lengkapi sekolah dengan panel surya dan taman atap.",
+    mission_goals: "1. Merancang tata ruang bangunan publik dengan konsep ramah energi (green building).\n2. Mengintegrasikan teknologi energi terbarukan (panel surya, ventilasi silang).",
+    mission_steps: "1. Buka kanvas Minecraft Education atau Tinkercad 3D.\n2. Bangun ruang kelas dengan jendela besar untuk pencahayaan alami matahari.\n3. Pasang panel surya virtual di atap sekolah sebagai sumber listrik bersih!",
+    mission_reflection: "Bagaimana desain ventilasi yang baik dapat menghemat penggunaan pendingin ruangan (AC) di sekolah?"
   },
 
-  // 4. MATHEMATICS
+  // ============================================================================
+  // 4. MATHEMATICS VIRTUAL (Matematika Jadi Game)
+  // ============================================================================
   {
     id: "STEM-MAT01",
     stem_category: "Mathematics",
-    title: "Pecahan Pizza Lezat: Memahami 1/2, 1/4, dan 3/4",
-    grade: "3",
-    media_type: "Dokumen",
-    media_url: "https://phet.colorado.edu/sims/html/fractions-intro/latest/fractions-intro_all.html",
-    thumbnail_url: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80",
-    description: "Belajar pecahan jadi menyenangkan dengan memotong pizza khayalan bersama teman-teman!",
-    mission_goals: "1. Memvisualisasikan pecahan sederhana dalam bentuk potongan benda utuh.\n2. Membandingkan nilai pecahan yang berpenyebut sama.",
-    mission_steps: "1. Buka simulasi pecahan interaktif PhET.\n2. Bagi sebuah lingkaran pizza menjadi 4 bagian sama besar.\n3. Berikan 2 potong kepada teman, dan hitung berapa sisa pecahan yang kamu miliki!",
-    mission_reflection: "Jika sebuah kue dibagi sama rata untuk 4 anak, mengapa setiap anak mendapat nilai 1/4 bagian?"
+    title: "Eksplorasi Bentuk Geometri & Sudut Ceria di GeoGebra",
+    grade: "1",
+    media_type: "Simulasi",
+    media_url: "https://www.geogebra.org/geometry",
+    thumbnail_url: "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=600&auto=format&fit=crop&q=80",
+    description: "Laboratorium geometri GeoGebra: melukis lingkaran, segitiga, persegi, menghubungkan titik sudut, dan mewarnai bangun datar.",
+    mission_goals: "1. Mengidentifikasi bentuk bangun datar dasar (lingkaran, segitiga, segiempat).\n2. Melatih ketelitian anak dalam menghubungkan garis dan titik sudut geometri.",
+    mission_steps: "1. Buka kanvas geometri GeoGebra.\n2. Pilih alat Segi Banyak (Polygon) dan buat segitiga serta persegi.\n3. Pilih alat Lingkaran (Circle) untuk menggambar roda dan hias dengan warna-warni ceria!",
+    mission_reflection: "Ada berapa titik sudut yang dimiliki oleh sebuah segitiga dibandingkan dengan persegi?"
   },
   {
     id: "STEM-MAT02",
     stem_category: "Mathematics",
-    title: "Detektif Sudut: Menemukan Sudut Siku-siku, Lancip, & Tumpul",
-    grade: "5",
-    media_type: "Video",
-    media_url: "https://www.youtube.com/watch?v=NVuMULQjb3o",
+    title: "Eksplorasi Tangram 2D & Jam Dinding Virtual",
+    grade: "2",
+    media_type: "Simulasi",
+    media_url: "https://mathigon.org/polypad#tangram",
     thumbnail_url: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80",
-    description: "Bawa penggaris busurmu dan jadilah detektif yang mencari sudut-sudut rahasia pada pintu, atap rumah, dan jam dinding!",
-    mission_goals: "1. Mengidentifikasi sudut siku-siku (90 derajat), lancip (<90 derajat), dan tumpul (>90 derajat).\n2. Melatih ketelitian dalam mengamati sudut pada objek di sekitar.",
-    mission_steps: "1. Ambil selembar kertas origami persegi yang memiliki sudut siku-siku 90°.\n2. Cocokkan ujung kertas pada 5 sudut benda di dalam kelas atau rumahmu.\n3. Catat di tabel: benda mana yang memiliki sudut siku-siku, lancip, atau tumpul!",
-    mission_reflection: "Mengapa kusen pintu dan jendela kebanyakan dirancang menggunakan sudut siku-siku?"
+    description: "Susun 7 potongan puzzle ajaib Tangram di Mathigon Polypad menjadi bentuk hewan dan putar jarum jam virtual untuk membaca waktu.",
+    mission_goals: "1. Menyusun berbagai bentuk siluet menggunakan 7 potongan geometri tangram.\n2. Membaca dan menunjukkan waktu pada jam analog (jarum pendek dan panjang).",
+    mission_steps: "1. Buka kanvas Polypad Tangram di browser.\n2. Putar dan susun 2 segitiga besar dan 1 persegi hingga membentuk burung terbang.\n3. Geser jarum jam ke angka 07.00 saat bel masuk sekolah berbunyi!",
+    mission_reflection: "Berapa menit yang dilewati jika jarum panjang jam berputar penuh satu putaran dari angka 12 kembali ke 12?"
+  },
+  {
+    id: "STEM-MAT03",
+    stem_category: "Mathematics",
+    title: "Pecahan Visual Warna-Warni: Pizza & Cokelat Pecahan",
+    grade: "3",
+    media_type: "Simulasi",
+    media_url: "https://phet.colorado.edu/sims/html/fractions-intro/latest/fractions-intro_all.html",
+    thumbnail_url: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80",
+    description: "Belajar pecahan jadi konkret dan mudah dipahami: iris pizza khayalan menjadi pecahan 1/2, 1/3, 1/4, dan 3/4 di simulasi PhET.",
+    mission_goals: "1. Memvisualisasikan konsep pecahan sebagai bagian dari benda utuh.\n2. Membandingkan nilai pecahan sederhana berpenyebut sama.",
+    mission_steps: "1. Buka simulasi Fractions Intro PhET.\n2. Pilih mode 'Intro' dan atur pembagi pizza menjadi 4 bagian.\n3. Ambil 2 potong pizza dan perhatikan bentuk angka pecahannya: 2/4 sama nilainya dengan 1/2!",
+    mission_reflection: "Jika kamu memiliki sebatang cokelat dan ingin berbagi sama rata kepada 3 sahabatmu, berapa bagian cokelat untuk masing-masing anak?"
+  },
+  {
+    id: "STEM-MAT04",
+    stem_category: "Mathematics",
+    title: "Merancang Luas & Keliling Taman Sekolah Interaktif",
+    grade: "4",
+    media_type: "Simulasi",
+    media_url: "https://phet.colorado.edu/sims/html/area-builder/latest/area-builder_all.html",
+    thumbnail_url: "https://images.unsplash.com/photo-1584697964190-705b893683f1?w=600&auto=format&fit=crop&q=80",
+    description: "Susun petak-petak hijau di PhET Area Builder untuk membuat taman dengan luas dan keliling tertentu.",
+    mission_goals: "1. Menghitung luas bangun datar dengan satuan petak persegi.\n2. Memahami perbedaan antara luas (permukaan) dan keliling (panjang tepian).",
+    mission_steps: "1. Buka simulasi Area Builder PhET.\n2. Susun 12 petak balok hijau membentuk persegi panjang (panjang 4 petak, lebar 3 petak).\n3. Hitung keliling pagar di sekelilingnya dan periksa hasilnya di kotak centang!",
+    mission_reflection: "Apakah dua bangun datar yang memiliki luas sama selalu memiliki keliling yang sama juga?"
+  },
+  {
+    id: "STEM-MAT05",
+    stem_category: "Mathematics",
+    title: "Tantangan Logika Bilangan & Pecahan Desimal di Matific",
+    grade: "5",
+    media_type: "Game",
+    media_url: "https://www.matific.com/",
+    thumbnail_url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=80",
+    description: "Petualangan matematika interaktif Matific: memecahkan teka-teki pecahan desimal, persen, dan nilai tempat bilangan.",
+    mission_goals: "1. Mengubah bentuk pecahan biasa menjadi desimal dan persen.\n2. Melatih nalar berhitung cepat dalam pemecahan masalah sehari-hari.",
+    mission_steps: "1. Masuk ke arena permainan matematika Matific.\n2. Selesaikan misi mengisi tangki air desimal: isi tangki hingga level 0,75 liter.\n3. Catat skor bintang yang berhasil kamu peroleh di papan misi!",
+    mission_reflection: "Mengapa pecahan 3/4 memiliki nilai yang sama persis dengan angka desimal 0,75 dan 75%?"
+  },
+  {
+    id: "STEM-MAT06",
+    stem_category: "Mathematics",
+    title: "Eksplorasi Bangun Ruang 3D & Jaring-Jaring Kubus Virtual",
+    grade: "6",
+    media_type: "Simulasi",
+    media_url: "https://mathigon.org/polypad#solids",
+    thumbnail_url: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80",
+    description: "Buka dan tutup jaring-jaring kubus, balok, prisma, dan limas secara 3D di Mathigon Polypad. Hitung rusuk, titik sudut, dan volumenya!",
+    mission_goals: "1. Menganalisis sifat-sifat bangun ruang (kubus, balok, prisma, tabung).\n2. Membuka jaring-jaring bangun ruang 3D menjadi pola 2D secara interaktif.",
+    mission_steps: "1. Buka menu 3D Solids di Mathigon Polypad.\n2. Tarik sebuah Kubus 3D ke papan kerja.\n3. Klik tombol 'Unfold' dan saksikan kubus merekah terbuka menjadi jaring-jaring 6 persegi!",
+    mission_reflection: "Ada berapa banyak variasi bentuk jaring-jaring yang berbeda yang dapat dilipat menjadi sebuah kubus sempurna?"
   }
 ];
 
@@ -177,7 +393,7 @@ function loadInitialData() {
 }
 
 function fallbackToLocalStorage() {
-  const DATA_VERSION = "v1.3.1";
+  const DATA_VERSION = "v1.5.0";
   const currentVersion = localStorage.getItem("stem_data_version");
   const savedSettings = localStorage.getItem("stem_settings");
   const savedMaterials = localStorage.getItem("stem_materials");

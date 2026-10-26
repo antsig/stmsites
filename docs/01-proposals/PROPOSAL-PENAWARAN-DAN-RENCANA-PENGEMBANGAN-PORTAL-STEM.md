@@ -124,7 +124,7 @@ graph LR
 4. **Layanan Pemasangan, Pelatihan & Garansi**:
    - Pemasangan langsung (*setup/deployment*) ke akun Google resmi sekolah.
    - Konfigurasi pangkalan data Google Sheets sekolah.
-   - Input data materi awal kurikulum STEM sekolah (12 materi percontohan).
+   - Input data materi awal kurikulum STEM sekolah (24 materi lengkap Kelas 1–6 SD Kemdikbud).
    - 1 sesi pelatihan daring bagi guru dan staf IT sekolah (durasi 2 jam).
    - Masa garansi perbaikan bebas bug (*free bug-fixing*) selama 3 bulan penuh.
 
@@ -143,7 +143,7 @@ Struktur estimasi investasi dirancang secara transparan, akuntabel, dan terukur 
 |---|---|---|:---:|
 | **UI/UX & Frontend Developer** | **Portal Siswa & Antarmuka Responsif Mobile** | • Pembuatan antarmuka visual beranda ramah anak dengan kartu 4 pilar STEM (Science, Technology, Engineering, Mathematics).<br>• Desain kartu interaktif formasi 2 kolom proporsional pada layar ponsel (*mobile-friendly*).<br>• Perancangan selektor jenjang kelas (*Grade-Locking Mechanism*) Kelas 1–6 SD.<br>• Pembuatan jendela modal misi eksplorasi praktikum interaktif (Tujuan, Langkah Praktikum, Tautan Video, Simulasi PhET/Blockly/Games, dan Refleksi).<br>• Optimasi tipografi dan tata letak universal responsif bebas *horizontal overflow*. | **1.200.000** |
 | **Backend & Script Engineer** | **Dashboard Admin Guru, Alur Data & Keamanan PIN** | • Penulisan skrip backend Google Apps Script (`Code.gs`) dengan V8 runtime engine.<br>• Pembuatan dashboard admin guru terpadu dengan autentikasi proteksi PIN Keamanan (`123456` dan kustomisasi PIN baru).<br>• Mekanisme manajemen konten sub-card materi STEM (CRUD: Tambah, Edit, Hapus) terhubung Google Sheets.<br>• Optimasi topbar admin mobile terkunci 1 baris (*no-wrap*) dan filter tabel 1 baris kompak.<br>• Penataan tombol aksi di bawah formulir (*thumb-zone ergonomics*) untuk kemudahan sentuh di ponsel.<br>• Penanganan CORS-free untuk mode luring mandiri (*standalone*). | **1.350.000** |
-| **Data & EdTech Specialist** | **Integrasi Google Sheets, Kustomisasi & Kurasi STEM** | • Perancangan struktur database Google Sheets (`Settings` & `Materi`) dan inisialisasi tabel otomatis.<br>• Pembuatan formulir kustomisasi nama sekolah, slogan, kontak WhatsApp, dan logo sekolah serta 4 logo pilar STEM dengan *Live Preview* real-time.<br>• Kurasi dan input 12 data awal materi praktikum STEM SD terhubung ke simulasi resmi PhET dan video edukasi.<br>• Optimasi tautan hosting aset dan thumbnail di Google Drive sekolah. | **550.000** |
+| **Data & EdTech Specialist** | **Integrasi Google Sheets, Kustomisasi & Kurasi STEM** | • Perancangan struktur database Google Sheets (`Settings` & `Materi`) dan inisialisasi tabel otomatis.<br>• Pembuatan formulir kustomisasi nama sekolah, slogan, kontak WhatsApp, dan logo sekolah serta 4 logo pilar STEM dengan *Live Preview* real-time.<br>• Kurasi dan input 24 data materi kurikulum STEM SD Kemdikbud lengkap (Kelas 1–6) terhubung ke simulasi resmi PhET, NASA Eyes, Google Earth, BioDigital, Scratch, Code.org, Tinkercad, Cargo Bridge, GeoGebra, Mathigon Polypad, dan Matific.<br>• Optimasi tautan hosting aset dan thumbnail di Google Drive sekolah. | **550.000** |
 | **QA Specialist & Deployment Facilitator** | **Pengujian Sistem, Panduan Deploy & Pelatihan Guru** | • Pengujian fungsionalitas menyeluruh dan kompatibilitas lintas peramban/perangkat (Android, iOS, PC).<br>• Pembuatan modul *Interactive Code Viewer* 5 berkas proyek (`Code.gs`, `index.html`, `styles.html`, `admin.html`, `scripts.html`) dengan tombol salin 1-klik.<br>• Penyusunan dokumen panduan penerapan 7 langkah (*Deployment Guide*) dan buku petunjuk operasional guru (*User Manual*).<br>• Pelaksanaan 1 sesi pelatihan daring bagi guru dan staf IT sekolah (durasi 2 jam) serta pendampingan masa garansi 3 bulan. | **400.000** |
 | **TOTAL (GOOGLE APPS SCRIPT READY-TO-USE)** | | | **Rp3.500.000** |
 
@@ -205,7 +205,7 @@ Hari ke-1: Penyelarasan & Penyiapan Akun
 Hari ke-2: Deployment & Kustomisasi
 ├── Pemasangan skrip backend Code.gs dan berkas HTML di Google Apps Script sekolah
 ├── Konfigurasi hak akses web app (*Anyone with Google Account / Anyone*)
-├── Input 12 materi praktikum awal dan pengujian fungsi tombol/simulasi
+├── Input 24 materi praktikum kurikulum STEM SD lengkap dan pengujian fungsi tombol/simulasi
 └── Penyesuaian PIN Admin sesuai permintaan pihak sekolah
 
 Hari ke-3: Verifikasi Bersama & Pelatihan
@@ -229,7 +229,40 @@ Hari ke-3: Verifikasi Bersama & Pelatihan
 
 ---
 
-## 7. Lembar Konfirmasi & Persetujuan
+## 7. Lampiran: Katalog 24 Materi Kurikulum STEM SD (Kemdikbud Kelas 1–6)
+
+Setiap materi telah diverifikasi aktif (HTTP 200 OK), bebas biaya (*open access*), dan diselaraskan dengan Capaian Pembelajaran (CP) Kurikulum Merdeka Kemdikbudristek:
+
+| ID | Kategori | Jenjang | Judul Materi Praktikum & Misi | Platform Edukasi | Tautan Aktif Terverifikasi |
+|:---:|:---:|:---:|---|---|---|
+| **STEM-SCI01** | Science | Kelas 1 | Eksplorasi Anatomi Tubuh 3D & 5 Panca Indra | BioDigital Human 3D | [human.biodigital.com](https://human.biodigital.com/) |
+| **STEM-SCI02** | Science | Kelas 2 | Percobaan Listrik Statis Balon & Sweater Ajaib | PhET Interactive Simulations | [phet.colorado.edu/.../balloons](https://phet.colorado.edu/sims/html/balloons-and-static-electricity/latest/balloons-and-static-electricity_all.html) |
+| **STEM-SCI03** | Science | Kelas 3 | Eksplorasi Wujud Zat: Padat, Cair, dan Gas | PhET Interactive Simulations | [phet.colorado.edu/.../states-of-matter](https://phet.colorado.edu/sims/html/states-of-matter-basics/latest/states-of-matter-basics_all.html) |
+| **STEM-SCI04** | Science | Kelas 4 | Rahasia Fotosintesis: Mengapa Daun Berwarna Hijau? | PhET Interactive Simulations | [phet.colorado.edu/.../molecules-and-light](https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light_all.html) |
+| **STEM-SCI05** | Science | Kelas 5 | Virtual Tour Gunung Berapi & Kerak Bumi | Google Earth 3D | [earth.google.com/.../Volcanoes](https://earth.google.com/web/search/Volcanoes) |
+| **STEM-SCI06** | Science | Kelas 6 | Menjelajah Tata Surya & Orbit Planet Antariksa | NASA Eyes on the Solar System | [eyes.nasa.gov/apps/solar-system](https://eyes.nasa.gov/apps/solar-system/) |
+| **STEM-TEC01** | Technology | Kelas 1 | Bermain AI Ceria: Mesin Cerdas Penebak Gambar | Google Quick, Draw! AI | [quickdraw.withgoogle.com](https://quickdraw.withgoogle.com/) |
+| **STEM-TEC02** | Technology | Kelas 2 | Logika Algoritma Labirin: Memandu Karakter | Blockly Games Maze | [blockly.games/maze](https://blockly.games/maze) |
+| **STEM-TEC03** | Technology | Kelas 3 | Animasi Kartun Perdanaku: Gerak Kucing Scratch | MIT Scratch Editor | [scratch.mit.edu/projects/editor](https://scratch.mit.edu/projects/editor/) |
+| **STEM-TEC04** | Technology | Kelas 4 | Coding Petualangan Karakter Minecraft | Code.org Minecraft Journey | [code.org/minecraft](https://code.org/minecraft) |
+| **STEM-TEC05** | Technology | Kelas 5 | Desain Rumah 3D Digital di Browser | Autodesk Tinkercad 3D | [www.tinkercad.com](https://www.tinkercad.com/) |
+| **STEM-TEC06** | Technology | Kelas 6 | Game Edukasi Interaktif Multi-Level di Scratch | MIT Scratch Editor | [scratch.mit.edu/projects/editor](https://scratch.mit.edu/projects/editor/) |
+| **STEM-ENG01** | Engineering | Kelas 1 | Keseimbangan Menara Balok & Jungkat-Jungkit | PhET Interactive Simulations | [phet.colorado.edu/.../balancing-act](https://phet.colorado.edu/sims/html/balancing-act/latest/balancing-act_all.html) |
+| **STEM-ENG02** | Engineering | Kelas 2 | Desain Perahu Apung Anti Tenggelam (Hukum Apung) | PhET Interactive Simulations | [phet.colorado.edu/.../buoyancy](https://phet.colorado.edu/sims/html/buoyancy/latest/buoyancy_all.html) |
+| **STEM-ENG03** | Engineering | Kelas 3 | Pesawat Sederhana: Katrol, Tuas & Bidang Miring | PhET Interactive Simulations | [phet.colorado.edu/.../forces-basics](https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_all.html) |
+| **STEM-ENG04** | Engineering | Kelas 4 | Arsitektur Jembatan Rangka Baja Penahan Beban | Cargo Bridge Civil Physics | [armorgames.com/.../cargo-bridge](https://armorgames.com/play/4962/cargo-bridge) |
+| **STEM-ENG05** | Engineering | Kelas 5 | Laboratorium Sirkuit Listrik Rumah Pintar | PhET Interactive Simulations | [phet.colorado.edu/.../circuit-dc](https://phet.colorado.edu/sims/html/circuit-construction-kit-dc/latest/circuit-construction-kit-dc_all.html) |
+| **STEM-ENG06** | Engineering | Kelas 6 | Rancang Bangun Sekolah Ramah Lingkungan | Minecraft Education Edition | [education.minecraft.net](https://education.minecraft.net/) |
+| **STEM-MAT01** | Mathematics | Kelas 1 | Eksplorasi Bentuk Geometri & Sudut Ceria | GeoGebra Geometry Suite | [www.geogebra.org/geometry](https://www.geogebra.org/geometry) |
+| **STEM-MAT02** | Mathematics | Kelas 2 | Eksplorasi Tangram 2D & Jam Dinding Virtual | Mathigon Polypad Tangram | [mathigon.org/polypad#tangram](https://mathigon.org/polypad#tangram) |
+| **STEM-MAT03** | Mathematics | Kelas 3 | Pecahan Visual Warna-Warni: Pizza & Balok | PhET Interactive Simulations | [phet.colorado.edu/.../fractions-intro](https://phet.colorado.edu/sims/html/fractions-intro/latest/fractions-intro_all.html) |
+| **STEM-MAT04** | Mathematics | Kelas 4 | Merancang Luas & Keliling Taman Interaktif | PhET Interactive Simulations | [phet.colorado.edu/.../area-builder](https://phet.colorado.edu/sims/html/area-builder/latest/area-builder_all.html) |
+| **STEM-MAT05** | Mathematics | Kelas 5 | Logika Bilangan & Game Matematika Matific | Matific Math Learning | [www.matific.com](https://www.matific.com/) |
+| **STEM-MAT06** | Mathematics | Kelas 6 | Bangun Ruang 3D & Jaring-Jaring Kubus Virtual | Mathigon Polypad 3D Solids | [mathigon.org/polypad#solids](https://mathigon.org/polypad#solids) |
+
+---
+
+## 8. Lembar Konfirmasi & Persetujuan
 
 Untuk menyetujui proposal spesifikasi teknis dan penawaran harga ini, silakan mengisi lembar persetujuan di bawah ini atau memberikan surat konfirmasi balasan resmi:
 

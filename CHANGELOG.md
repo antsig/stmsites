@@ -3,6 +3,25 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.5.0] - 2026-10-26
+
+### Added & Enhanced
+- **24 Materi Kurikulum STEM SD Kemdikbud Lengkap (Kelas 1 s.d. 6)**:
+  - Menyediakan 24 materi kurikulum STEM SD lengkap (4 pilar × 6 jenjang kelas 1–6) yang diselaraskan dengan Capaian Pembelajaran Kurikulum Merdeka Kemdikbudristek.
+  - **Science (IPAS SD)**: 6 Materi terverifikasi (BioDigital 3D Human, PhET Balon & Listrik Statis, PhET Wujud Zat Padat/Cair/Gas, PhET Molekul & Fotosintesis, Google Earth 3D Gunung Berapi, NASA Eyes on the Solar System).
+  - **Technology (Informatika & AI)**: 6 Materi terverifikasi (Google Quick, Draw! AI, Blockly Games Maze, MIT Scratch Animasi Kartun, Code.org Minecraft Journey, Autodesk Tinkercad 3D, MIT Scratch Game Edukasi Multi-Level).
+  - **Engineering (Rekayasa & Struktur)**: 6 Materi terverifikasi (PhET Keseimbangan Balancing Act, PhET Hukum Apung Buoyancy, PhET Pesawat Sederhana Gaya & Gerak, Cargo Bridge Jembatan Rangka, PhET Sirkuit Listrik DC, Minecraft Education Sekolah Ramah Lingkungan).
+  - **Mathematics (Matematika Interaktif)**: 6 Materi terverifikasi (GeoGebra Geometry Suite, Mathigon Polypad Tangram & Jam, PhET Pecahan Fractions Intro, PhET Luas & Keliling Area Builder, Matific Math Game, Mathigon Polypad 3D Solids).
+- **Verifikasi 100% Tautan Aktif (HTTP 200 OK)**:
+  - Seluruh 24 tautan materi telah diuji secara teknis dan terbukti aktif (HTTP 200 OK), bebas broken link, dan dapat langsung dibuka oleh siswa maupun guru.
+- **Sinkronisasi 4 Berkas Arsitektur & Cache Bump (`v1.5.0`)**:
+  - Sinkronisasi menyeluruh pada `scripts.html`, `index.html`, `admin.html`, dan data seeding otomatis backend `Code.gs`.
+  - Peningkatan `DATA_VERSION` menjadi `"v1.5.0"` sehingga browser pengguna otomatis mereset dan memuat data materi terbaru tanpa perlu hapus cache manual.
+- **Lampiran Katalog 24 Materi pada Proposal Penawaran**:
+  - Menambahkan tabel katalog 24 materi lengkap beserta platform edukasi dan tautan aktif di dokumen proposal [PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md](file:///f:/repository/stemsites/docs/01-proposals/PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md).
+
+---
+
 ## [1.4.3] - 2026-10-26
 
 ### Fixed & Enhanced
