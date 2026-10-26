@@ -6,7 +6,7 @@ Dokumen ini berisi panduan pengujian dan bukti verifikasi fungsional untuk **Por
 
 ## 🧭 User Testing Journey
 
-### 1. Pengujian Beranda Publik Bersih & Responsivitas Mobile (Formasi 1 Kolom Penuh)
+### 1. Pengujian Beranda Publik Bersih & Responsivitas Mobile (Formasi 2 Kolom Padat)
 - [x] **Langkah 1**: Buka file [index.html](file:///f:/repository/stemsites/index.html) di browser.
 - [x] **Hasil yang Diharapkan**:
   - Tampilan beranda sangat bersih dan terarah: memuat Identitas Sekolah, Hero Banner, caption pemantik, dan 4 Card Utama STEM.
@@ -14,7 +14,8 @@ Dokumen ini berisi panduan pengujian dan bukti verifikasi fungsional untuk **Por
 - [x] **Langkah 2**: Buka *Developer Tools* browser (F12) lalu aktifkan mode Mobile/Responsive (< 768px atau 394px).
 - [x] **Hasil yang Diharapkan**:
   - Elemen `.hero-meta-bar` (Khusus Siswa, Belajar Mandiri, dll.) otomatis disembunyikan.
-  - 4 Card Utama STEM tampil rapi dalam formasi **1 kolom vertikal (`grid-template-columns: 1fr !important;`)** dengan padding yang nyaman, deskripsi materi terlihat jelas, dan indikator panah aksi ramah sentuhan.
+  - 4 Card Utama STEM tampil rapi dalam formasi **2 kolom padat (`grid-template-columns: repeat(2, 1fr) !important;`)** dengan padding yang pas, seimbang 2 kartu per baris, dan tidak memerlukan scroll panjang.
+  - Materi yang tampil adalah materi awal yang telah dikembalikan (*Daur Hidup Kupu-kupu, Fotosintesis, Robot Pembawa Pesan, Literasi Digital, Jembatan Kertas, Mobil Balon, Pecahan Pizza, Detektif Sudut*).
 
 ---
 

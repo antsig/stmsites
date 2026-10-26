@@ -3,6 +3,21 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.3.1] - 2026-10-26
+
+### Restored & Enhanced
+- **Kembalikan Formasi 2 Kolom Card STEM Beranda Mobile**:
+  - 4 Card Utama STEM (Science, Technology, Engineering, Mathematics) di beranda publik dikembalikan ke formasi **2 kolom padat** (`grid-template-columns: repeat(2, 1fr) !important;`) pada mode smartphone (< 768px).
+  - Tampilan beranda kembali ringkas, seimbang (2 baris x 2 kartu), dan tidak memerlukan scroll panjang.
+  - Halaman lainnya (seperti form Pengaturan Logo & Sekolah Admin) tetap dipertahankan 1 kolom responsif agar tidak terpotong.
+- **Pemulihan Contoh Materi Pembelajaran Sebelumnya**:
+  - Mengembalikan daftar 8 item `INITIAL_MATERIALS` pada [scripts.html](file:///f:/repository/stemsites/scripts.html) dan `sampleMaterials` pada [Code.gs](file:///f:/repository/stemsites/Code.gs) ke konten materi awal yang disukai pengguna.
+  - Pembaruan versi cache lokal `DATA_VERSION` menjadi `"v1.3.1"` agar browser klien otomatis memuat materi yang telah dipulihkan.
+- **Dokumen Teknis & Penawaran Harga**:
+  - Diterbitkan dokumen teknis resmi roadmap pengembangan dan proposal penawaran harga sistem portal STEM sekolah di [docs/01-proposals/PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md](file:///f:/repository/stemsites/docs/01-proposals/PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md).
+
+---
+
 ## [1.3.0] - 2026-10-26
 
 ### Added & Enhanced
