@@ -638,17 +638,57 @@ textarea.form-control { min-height: 90px; resize: vertical; }
   .grade-select-btn .grade-num { font-size: 1.05rem; }
   .grade-select-btn.all-grades { padding: 0.75rem; font-size: 0.85rem; }
 
-  /* Admin Responsiveness 1 Kolom */
-  .admin-content-area { padding: 1rem 0.85rem; }
-  .admin-pane-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; margin-bottom: 1.25rem; }
-  .admin-pane-header .nav-btn { width: 100%; justify-content: center; }
-  .admin-filter-bar { flex-direction: column !important; align-items: stretch !important; gap: 0.65rem !important; }
-  .admin-filter-bar input, .admin-filter-bar select { max-width: 100% !important; width: 100% !important; }
+  /* Admin Responsiveness Mobile & Thumb-Zone Friendly */
+  .admin-content-area { padding: 0.85rem 0.65rem; }
+  .admin-pane-header { flex-direction: column; align-items: stretch; gap: 0.35rem; margin-bottom: 0.65rem; }
+  .admin-pane-title h2 { font-size: 1.15rem !important; line-height: 1.28 !important; margin-bottom: 0.2rem !important; }
+  .admin-pane-title p { font-size: 0.78rem !important; line-height: 1.38 !important; color: var(--text-muted) !important; margin-bottom: 0.25rem !important; }
+  
+  /* Sembunyikan tombol header di mobile jika dipindahkan ke bawah */
+  .admin-pane-header .desktop-action { display: none !important; }
+  
+  /* Filter Bar 1 Baris Kompak */
+  .admin-filter-bar {
+    display: grid !important;
+    grid-template-columns: minmax(105px, 1.8fr) minmax(88px, 1.1fr) minmax(78px, 1fr) !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    margin-bottom: 0.65rem !important;
+    width: 100% !important;
+  }
+  .admin-filter-bar input, .admin-filter-bar select {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 38px !important;
+    font-size: 0.78rem !important;
+    padding: 0.4rem 0.45rem !important;
+    border-radius: var(--radius-sm) !important;
+  }
+  
+  /* Action Button Bar di Bawah Filter / Form */
+  .admin-action-row-bottom {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.85rem !important;
+    width: 100% !important;
+  }
+  .admin-action-row-bottom .nav-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 0.65rem 1rem !important;
+    font-size: 0.86rem !important;
+    font-weight: 700 !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+
   .admin-preview-sidebar { width: 100% !important; }
   .table-container { border-radius: var(--radius-md); }
 
   .form-row-2, .form-row-4 { grid-template-columns: 1fr; }
 }
+
+.admin-action-row-bottom { display: none; }
 
 .grade-selector-header { text-align: center; margin-bottom: 1.25rem; }
 .grade-selector-icon-badge {
@@ -1378,14 +1418,14 @@ textarea.form-control { min-height: 90px; resize: vertical; }
             <h2>Kelola Sub-Card Materi STEM</h2>
             <p>Tambah, edit, atau hapus konten materi pada masing-masing dari 4 Card Utama STEM.</p>
           </div>
-          <button class="nav-btn primary" onclick="openAddMaterialModal()">
+          <button class="nav-btn primary desktop-action" onclick="openAddMaterialModal()">
             <i class="fa-solid fa-plus"></i> Tambah Sub-Card Baru
           </button>
         </div>
 
         <!-- Filter Bar di Admin Table -->
         <div class="admin-filter-bar" style="display:flex; gap:0.75rem; margin-bottom:1rem; flex-wrap:wrap;">
-          <input type="text" id="adminSearchInput" class="form-control" placeholder="Cari materi di tabel..." style="max-width:320px;" oninput="renderAdminTable()">
+          <input type="text" id="adminSearchInput" class="form-control" placeholder="Cari materi..." style="max-width:320px;" oninput="renderAdminTable()">
           <select id="adminStemFilter" class="form-control" style="max-width:180px;" onchange="renderAdminTable()">
             <option value="">Semua STEM</option>
             <option value="Science">Science</option>
@@ -1402,6 +1442,13 @@ textarea.form-control { min-height: 90px; resize: vertical; }
             <option value="5">Kelas 5</option>
             <option value="6">Kelas 6</option>
           </select>
+        </div>
+
+        <!-- Action Button di Bawah Filter untuk Akses Mudah Mobile -->
+        <div class="admin-action-row-bottom">
+          <button class="nav-btn primary" onclick="openAddMaterialModal()">
+            <i class="fa-solid fa-plus"></i> Tambah Sub-Card Baru
+          </button>
         </div>
 
         <!-- Table Container -->
@@ -1435,7 +1482,7 @@ textarea.form-control { min-height: 90px; resize: vertical; }
             <h2>Pengaturan Identitas, Logo Sekolah & Logo Kategori STEM</h2>
             <p>Kustomisasi informasi sekolah, logo instansi, URL logo masing-masing dari 4 kategori STEM, kontak bantuan, dan PIN Admin.</p>
           </div>
-          <button class="nav-btn primary" onclick="saveSchoolSettings()">
+          <button class="nav-btn primary desktop-action" onclick="saveSchoolSettings()">
             <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan
           </button>
         </div>
@@ -1521,6 +1568,11 @@ textarea.form-control { min-height: 90px; resize: vertical; }
                   <input type="url" id="settingLogoMat" class="form-control" placeholder="Kosongkan untuk ikon bawaan" oninput="previewSettings()">
                 </div>
               </div>
+            <!-- Action Button Simpan Pengaturan di Bawah Form untuk Mobile -->
+            <div class="admin-action-row-bottom" style="margin-top:0.75rem;">
+              <button class="nav-btn primary" onclick="saveSchoolSettings()">
+                <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan
+              </button>
             </div>
 
           </div>
@@ -2593,7 +2645,9 @@ function openAdminView() {
   if (view) view.classList.add("active");
   renderAdminTable();
   populateSettingsForm();
-  initCodeSnippets();
+  if (typeof initDeployCodeViewer === 'function') {
+    initDeployCodeViewer();
+  }
 }
 
 function closeAdminView() {

@@ -3,6 +3,21 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.4.2] - 2026-10-26
+
+### Fixed & Enhanced
+- **Perapian Tipografi & Tampilan Mobile Dashboard Admin**:
+  - Penyesuaian ukuran font judul pane admin (`.admin-pane-title h2`) menjadi `1.15rem` dan subjudul menjadi `0.78rem`, memberikan tampilan yang proporsional, rapi, dan nyaman dibaca di layar smartphone.
+- **Penyatuan Filter dalam 1 Baris Kompak (*1-Row Inline Filters*)**:
+  - Filter pencarian, dropdown STEM, dan dropdown Kelas disatukan ke dalam 1 baris grid responsif yang ringkas, menghemat ruang vertikal layar hingga 65%.
+- **Penataan Tombol Aksi di Bawah Form / Filter (*Thumb-Zone Ergonomics*)**:
+  - Tombol `+ Tambah Sub-Card Baru` di mode mobile diposisikan tepat di bawah baris filter dengan lebar penuh (*full-width touch target*).
+  - Tab *Pengaturan Logo & Sekolah* kini dilengkapi tombol `Simpan Pengaturan` di bawah form sehingga pengguna mobile dapat langsung menyimpan setelah selesai mengisi formulir.
+- **Pembersihan Runtime Console Error**:
+  - Memperbaiki panggilan `openAdminView()` pada `scripts.html`, `admin.html`, dan `index.html` dengan proteksi aman `initDeployCodeViewer()`, menghilangkan error `Uncaught ReferenceError: initCodeSnippets is not defined`.
+
+---
+
 ## [1.4.1] - 2026-10-26
 
 ### Fixed & Enhanced

@@ -767,7 +767,9 @@ function openAdminView() {
   if (view) view.classList.add("active");
   renderAdminTable();
   populateSettingsForm();
-  initCodeSnippets();
+  if (typeof initDeployCodeViewer === 'function') {
+    initDeployCodeViewer();
+  }
 }
 
 function closeAdminView() {
