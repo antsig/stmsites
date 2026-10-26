@@ -94,9 +94,22 @@ Dokumen ini berisi panduan pengujian dan bukti verifikasi fungsional untuk **Por
 
 ---
 
+### 8. Pengujian Panduan Deploy & File Selector 5 Berkas di Admin
+- [x] **Langkah 1**: Masuk ke panel Admin menggunakan PIN (`1234` atau `123456`).
+- [x] **Langkah 2**: Klik tab **"Step Deploy & Kode GAS"** di sidemenu admin.
+- [x] **Hasil yang Diharapkan**:
+  - Tampil panduan terstruktur **7 Langkah Penerapan ke Akun Google**.
+  - Tampil **File Selector 5 Berkas**: tombol `Code.gs`, `index.html`, `styles.html`, `admin.html`, dan `scripts.html`.
+  - Mengklik tab berkas secara dinamis memuat seluruh kode berkas terkait ke dalam textarea display lengkap dengan info jumlah baris dan karakter.
+  - Mengklik tombol **"Salin Kode Ini"** menyalin seluruh kode ke clipboard dan menampilkan toast konfirmasi sukses.
+  - Tersedia dokumen panduan mandiri lengkap di [docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md](file:///f:/repository/stemsites/docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md).
+
+---
+
 ## 🛡️ Bukti Berkas Modular Google Apps Script
 - [styles.html](file:///f:/repository/stemsites/styles.html): Modular CSS murni GAS (`<style>...</style>`).
 - [scripts.html](file:///f:/repository/stemsites/scripts.html): Modular JavaScript murni GAS (`<script>...</script>`).
 - [admin.html](file:///f:/repository/stemsites/admin.html): Modular Admin View & Form markup murni GAS.
 - [index.html](file:///f:/repository/stemsites/index.html): Modular Public Page Template & Include Loader.
-- [Code.gs](file:///f:/repository/stemsites/Code.gs): Backend Google Apps Script dengan fungsi `include()` dan `doGet()`.
+- [Code.gs](file:///f:/repository/stemsites/Code.gs): Backend Google Apps Script dengan fungsi `include()`, `doGet()`, dan `getDeployFileCode()`.
+- [PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md](file:///f:/repository/stemsites/docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md): Panduan lengkap deploy dan kode sumber.

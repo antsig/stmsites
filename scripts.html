@@ -795,7 +795,12 @@ function switchAdminTab(tabId, btn) {
 
   if (btn) btn.classList.add("active");
   const targetPane = document.getElementById(tabId);
-  if (targetPane) targetPane.classList.add("active");
+  if (targetPane) {
+    targetPane.classList.add("active");
+    if (tabId === "tab-deploy-gas") {
+      initDeployCodeViewer();
+    }
+  }
 
   const sidebar = document.getElementById("adminSidebar");
   const backdrop = document.getElementById("adminBackdropMobile");
@@ -1084,32 +1089,186 @@ function saveSchoolSettings() {
   }
 }
 
-function initCodeSnippets() {
-  const codeBox = document.getElementById("codeGsSource");
-  if (codeBox) {
-    codeBox.value = `// Backend Script Google Apps Script - Code.gs
-var SHEET_SETTINGS = 'Settings';
-var SHEET_MATERI = 'Materi';
-var DEFAULT_PIN = '123456';
+// ==============================================================================
+// MODUL PANDUAN DEPLOY & CODE VIEWER (5 BERKAS GOOGLE APPS SCRIPT)
+// ==============================================================================
+let currentDeployFileName = 'Code.gs';
+const DEPLOY_FILE_METAS = {
+  'Code.gs': {
+    type: 'Script (.gs)',
+    appsScriptName: 'Code.gs',
+    desc: 'Backend Controller, Database Google Sheets, & API Engine'
+  },
+  'index.html': {
+    type: 'HTML',
+    appsScriptName: 'index',
+    desc: 'Template Shell Utama Aplikasi Web (Ketik nama "index" di Apps Script)'
+  },
+  'styles.html': {
+    type: 'HTML',
+    appsScriptName: 'styles',
+    desc: 'Desain Visual CSS Responsif Modern (Ketik nama "styles" di Apps Script)'
+  },
+  'admin.html': {
+    type: 'HTML',
+    appsScriptName: 'admin',
+    desc: 'Markup Tampilan Dashboard Panel Admin (Ketik nama "admin" di Apps Script)'
+  },
+  'scripts.html': {
+    type: 'HTML',
+    appsScriptName: 'scripts',
+    desc: 'Logika Interaktif JavaScript Frontend (Ketik nama "scripts" di Apps Script)'
+  }
+};
 
-function doGet(e) {
-  initDatabaseIfEmpty();
-  return HtmlService.createTemplateFromFile('index').evaluate()
-    .setTitle('Portal Pembelajaran STEM Sekolah')
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+const deployFileCache = {};
+
+function getCompleteCodeGsSource() {
+  return "/**\n * ==============================================================================\n * PORTAL PEMBELAJARAN STEM SEKOLAH BERBASIS GOOGLE APPS SCRIPT (GAS)\n * Backend Script - Code.gs\n * ==============================================================================\n * Dijalankan di Google Apps Script yang terhubung ke Google Sheets sebagai database.\n */\n\n// Konfigurasi Nama Sheet\nvar SHEET_SETTINGS = 'Settings';\nvar SHEET_MATERI = 'Materi';\n\n// Default PIN Admin\nvar DEFAULT_PIN = '123456';\n\n/**\n * Entry point Web App (GET Request)\n */\nfunction doGet(e) {\n  // Inisialisasi spreadsheet jika tabel belum ada\n  initDatabaseIfEmpty();\n\n  var template = HtmlService.createTemplateFromFile('index');\n  return template.evaluate()\n    .setTitle('Portal Pembelajaran STEM Sekolah')\n    .addMetaTag('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')\n    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);\n}\n\n/**\n * Menyertakan file HTML parsial jika diperlukan (misal: CSS / JS terpisah)\n */\nfunction include(filename) {\n  return HtmlService.createHtmlOutputFromFile(filename).getContent();\n}\n\n/**\n * Mengambil data awal untuk klien (Settings + Daftar Materi)\n */\nfunction getInitialData() {\n  try {\n    initDatabaseIfEmpty();\n    var settings = getSettingsMap();\n    var materials = getMaterialsList();\n\n    // Sembunyikan PIN admin di respon publik\n    var safeSettings = Object.assign({}, settings);\n    delete safeSettings.admin_pin;\n\n    return {\n      success: true,\n      data: {\n        settings: safeSettings,\n        materials: materials\n      }\n    };\n  } catch (err) {\n    return {\n      success: false,\n      error: err.toString()\n    };\n  }\n}\n\n/**\n * Verifikasi PIN Admin\n */\nfunction verifyPin(inputPin) {\n  try {\n    var settings = getSettingsMap();\n    var currentPin = settings.admin_pin || DEFAULT_PIN;\n    if (String(inputPin).trim() === String(currentPin).trim()) {\n      return { success: true };\n    }\n    return { success: false, error: 'PIN Admin tidak sesuai! Silakan periksa kembali.' };\n  } catch (err) {\n    return { success: false, error: err.toString() };\n  }\n}\n\n/**\n * Menyimpan (Tambah baru atau Update) Sub-Card Materi STEM\n */\nfunction saveMaterial(materialData, adminPin) {\n  try {\n    // Validasi Keamanan PIN\n    var pinCheck = verifyPin(adminPin);\n    if (!pinCheck.success) return pinCheck;\n\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n    var sheet = ss.getSheetByName(SHEET_MATERI);\n    if (!sheet) {\n      initDatabaseIfEmpty();\n      sheet = ss.getSheetByName(SHEET_MATERI);\n    }\n\n    var data = sheet.getDataRange().getValues();\n    var headers = data[0];\n    var idIndex = headers.indexOf('id');\n\n    var isUpdate = false;\n    var targetRow = -1;\n\n    // Jika ID diberikan, cari baris untuk update\n    if (materialData.id) {\n      for (var i = 1; i < data.length; i++) {\n        if (String(data[i][idIndex]) === String(materialData.id)) {\n          isUpdate = true;\n          targetRow = i + 1; // 1-based row index\n          break;\n        }\n      }\n    }\n\n    var finalId = isUpdate ? materialData.id : 'STEM-' + Utilities.getUuid().substring(0, 8).toUpperCase();\n    var now = Utilities.formatDate(new Date(), 'Asia/Jakarta', 'yyyy-MM-dd HH:mm:ss');\n\n    var rowValues = [\n      finalId,\n      materialData.stem_category || 'Science',\n      materialData.title || '',\n      materialData.grade || '1',\n      materialData.media_type || 'Video',\n      materialData.media_url || '',\n      materialData.thumbnail_url || '',\n      materialData.description || '',\n      materialData.mission_goals || '',\n      materialData.mission_steps || '',\n      materialData.mission_reflection || '',\n      isUpdate ? (data[targetRow - 1][headers.indexOf('created_at')] || now) : now\n    ];\n\n    if (isUpdate && targetRow > 1) {\n      sheet.getRange(targetRow, 1, 1, rowValues.length).setValues([rowValues]);\n    } else {\n      sheet.appendRow(rowValues);\n    }\n\n    return {\n      success: true,\n      message: isUpdate ? 'Materi berhasil diperbarui!' : 'Materi baru berhasil ditambahkan!',\n      data: formatMaterialRow(headers, rowValues)\n    };\n  } catch (err) {\n    return { success: false, error: err.toString() };\n  }\n}\n\n/**\n * Menghapus Sub-Card Materi berdasarkan ID\n */\nfunction deleteMaterial(id, adminPin) {\n  try {\n    var pinCheck = verifyPin(adminPin);\n    if (!pinCheck.success) return pinCheck;\n\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n    var sheet = ss.getSheetByName(SHEET_MATERI);\n    if (!sheet) return { success: false, error: 'Sheet Materi tidak ditemukan!' };\n\n    var data = sheet.getDataRange().getValues();\n    var idIndex = data[0].indexOf('id');\n    var foundRow = -1;\n\n    for (var i = 1; i < data.length; i++) {\n      if (String(data[i][idIndex]) === String(id)) {\n        foundRow = i + 1;\n        break;\n      }\n    }\n\n    if (foundRow > 1) {\n      sheet.deleteRow(foundRow);\n      return { success: true, message: 'Materi berhasil dihapus!' };\n    }\n\n    return { success: false, error: 'Materi dengan ID tersebut tidak ditemukan.' };\n  } catch (err) {\n    return { success: false, error: err.toString() };\n  }\n}\n\n/**\n * Memperbarui Pengaturan Sekolah & Logo\n */\nfunction updateSettings(newSettings, adminPin) {\n  try {\n    var pinCheck = verifyPin(adminPin);\n    if (!pinCheck.success) return pinCheck;\n\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n    var sheet = ss.getSheetByName(SHEET_SETTINGS);\n    if (!sheet) {\n      initDatabaseIfEmpty();\n      sheet = ss.getSheetByName(SHEET_SETTINGS);\n    }\n\n    var data = sheet.getDataRange().getValues();\n    var existingKeys = {};\n    for (var i = 1; i < data.length; i++) {\n      existingKeys[data[i][0]] = i + 1;\n    }\n\n    // Perbarui key yang diberikan\n    for (var key in newSettings) {\n      if (newSettings.hasOwnProperty(key)) {\n        var val = newSettings[key];\n        if (existingKeys[key]) {\n          sheet.getRange(existingKeys[key], 2).setValue(val);\n        } else {\n          sheet.appendRow([key, val]);\n        }\n      }\n    }\n\n    var updatedSettings = getSettingsMap();\n    delete updatedSettings.admin_pin; // Jangan kirimkan PIN kembali\n\n    return {\n      success: true,\n      message: 'Pengaturan sekolah berhasil disimpan!',\n      data: updatedSettings\n    };\n  } catch (err) {\n    return { success: false, error: err.toString() };\n  }\n}\n\n/**\n * Mengambil daftar pengaturan dalam format objek Key-Value\n */\nfunction getSettingsMap() {\n  var ss = SpreadsheetApp.getActiveSpreadsheet();\n  var sheet = ss.getSheetByName(SHEET_SETTINGS);\n  if (!sheet) return {};\n\n  var data = sheet.getDataRange().getValues();\n  var settings = {};\n  for (var i = 1; i < data.length; i++) {\n    var k = String(data[i][0]).trim();\n    var v = data[i][1];\n    if (k) settings[k] = v;\n  }\n  return settings;\n}\n\n/**\n * Mengambil semua materi sebagai array of objects\n */\nfunction getMaterialsList() {\n  var ss = SpreadsheetApp.getActiveSpreadsheet();\n  var sheet = ss.getSheetByName(SHEET_MATERI);\n  if (!sheet) return [];\n\n  var data = sheet.getDataRange().getValues();\n  if (data.length <= 1) return [];\n\n  var headers = data[0];\n  var list = [];\n  for (var i = 1; i < data.length; i++) {\n    list.push(formatMaterialRow(headers, data[i]));\n  }\n  return list;\n}\n\n/**\n * Format baris sheet menjadi objek JSON materi\n */\nfunction formatMaterialRow(headers, row) {\n  var obj = {};\n  for (var j = 0; j < headers.length; j++) {\n    var key = headers[j];\n    var val = row[j];\n    if (key === 'grade') {\n      obj[key] = String(val);\n    } else {\n      obj[key] = val !== undefined && val !== null ? String(val) : '';\n    }\n  }\n  return obj;\n}\n\n/**\n * Inisialisasi sheet dan seed data awal jika spreadsheet masih kosong\n */\nfunction initDatabaseIfEmpty() {\n  var ss = SpreadsheetApp.getActiveSpreadsheet();\n\n  // 1. Inisialisasi Sheet Settings\n  var settingsSheet = ss.getSheetByName(SHEET_SETTINGS);\n  if (!settingsSheet) {\n    settingsSheet = ss.insertSheet(SHEET_SETTINGS);\n    settingsSheet.appendRow(['key', 'value']);\n    var defaultSettings = [\n      ['school_name', 'SD NEGERI HARAPAN BANGSA'],\n      ['academic_year', '2026/2027'],\n      ['slogan', 'Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika Bersama!'],\n      ['logo_url', 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80'],\n      ['contact_wa', '6281234567890'],\n      ['contact_email', 'stem.harapanbangsa@sekolah.sch.id'],\n      ['admin_pin', DEFAULT_PIN],\n      ['logo_science', ''],\n      ['logo_technology', ''],\n      ['logo_engineering', ''],\n      ['logo_mathematics', '']\n    ];\n    for (var s = 0; s < defaultSettings.length; s++) {\n      settingsSheet.appendRow(defaultSettings[s]);\n    }\n    settingsSheet.getRange(1, 1, 1, 2).setFontWeight('bold').setBackground('#E2E8F0');\n  }\n\n  // 2. Inisialisasi Sheet Materi\n  var materiSheet = ss.getSheetByName(SHEET_MATERI);\n  if (!materiSheet) {\n    materiSheet = ss.insertSheet(SHEET_MATERI);\n    var materiHeaders = [\n      'id', 'stem_category', 'title', 'grade', 'media_type', 'media_url',\n      'thumbnail_url', 'description', 'mission_goals', 'mission_steps',\n      'mission_reflection', 'created_at'\n    ];\n    materiSheet.appendRow(materiHeaders);\n\n    // Seed contoh materi STEM untuk Kelas 1 s.d. 6\n    var sampleMaterials = [\n      // 1. Science\n      [\n        'STEM-SCI01', 'Science', 'Petualangan Daur Hidup Kupu-kupu', '2', 'Video',\n        'https://www.youtube.com/watch?v=O1S8WzwLPlM',\n        'https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=600&auto=format&fit=crop&q=80',\n        'Yuk amati metamorfosis sempurna dari telur, ulat yang rakus, kepompong tidur, hingga menjadi kupu-kupu bersayap indah!',\n        '1. Mengenal 4 tahap metamorfosis kupu-kupu.\\n2. Menjelaskan perubahan bentuk ulat hingga menjadi kupu-kupu.',\n        '1. Tonton video animasi daur hidup kupu-kupu.\\n2. Siapkan kertas origami atau plastisin.\\n3. Buatlah 4 replika tahap metamorfosis dan susun berurutan di buku gambarmu!',\n        'Mengapa ulat harus beristirahat di dalam kepompong sebelum sayapnya tumbuh indah?',\n        '2026-10-25 08:00:00'\n      ],\n      [\n        'STEM-SCI02', 'Science', 'Eksplorasi Fotosintesis: Mengapa Daun Berwarna Hijau?', '4', 'Simulasi',\n        'https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light_all.html',\n        'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop&q=80',\n        'Temukan bagaimana klorofil menyerap cahaya matahari dan mengubah air serta karbon dioksida menjadi oksigen segar!',\n        '1. Menjelaskan fungsi klorofil dalam proses fotosintesis.\\n2. Mengidentifikasi peran penting tumbuhan bagi udara di bumi.',\n        '1. Ambil 2 helai daun tanaman di taman sekolah.\\n2. Tutup salah satu bagian daun dengan kertas timah selama 2 hari.\\n3. Amati perubahan warna daun saat terkena sinar matahari!',\n        'Apa yang akan terjadi pada udara di bumi jika pohon-pohon hijau berkurang?',\n        '2026-10-25 08:15:00'\n      ],\n      // 2. Technology\n      [\n        'STEM-TEC01', 'Technology', 'Logika Coding Dasar: Algoritma Robot Pembawa Pesan', '3', 'Simulasi',\n        'https://blockly.games/maze',\n        'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&auto=format&fit=crop&q=80',\n        'Belajar logika berpikir komputasional dengan menyusun blok perintah langkah demi langkah agar robot mencapai tujuan.',\n        '1. Memahami konsep urutan perintah (sequence) dalam pemrograman.\\n2. Melatih logika pemecahan masalah secara runtut.',\n        '1. Buka simulasi labirin blok melalui tautan materi.\\n2. Pandu robot agar berhasil keluar labirin dengan perintah: Maju, Belok Kiri, Belok Kanan.\\n3. Tuliskan kode langkah terbaikmu di buku catatan!',\n        'Mengapa komputer atau robot harus diberi perintah yang sangat runtut tanpa boleh ada yang terbalik?',\n        '2026-10-25 08:30:00'\n      ],\n      [\n        'STEM-TEC02', 'Technology', 'Jelajah Internet Cerdas: Cara Mencari Fakta & Menghindari Hoaks', '5', 'Artikel',\n        'https://id.wikipedia.org/wiki/Literasi_digital',\n        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80',\n        'Kiat aman berselancar di dunia maya, mengenali sumber informasi tepercaya, dan menjaga data privasi.',\n        '1. Siswa mampu membedakan informasi fakta dan berita bohong.\\n2. Mengetahui pentingnya merahasiakan password dan data pribadi.',\n        '1. Baca artikel ringkasan literasi digital.\\n2. Periksa sebuah berita online menggunakan rumus 5W+1H.\\n3. Buat kartu pengingat: 3 Langkah Cek Fakta di Internet!',\n        'Mengapa kita tidak boleh sembarangan mengklik tautan hadiah yang tidak jelas pengirimnya?',\n        '2026-10-25 08:45:00'\n      ],\n      // 3. Engineering\n      [\n        'STEM-ENG01', 'Engineering', 'Rekayasa Jembatan Kertas Kokoh Penahan Beban', '1', 'Praktikum',\n        'https://www.youtube.com/watch?v=7b7pS6X9V1g',\n        'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&auto=format&fit=crop&q=80',\n        'Bagaimana melipat selembar kertas biasa agar mampu menahan beban koin atau mobil mainan? Temukan rahasia struktur lipatan!',\n        '1. Mengenal konsep dasar struktur teknik (lipatan zig-zag/akordeon).\\n2. Melatih kreativitas rancang bangun dengan bahan sederhana.',\n        '1. Siapkan 3 lembar kertas HVS bekas dan 2 cangkir sebagai tiang penyangga.\\n2. Buat jembatan pertama mendatar biasa, dan jembatan kedua dengan lipatan zig-zag.\\n3. Letakkan koin satu demi satu di atas jembatan sampai roboh. Catat jembatan mana yang paling kokoh!',\n        'Mengapa lipatan zig-zag dapat membuat kertas tipis menjadi jauh lebih kuat menahan beban?',\n        '2026-10-25 09:00:00'\n      ],\n      [\n        'STEM-ENG02', 'Engineering', 'Desain Mobil Bertenaga Balon Udara (Hukum Gerak)', '6', 'Praktikum',\n        'https://www.youtube.com/watch?v=Kz6E1B6VvG8',\n        'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80',\n        'Rancang mobil balap ramah lingkungan dari botol bekas yang meluncur kencang akibat semburan udara dari balon!',\n        '1. Memahami prinsip aksi-reaksi (dorongan udara keluar menghasilkan gerak maju).\\n2. Menguji coba aerodinamika bentuk bodi kendaraan sederhana.',\n        '1. Siapkan botol plastik bekas, sedotan, 4 tutup botol sebagai roda, dan 1 buah balon.\\n2. Rakit poros roda menggunakan tusuk sate dan sedotan.\\n3. Tiup balon di atas mobil, lalu lepaskan di lantai licin dan ukur jarak luncurnya!',\n        'Bagaimana cara memodifikasi bentuk mobil agar meluncur lebih lurus dan jauh?',\n        '2026-10-25 09:15:00'\n      ],\n      // 4. Mathematics\n      [\n        'STEM-MAT01', 'Mathematics', 'Pecahan Pizza Lezat: Memahami 1/2, 1/4, dan 3/4', '3', 'Dokumen',\n        'https://phet.colorado.edu/sims/html/fractions-intro/latest/fractions-intro_all.html',\n        'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80',\n        'Belajar pecahan jadi menyenangkan dengan memotong pizza khayalan bersama teman-teman!',\n        '1. Memvisualisasikan pecahan sederhana dalam bentuk potongan benda utuh.\\n2. Membandingkan nilai pecahan yang berpenyebut sama.',\n        '1. Buka simulasi pecahan interaktif PhET.\\n2. Bagi sebuah lingkaran pizza menjadi 4 bagian sama besar.\\n3. Berikan 2 potong kepada teman, dan hitung berapa sisa pecahan yang kamu miliki!',\n        'Jika sebuah kue dibagi sama rata untuk 4 anak, mengapa setiap anak mendapat nilai 1/4 bagian?',\n        '2026-10-25 09:30:00'\n      ],\n      [\n        'STEM-MAT02', 'Mathematics', 'Detektif Sudut: Menemukan Sudut Siku-siku, Lancip, & Tumpul', '5', 'Video',\n        'https://www.youtube.com/watch?v=NVuMULQjb3o',\n        'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80',\n        'Bawa penggaris busurmu dan jadilah detektif yang mencari sudut-sudut rahasia pada pintu, atap rumah, dan jam dinding!',\n        '1. Mengidentifikasi sudut siku-siku (90 derajat), lancip (<90 derajat), dan tumpul (>90 derajat).\\n2. Melatih ketelitian dalam mengamati sudut pada objek di sekitar.',\n        '1. Ambil selembar kertas origami persegi yang memiliki sudut siku-siku 90°.\\n2. Cocokkan ujung kertas pada 5 sudut benda di dalam kelas atau rumahmu.\\n3. Catat di tabel: benda mana yang memiliki sudut siku-siku, lancip, atau tumpul!',\n        'Mengapa kusen pintu dan jendela kebanyakan dirancang menggunakan sudut siku-siku?',\n        '2026-10-25 09:45:00'\n      ]\n    ];\n\n    for (var m = 0; m < sampleMaterials.length; m++) {\n      materiSheet.appendRow(sampleMaterials[m]);\n    }\n    materiSheet.getRange(1, 1, 1, materiHeaders.length).setFontWeight('bold').setBackground('#E2E8F0');\n  }\n}\n";
 }
 
-function include(filename) {
-  return HtmlService.createHtmlOutputFromFile(filename).getContent();
-}`;
+async function initDeployCodeViewer() {
+  await selectDeployFile('Code.gs');
+}
+
+async function selectDeployFile(filename) {
+  currentDeployFileName = filename;
+  const meta = DEPLOY_FILE_METAS[filename] || { type: 'File', appsScriptName: filename, desc: '' };
+
+  document.querySelectorAll('.deploy-tab-btn').forEach((btn) => {
+    if (btn.textContent.includes(filename)) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  const badgeEl = document.getElementById('deployFileMetaBadge');
+  if (badgeEl) {
+    badgeEl.textContent = 'Tipe: ' + meta.type + ' | Nama di Apps Script: ' + meta.appsScriptName + ' (cukup ketik nama tanpa .html)';
+  }
+
+  const viewer = document.getElementById('deployCodeViewer');
+  if (!viewer) return;
+
+  if (deployFileCache[filename]) {
+    viewer.value = deployFileCache[filename];
+    updateDeployCharCount(viewer.value);
+    return;
+  }
+
+  viewer.value = 'Memuat skrip lengkap berkas ' + filename + '...';
+
+  let content = '';
+  if (filename === 'Code.gs') {
+    content = getCompleteCodeGsSource();
+  } else if (isRunningInGoogleAppsScript()) {
+    try {
+      content = await new Promise((resolve) => {
+        google.script.run
+          .withSuccessHandler((res) => {
+            if (res && res.success) resolve(res.content);
+            else resolve(getLocalDomContent(filename));
+          })
+          .withFailureHandler(() => {
+            resolve(getLocalDomContent(filename));
+          })
+          .getDeployFileCode(filename);
+      });
+    } catch (e) {
+      content = getLocalDomContent(filename);
+    }
+  } else {
+    try {
+      const res = await fetch(filename);
+      if (res.ok) {
+        content = await res.text();
+      } else {
+        content = getLocalDomContent(filename);
+      }
+    } catch (e) {
+      content = getLocalDomContent(filename);
+    }
+  }
+
+  deployFileCache[filename] = content;
+  viewer.value = content;
+  updateDeployCharCount(content);
+}
+
+function updateDeployCharCount(text) {
+  const charEl = document.getElementById('deployCodeCharCount');
+  if (charEl) {
+    const lines = (text || '').split('\n').length;
+    const chars = (text || '').length;
+    charEl.textContent = lines + ' baris • ' + chars.toLocaleString() + ' karakter';
   }
 }
 
-function copyBackendCode() {
-  const code = document.getElementById("codeGsSource")?.value || "";
+function getLocalDomContent(filename) {
+  if (filename === 'styles.html') {
+    const st = document.querySelector('style[data-gas-style="true"]') || document.querySelector('style');
+    return st ? '<style>\n' + st.textContent.trim() + '\n</style>' : '<!-- styles.html -->';
+  }
+  if (filename === 'admin.html') {
+    const adm = document.getElementById('adminModuleContainer') || document.getElementById('adminView');
+    return adm ? adm.innerHTML.trim() : '<!-- admin.html -->';
+  }
+  if (filename === 'scripts.html') {
+    const sc = document.querySelector('script:not([src])');
+    return sc ? '<script>\n' + sc.textContent.trim() + '\n<' + '/script>' : '<script>// scripts.html<' + '/script>';
+  }
+  if (filename === 'index.html') {
+    return `<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Portal Pembelajaran STEM Sekolah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <?!= include('styles'); ?>
+</head>
+<body>
+  <div id="adminModuleContainer">
+    <?!= include('admin'); ?>
+  </div>
+  <?!= include('scripts'); ?>
+</body>
+</html>`;
+  }
+  return '';
+}
+
+function copyCurrentDeployCode() {
+  const viewer = document.getElementById('deployCodeViewer');
+  const code = viewer ? viewer.value : '';
+  if (!code) {
+    showToast('Tidak ada kode untuk disalin!', 'error');
+    return;
+  }
+
   navigator.clipboard.writeText(code).then(() => {
-    showToast("Kode Code.gs berhasil disalin!", "success");
+    const meta = DEPLOY_FILE_METAS[currentDeployFileName] || { appsScriptName: currentDeployFileName };
+    showToast('Kode ' + meta.appsScriptName + ' (' + code.length.toLocaleString() + ' karakter) berhasil disalin! Tempelkan ke Apps Script.', 'success');
+
+    const btnText = document.getElementById('copyDeployBtnText');
+    const btnIcon = document.getElementById('copyDeployBtnIcon');
+    if (btnText) btnText.textContent = 'Tersalin! ✅';
+    if (btnIcon) btnIcon.className = 'fa-solid fa-check';
+
+    setTimeout(() => {
+      if (btnText) btnText.textContent = 'Salin Kode Ini';
+      if (btnIcon) btnIcon.className = 'fa-solid fa-copy';
+    }, 2500);
+  }).catch(() => {
+    if (viewer) {
+      viewer.select();
+      document.execCommand('copy');
+      showToast('Kode berhasil disalin via seleksi teks!', 'success');
+    }
   });
 }
 

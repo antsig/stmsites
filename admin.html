@@ -360,49 +360,89 @@
       </div>
 
       <!-- ==================================================================
-           TAB 4: STEP DEPLOY & KODE GAS
+           TAB 4: STEP DEPLOY & KODE GAS LENGKAP
            ================================================================== -->
       <div class="admin-tab-pane" id="tab-deploy-gas">
         <div class="admin-pane-header">
           <div class="admin-pane-title">
             <h2>Panduan Deploy Web App ke Google Apps Script</h2>
-            <p>Langkah mudah menerbitkan aplikasi ini secara gratis menggunakan akun Google Anda.</p>
+            <p>Langkah lengkap menerbitkan portal ini secara gratis menggunakan Google Spreadsheet & Apps Script (Rp 0/bulan).</p>
           </div>
+          <button class="nav-btn primary" onclick="copyCurrentDeployCode()">
+            <i class="fa-solid fa-copy"></i> Salin Kode Berkas Aktif
+          </button>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:1.25rem; max-width:860px;">
+        <div style="display:flex; flex-direction:column; gap:1.25rem; max-width:960px;">
           
+          <!-- Panduan 7 Langkah Mudah -->
           <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
-            <h4 style="font-size:1rem; font-weight:800; margin-bottom:0.5rem;"><i class="fa-solid fa-list-check" style="color:var(--primary);"></i> 4 Langkah Deploy Mudah:</h4>
+            <h4 style="font-size:1.05rem; font-weight:800; margin-bottom:0.75rem; color:var(--text-main); display:flex; align-items:center; gap:0.5rem;">
+              <i class="fa-solid fa-cloud-arrow-up" style="color:var(--primary);"></i> 7 Langkah Penerapan ke Akun Google Anda:
+            </h4>
             <ol style="font-size:0.875rem; color:#334155; line-height:1.8; padding-left:1.25rem;">
-              <li>Buka <a href="https://sheets.new" target="_blank" style="color:var(--primary); font-weight:700;">Google Spreadsheet Baru</a> di browser Anda dan beri nama (misal: <em>Database Portal STEM</em>).</li>
-              <li>Pada menu atas Spreadsheet, klik menu <strong>Ekstensi (Extensions)</strong> &gt; pilih <strong>Apps Script</strong>.</li>
-              <li>Di dalam editor Apps Script buat berkas berikut:
-                <ul>
+              <li>Buka <a href="https://sheets.new" target="_blank" style="color:var(--primary); font-weight:700;">Google Spreadsheet Baru (sheets.new)</a> dan beri judul, misal: <em>Database Portal STEM Sekolah</em>. Biarkan sheet kosong.</li>
+              <li>Pada menu atas Spreadsheet, klik <strong>Ekstensi (Extensions)</strong> &gt; pilih <strong>Apps Script</strong>.</li>
+              <li>Di editor Apps Script, buat total <strong>5 berkas</strong>:
+                <ul style="margin-top:0.25rem; margin-bottom:0.25rem;">
                   <li>File Script: <code>Code.gs</code></li>
-                  <li>File HTML: <code>index</code>, <code>admin</code>, <code>styles</code>, dan <code>scripts</code></li>
+                  <li>File HTML (klik tanda <code>+</code> &gt; pilih <em>HTML</em>): ketik <code>index</code>, <code>styles</code>, <code>admin</code>, dan <code>scripts</code> <em>(cukup ketik nama tanpa .html)</em>.</li>
                 </ul>
               </li>
-              <li>Klik tombol biru <strong>Terapkan (Deploy)</strong> &gt; pilih <strong>Penerapan Baru (New Deployment)</strong>:
-                <ul>
-                  <li>Jenis: <strong>Aplikasi Web (Web App)</strong>.</li>
-                  <li>Jalankan sebagai: <strong>Saya (Me)</strong>.</li>
-                  <li>Siapa yang memiliki akses: <strong>Siapa saja (Anyone)</strong>.</li>
-                  <li>Klik <strong>Deploy</strong> dan salin URL Web App yang dihasilkan!</li>
+              <li>Salin dan tempelkan seluruh kode untuk masing-masing berkas menggunakan tombol <strong>Salin Kode</strong> pada tab di bawah ini.</li>
+              <li>Tekan tombol disket <strong>Simpan proyek (Ctrl + S)</strong>.</li>
+              <li>Klik tombol biru <strong>Terapkan (Deploy)</strong> di kanan atas &gt; pilih <strong>Penerapan baru (New deployment)</strong>:
+                <ul style="margin-top:0.25rem; margin-bottom:0.25rem;">
+                  <li>Jenis: <strong>Aplikasi web (Web app)</strong></li>
+                  <li>Jalankan sebagai: <strong>Saya (email Anda)</strong></li>
+                  <li>Siapa yang memiliki akses: <strong>Siapa saja (Anyone)</strong> <em>(wajib agar siswa dapat membuka tanpa login khusus)</em>.</li>
                 </ul>
               </li>
+              <li>Klik <strong>Terapkan</strong> &gt; lakukan otorisasi izin akun Google (klik <em>Advanced / Lanjutan</em> &gt; <em>Go to Portal STEM (unsafe)</em> &gt; <em>Izinkan</em>), lalu salin URL Web App yang dihasilkan!</li>
             </ol>
           </div>
 
-          <!-- Box Kode Code.gs -->
+          <!-- Selector Berkas Kode Lengkap -->
           <div style="background:#FFF; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color);">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
-              <h4 style="font-size:0.95rem; font-weight:800;"><i class="fa-solid fa-code"></i> Kode Backend (Code.gs)</h4>
-              <button class="nav-btn primary" style="font-size:0.78rem; padding:0.35rem 0.8rem;" onclick="copyBackendCode()">
-                <i class="fa-solid fa-copy"></i> Salin Code.gs
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem;">
+              <div>
+                <h4 style="font-size:1rem; font-weight:800; color:var(--text-main); display:flex; align-items:center; gap:0.5rem;">
+                  <i class="fa-solid fa-folder-open" style="color:#D97706;"></i> Skrip Lengkap Berkas Proyek:
+                </h4>
+                <span id="deployFileMetaBadge" style="font-size:0.8rem; color:var(--text-muted);">Tipe: Script (.gs) | Nama di editor: Code.gs</span>
+              </div>
+              <button class="nav-btn primary" style="font-size:0.8rem; padding:0.4rem 0.9rem;" onclick="copyCurrentDeployCode()">
+                <i class="fa-solid fa-copy" id="copyDeployBtnIcon"></i> <span id="copyDeployBtnText">Salin Kode Ini</span>
               </button>
             </div>
-            <textarea id="codeGsSource" readonly class="code-box-display" style="width:100%; height:160px; resize:none;"></textarea>
+
+            <!-- Tab Selector 5 Berkas -->
+            <div class="deploy-file-tabs">
+              <button class="deploy-tab-btn active" onclick="selectDeployFile('Code.gs')">
+                <i class="fa-brands fa-google"></i> Code.gs
+              </button>
+              <button class="deploy-tab-btn" onclick="selectDeployFile('index.html')">
+                <i class="fa-brands fa-html5"></i> index.html
+              </button>
+              <button class="deploy-tab-btn" onclick="selectDeployFile('styles.html')">
+                <i class="fa-brands fa-css3-alt"></i> styles.html
+              </button>
+              <button class="deploy-tab-btn" onclick="selectDeployFile('admin.html')">
+                <i class="fa-solid fa-user-gear"></i> admin.html
+              </button>
+              <button class="deploy-tab-btn" onclick="selectDeployFile('scripts.html')">
+                <i class="fa-brands fa-js"></i> scripts.html
+              </button>
+            </div>
+
+            <!-- Textarea Kode Display -->
+            <div style="position:relative; margin-top:0.75rem;">
+              <textarea id="deployCodeViewer" readonly class="code-box-display" style="width:100%; height:360px; resize:vertical; font-family:'Courier New', Courier, monospace; font-size:0.82rem; line-height:1.5;"></textarea>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem; font-size:0.78rem; color:var(--text-muted);">
+              <span><i class="fa-solid fa-circle-info"></i> Klik ganda atau Ctrl+A untuk memilih semua kode secara manual.</span>
+              <span id="deployCodeCharCount">0 karakter</span>
+            </div>
           </div>
 
         </div>

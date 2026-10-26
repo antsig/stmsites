@@ -415,3 +415,19 @@ function initDatabaseIfEmpty() {
     materiSheet.getRange(1, 1, 1, materiHeaders.length).setFontWeight('bold').setBackground('#E2E8F0');
   }
 }
+
+/**
+ * Menyediakan konten berkas kode untuk tab Panduan Deploy di Panel Admin
+ */
+function getDeployFileCode(filename) {
+  try {
+    if (filename === 'Code.gs') {
+      return { success: true, content: 'Buka file Code.gs langsung di editor Apps Script.' };
+    }
+    var baseName = filename.replace('.html', '');
+    var content = HtmlService.createHtmlOutputFromFile(baseName).getContent();
+    return { success: true, content: content };
+  } catch (err) {
+    return { success: false, error: err.toString() };
+  }
+}

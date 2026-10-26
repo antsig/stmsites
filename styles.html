@@ -731,4 +731,39 @@ textarea.form-control { min-height: 90px; resize: vertical; }
   color: #64748B;
   line-height: 1.5;
 }
+
+/* Deploy Code File Tabs */
+.deploy-file-tabs {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid var(--border-color);
+  -webkit-overflow-scrolling: touch;
+}
+.deploy-tab-btn {
+  padding: 0.55rem 0.95rem;
+  background: #F1F5F9;
+  border: 1.5px solid var(--border-color);
+  border-bottom: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.deploy-tab-btn:hover {
+  background: #E2E8F0;
+  color: var(--text-main);
+}
+.deploy-tab-btn.active {
+  background: #0F172A;
+  color: #FFF;
+  border-color: #0F172A;
+}
 </style>

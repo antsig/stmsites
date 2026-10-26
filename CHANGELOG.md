@@ -3,6 +3,17 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.4.0] - 2026-10-26
+
+### Added & Enhanced
+- **Panduan Deploy Lengkap & Interactive Code Viewer 5 Berkas**:
+  - **Selector 5 Berkas Proyek di Panel Admin**: Ditambahkan tab pemilih berkas interaktif pada tab *Step Deploy & Kode GAS* untuk menampilkan seluruh kode sumber lengkap dari 5 berkas: `Code.gs`, `index.html`, `styles.html`, `admin.html`, dan `scripts.html`.
+  - **Tombol Salin 1-Klik (*Copy to Clipboard*)**: Memungkinkan pengguna/guru menyalin kode masing-masing berkas secara instan lengkap dengan indikator status sukses dan jumlah karakter.
+  - **Panduan 7 Langkah Penerapan (*Deployment Steps*)**: Langkah terstruktur dari pembuatan spreadsheet baru, pembuatan 5 berkas di editor Apps Script, pengaturan hak akses web app (*Anyone*), hingga otorisasi izin akun Google.
+  - **Dokumen Panduan Deploy Mandiri Lengkap**: Diterbitkan berkas panduan komprehensif di [docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md](file:///f:/repository/stemsites/docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md) yang memuat instruksi langkah-demi-langkah, kode sumber lengkap 5 berkas, dan FAQ otorisasi Google.
+
+---
+
 ## [1.3.1] - 2026-10-26
 
 ### Restored & Enhanced
