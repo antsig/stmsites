@@ -3,6 +3,16 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.5.2] - 2026-10-26
+
+### Fixed & Enhanced
+- **Perbaikan Bug Nesting Tag Div pada Tab Panduan Admin & Step Deploy GAS**:
+  - Memperbaiki unclosed tag `</div>` pada container form `tab-settings` di [admin.html](file:///f:/repository/stemsites/admin.html) dan [index.html](file:///f:/repository/stemsites/index.html) yang menyebabkan kontainer `tab-admin-guide` dan `tab-deploy-gas` bersarang secara tidak sengaja di dalam `tab-settings`.
+  - Akibat nesting tersebut, ketika tab *Panduan Admin* atau *Step Deploy & Kode GAS* dibuka, pane tersembunyi karena parent `tab-settings` memiliki status `display: none`.
+  - Setelah perbaikan struktur DOM, seluruh 4 tab berada pada kedalaman hierarki yang sejajar (*root level siblings*) dan konten Panduan Operasional serta 7 Langkah Deploy GAS tampil secara utuh, jernih, dan interaktif.
+
+---
+
 ## [1.5.1] - 2026-10-26
 
 ### Added & Enhanced
