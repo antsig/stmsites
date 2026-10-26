@@ -28,11 +28,23 @@ const server = http.createServer((req, res) => {
       res.end('404 Not Found');
       return;
     }
+    let content = data;
+    if (ext === '.html') {
+      let htmlStr = data.toString('utf8');
+      htmlStr = htmlStr.replace(/<\?!=\s*include\('(\w+)'\);\s*\?>/g, (match, name) => {
+        const incPath = path.join(__dirname, name + '.html');
+        if (fs.existsSync(incPath)) {
+          return fs.readFileSync(incPath, 'utf8');
+        }
+        return match;
+      });
+      content = Buffer.from(htmlStr, 'utf8');
+    }
     res.writeHead(200, {
       'Content-Type': contentType,
       'Access-Control-Allow-Origin': '*'
     });
-    res.end(data);
+    res.end(content);
   });
 });
 

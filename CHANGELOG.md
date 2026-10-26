@@ -3,6 +3,19 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.5.4] - 2026-10-26
+
+### Fixed & Enhanced
+- **Pemulihan Klik Tombol & Pengisian Materi Instan di Google Apps Script (Zero Script Duplication)**:
+  - **Eliminasi Total Script Duplikat**: Menghapus ribuan baris kode duplikasi inline CSS dan JavaScript di dalam [index.html](file:///f:/repository/stemsites/index.html) dan [admin.html](file:///f:/repository/stemsites/admin.html) yang sebelumnya memicu `SyntaxError: Identifier 'DEFAULT_SETTINGS' has already been declared` saat dievaluasi oleh Google Apps Script.
+  - **Pemurnian Berkas Modular**: Mengubah [admin.html](file:///f:/repository/stemsites/admin.html) menjadi pure partial HTML (572 baris) tanpa doctype, head, style, atau script ganda. [index.html](file:///f:/repository/stemsites/index.html) kini menjadi shell murni yang ramping (513 baris).
+  - **Jaminan Instan 24 Materi SD**: Menginisialisasi `appState.materials` langsung dengan data 24 materi kurikulum STEM SD sejak baris pertama, sehingga detik pertama dibuka di Google Apps Script kartu langsung menampilkan `6 Materi` per kategori tanpa jeda (bebas kondisi materi kosong).
+  - **Multi-State Startup Trigger**: Mengganti event listener rapuh `DOMContentLoaded` dengan pemeriksa multi-status (`loading` vs `interactive`/`complete`) dan sinkronisasi `load` event.
+  - **Harmonisasi Modal Backdrop**: Menambahkan dukungan selector `.modal-backdrop.open` dan `.modal-backdrop.active` di [styles.html](file:///f:/repository/stemsites/styles.html) agar semua modal terbuka konsisten.
+  - **Dukungan Include di Server Lokal**: Menambahkan evaluasi otomatis `include()` pada [server.js](file:///f:/repository/stemsites/server.js) lokal.
+
+---
+
 ## [1.5.3] - 2026-10-26
 
 ### Fixed & Hardened

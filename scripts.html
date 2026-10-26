@@ -350,7 +350,7 @@ const INITIAL_MATERIALS = [
 
 let appState = {
   settings: Object.assign({}, DEFAULT_SETTINGS),
-  materials: [],
+  materials: JSON.parse(JSON.stringify(INITIAL_MATERIALS)),
   currentAdminPin: "123456",
   selectedCategory: "",
   selectedGrade: "",
@@ -361,8 +361,26 @@ let appState = {
   isGradeLocked: false
 };
 
-window.addEventListener("DOMContentLoaded", () => {
+function initApp() {
   loadInitialData();
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("page") === "admin") {
+      setTimeout(() => {
+        openAdminPinModal();
+      }, 400);
+    }
+  } catch (err) {}
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
+} else {
+  initApp();
+}
+
+window.addEventListener("load", () => {
+  renderApp();
 });
 
 function isRunningInGoogleAppsScript() {
@@ -370,6 +388,9 @@ function isRunningInGoogleAppsScript() {
 }
 
 function loadInitialData() {
+  // Render awal seketika agar portal tidak pernah kosong sedetik pun
+  renderApp();
+
   if (isRunningInGoogleAppsScript()) {
     google.script.run
       .withSuccessHandler((response) => {

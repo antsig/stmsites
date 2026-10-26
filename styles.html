@@ -444,7 +444,8 @@ button, input, select, textarea { font-family: inherit; }
 .empty-state i { font-size: 3rem; color: #94A3B8; margin-bottom: 1rem; }
 
 .modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; opacity: 0; transition: opacity 0.25s ease; }
-.modal-backdrop.open { display: flex; opacity: 1; }
+.modal-backdrop.open,
+.modal-backdrop.active { display: flex; opacity: 1; }
 .modal-container { background: #FFF; border-radius: var(--radius-lg); width: 100%; max-width: 680px; max-height: 90vh; display: flex; flex-direction: column; box-shadow: var(--shadow-xl); overflow: hidden; animation: modalSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
 
 @keyframes modalSlideIn { from { transform: translateY(20px) scale(0.97); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }

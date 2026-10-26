@@ -580,6 +580,12 @@ function getDeployFileCode(filename) {
    - Ubah versi menjadi **Versi baru (New version)** > klik **Terapkan (Deploy)**. URL web app Anda akan tetap sama!
 
 4. **Muncul pesan *"Exception: Konten HTML rusak"* saat menjalankan atau deploy Web App?**
-   - Pastikan Anda menggunakan kode terbaru versi `v1.5.3`.
+   - Pastikan Anda menggunakan kode terbaru versi `v1.5.3+`.
    - Di versi sebelumnya, terdapat string literal `</body>` dan `</html>` di dalam skrip JavaScript helper yang disalahartikan oleh parser Google Apps Script sebagai penutup dokumen awal.
    - Perbarui berkas `index`, `admin`, dan `scripts` dengan kode terbaru dari repositori ini, lalu buat penerapan baru (*New Version*).
+
+5. **Halaman tampil tetapi tombol tidak bisa diklik dan materi bertuliskan 0 Materi / kosong?**
+   - Pastikan Anda menggunakan versi `v1.5.4`.
+   - Hal ini disebabkan oleh duplikasi skrip yang membuat browser mendeteksi variabel dideklarasikan ganda sehingga proses JavaScript macet.
+   - Pada versi `v1.5.4`, `admin.html` dan `index.html` telah dimurnikan menjadi struktur modular murni tanpa script ganda, data 24 materi diinisialisasi instan (*zero delay*), dan sistem inisialisasi aman dipicu di semua status dokumen.
+   - Perbarui kelima berkas (`Code.gs`, `index`, `styles`, `admin`, `scripts`) lalu deploy Versi Baru.
