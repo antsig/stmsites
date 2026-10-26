@@ -3,6 +3,23 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.5.8] - 2026-10-27
+
+### Fixed & Enhanced
+- **Resolusi Modal Z-Index Stacking, GAS OAuth Dialog, & Resiliensi Backend**:
+  - **Z-Index Modal Admin**: Memperbaiki masalah modal *'Tambah Sub-Card Baru'* (`#materialFormModal`) yang tidak muncul karena terjebak di belakang panel admin (`.admin-overlay-view` `z-index: 150`). Menaikkan `.modal-backdrop` ke `z-index: 300` dan `#materialFormModal` ke `z-index: 350 !important; display: flex !important;`.
+  - **Elevasi Toast Notifications**: Memperbarui `.toast-container` ke `z-index: 500` agar seluruh notifikasi validasi dan konfirmasi penyimpanan tampil di atas seluruh modal.
+  - **Resolusi `createOAuthDialog=true` (SyntaxError Baris 1)**: Menambahkan panduan wajib otorisasi 1x di editor Apps Script via fungsi `initDatabaseIfEmpty` pada [PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md](file:///f:/repository/stemsites/docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md) guna mencegah browser modern memblokir dialog izin Google di dalam iframe.
+  - **Resiliensi Backend `Code.gs`**:
+    - Menambahkan helper `getActiveSpreadsheetSafe()` yang mendukung proyek container-bound maupun standalone dengan opsi konfigurasi `SPREADSHEET_ID`.
+    - Memasang helper `findColumnIndex()` dan `formatMaterialRow()` dengan pembacaan header kolom case-insensitive (kebal terhadap pengubahan kapitalisasi judul kolom oleh pengguna di Google Sheets).
+    - Memperkaya respon `forceSeedMaterials()` dengan pesan status informatif.
+    - Menyelaraskan zona waktu penyimpanan tanggal ke WITA (`Asia/Makassar`).
+  - **Aksesibilitas & UX Global Modal**: Menambahkan event listener global klik di luar modal (*backdrop click*) dan tombol keyboard `Escape` untuk menutup modal aktif secara instan.
+  - **Sinkronisasi Tab Kode Deploy**: Memperbarui fungsi `getCompleteCodeGsSource()` di [index.html](file:///f:/repository/stemsites/index.html) agar kode yang disalin dari panel admin identik 100% dengan `Code.gs` terbaru.
+
+---
+
 ## [1.5.7] - 2026-10-26
 
 ### Fixed & Optimized

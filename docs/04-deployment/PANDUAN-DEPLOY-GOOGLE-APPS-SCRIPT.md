@@ -59,38 +59,43 @@ Jika Anda mengedit atau menempelkan kode baru di Google Apps Script, **menekan t
 3. Tab baru editor Google Apps Script akan terbuka.
 4. Ganti judul proyek di kiri atas (default: *"Proyek tanpa judul"*) menjadi `Portal Pembelajaran STEM Sekolah`.
 
-### Tahap 3: Buat dan Salin Berkas `Code.gs`
-1. Di panel kiri, klik file default yang sudah ada: `Kode.gs` (atau `Code.gs`).
+### Tahap 3: Salin Berkas `Code.gs`
+1. Di panel kiri, klik file default yang sudah ada: `Code.gs` (atau `Kode.gs`).
 2. Hapus seluruh isi kode bawaan (`function myFunction() { ... }`).
-3. Tempelkan (*paste*) seluruh kode dari bagian [Kode 1: Code.gs](#kode-1-codegs) di bawah ini.
+3. Tempelkan (*paste*) seluruh kode dari berkas `Code.gs`.
 4. Simpan dengan menekan tombol ikon disket **Simpan proyek (Save project)** atau tombol `Ctrl + S`.
 
-### Tahap 4: Buat 4 Berkas HTML (`index`, `styles`, `admin`, `scripts`)
+### Tahap 4: Salin Berkas `index.html` (Standalone 1-Berkas Utuh)
 1. Di panel kiri Apps Script, klik tombol ikon tambah **`+`** di sebelah tulisan *"File"*, lalu pilih **HTML**.
-2. Beri nama: **`index`** (lalu tekan Enter). Hapus kode bawaan dan tempelkan seluruh kode dari [Kode 2: index.html](#kode-2-indexhtml).
-3. Klik tombol **`+`** > pilih **HTML**, beri nama: **`styles`**. Tempelkan seluruh kode dari [Kode 3: styles.html](#kode-3-styleshtml).
-4. Klik tombol **`+`** > pilih **HTML**, beri nama: **`admin`**. Tempelkan seluruh kode dari [Kode 4: admin.html](#kode-4-adminhtml).
-5. Klik tombol **`+`** > pilih **HTML**, beri nama: **`scripts`**. Tempelkan seluruh kode dari [Kode 5: scripts.html](#kode-5-scriptshtml).
-6. Tekan tombol **Simpan proyek** (`Ctrl + S`). Pastikan semua file tidak memiliki tanda titik oranye (indikasi belum disimpan).
+2. Beri nama: **`index`** (cukup ketik `index` tanpa `.html`, lalu tekan Enter).
+3. Hapus kode bawaan dan tempelkan (*paste*) seluruh isi dari berkas `index.html` (di root repositori) yang sudah menggabungkan seluruh markup antarmuka, CSS modern, dan JavaScript interaktif.
+4. ⚠️ **Hapus Berkas Lama**: Jika sebelumnya ada berkas `styles.html`, `admin.html`, atau `scripts.html`, klik titik tiga ⋮ di samping nama berkas > pilih **Hapus**. Di Apps Script **hanya perlu 2 berkas**: `Code.gs` dan `index.html`.
+5. Tekan tombol **Simpan proyek** (`Ctrl + S`).
 
-### Tahap 5: Jalankan Penerapan Baru (*New Deployment*)
+### Tahap 5: Otorisasi Izin Database Spreadsheet (WAJIB 1x DI EDITOR)
+> ⚠️ **PENTING UNTUK MENCEGAH ERROR `createOAuthDialog=true`**:
+> Agar skrip diizinkan mengakses Google Sheets tanpa memicu popup error di browser:
+1. Di bilah toolbar atas editor Apps Script (di sebelah tombol *Debug* dan *Jalankan*), cari dropdown fungsi.
+2. Pilih fungsi: **`initDatabaseIfEmpty`**.
+3. Klik tombol **Jalankan (Run)**.
+4. Google akan menampilkan dialog: *"Otorisasi Diperlukan" (Authorization required)*.
+5. Klik **Tinjau Izin (Review permissions)**.
+6. Pilih Akun Google Anda.
+7. Klik tombol kecil **Lanjutan (Advanced)** di kiri bawah dialog.
+8. Klik tautan **Buka Portal Pembelajaran STEM Sekolah (tidak aman)** / *Go to Portal STEM (unsafe)*.
+9. Klik **Izinkan (Allow)**.
+10. Selesai! Log eksekusi akan menampilkan status selesai, dan kedua sheet (`Settings` dan `Materi`) otomatis terisi 24 materi di Google Sheets Anda!
+
+### Tahap 6: Jalankan Penerapan Baru (*New Deployment*)
 1. Di pojok kanan atas editor Apps Script, klik tombol biru **Terapkan (Deploy)**.
-2. Pilih opsi **Penerapan baru (New deployment)**.
+2. Pilih opsi **Penerapan baru (New deployment)** (atau **Kelola penerapan** jika memperbarui versi).
 3. Pada dialog yang muncul, klik ikon roda gigi ⚙️ di sebelah *"Pilih jenis"*, lalu pilih **Aplikasi web (Web app)**.
 4. Lakukan pengaturan konfigurasi berikut:
-   - **Deskripsi**: `Rilis Produksi Portal Pembelajaran STEM v1.5.0`
+   - **Deskripsi**: `Portal Pembelajaran STEM SD v1.5.8`
    - **Jalankan sebagai (Execute as)**: Pilih **Saya (email-anda@gmail.com / akun sekolah)**.
    - **Siapa yang memiliki akses (Who has access)**: Pilih **Siapa saja (Anyone)**.
      *(Catatan: Ini wajib dipilih agar siswa dan orang tua dapat membuka portal tanpa diminta login akun Google khusus).*
 5. Klik tombol **Terapkan (Deploy)**.
-
-### Tahap 6: Otorisasi Izin Akun Google (Hanya 1x di Awal)
-Karena skrip ini akan membaca dan menulis data ke Google Sheets milik Anda, Google akan meminta konfirmasi izin:
-1. Klik tombol **Beri akses (Authorize access)**.
-2. Pilih akun Google Anda.
-3. Jika muncul layar peringatan *"Google hasn't verified this app"* (Google belum memverifikasi aplikasi ini), klik tulisan kecil **Lanjutan (Advanced)** di kiri bawah.
-4. Klik tautan **Buka Portal Pembelajaran STEM Sekolah (tidak aman)** / *Go to Portal STEM (unsafe)*.
-5. Klik **Izinkan (Allow)**.
 
 ### Tahap 7: Salin URL Web App & Bagikan ke Siswa!
 1. Google Apps Script akan menampilkan **URL Aplikasi Web (Web App URL)**, contoh:

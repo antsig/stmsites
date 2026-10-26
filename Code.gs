@@ -10,8 +10,38 @@
 var SHEET_SETTINGS = 'Settings';
 var SHEET_MATERI = 'Materi';
 
+// ID Spreadsheet Opsional: Jika proyek Apps Script dibuat secara Standalone (script.google.com),
+// tempelkan ID Spreadsheet di sini. Jika dibuat dari Google Sheets (menu Ekstensi > Apps Script), biarkan kosong ''.
+var SPREADSHEET_ID = '';
+
 // Default PIN Admin
 var DEFAULT_PIN = '123456';
+
+/**
+ * Mendapatkan referensi Spreadsheet secara aman (mendukung Container-Bound maupun Standalone).
+ */
+function getActiveSpreadsheetSafe() {
+  if (typeof SPREADSHEET_ID !== 'undefined' && SPREADSHEET_ID && SPREADSHEET_ID.trim() !== '') {
+    return SpreadsheetApp.openById(SPREADSHEET_ID.trim());
+  }
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (ss) return ss;
+  throw new Error('Spreadsheet aktif tidak ditemukan! Pastikan proyek ini dibuka dari Google Sheets (menu Ekstensi > Apps Script) atau isi variabel SPREADSHEET_ID di baris 15 Code.gs.');
+}
+
+/**
+ * Helper pencarian indeks kolom secara fleksibel & case-insensitive
+ */
+function findColumnIndex(headers, columnName) {
+  if (!headers || !Array.isArray(headers)) return -1;
+  var target = String(columnName).trim().toLowerCase();
+  for (var i = 0; i < headers.length; i++) {
+    if (String(headers[i]).trim().toLowerCase() === target) {
+      return i;
+    }
+  }
+  return -1;
+}
 
 /**
  * Entry point Web App (GET Request)
@@ -113,7 +143,7 @@ function saveMaterial(materialData, adminPin) {
     var pinCheck = verifyPin(adminPin);
     if (!pinCheck.success) return pinCheck;
 
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getActiveSpreadsheetSafe();
     var sheet = ss.getSheetByName(SHEET_MATERI);
     if (!sheet) {
       initDatabaseIfEmpty();
@@ -122,7 +152,9 @@ function saveMaterial(materialData, adminPin) {
 
     var data = sheet.getDataRange().getValues();
     var headers = data[0];
-    var idIndex = headers.indexOf('id');
+    var idIndex = findColumnIndex(headers, 'id');
+    if (idIndex === -1) idIndex = 0; // Fallback kolom pertama jika header tidak bernama id
+    var createdAtIdx = findColumnIndex(headers, 'created_at');
 
     var isUpdate = false;
     var targetRow = -1;
@@ -130,7 +162,7 @@ function saveMaterial(materialData, adminPin) {
     // Jika ID diberikan, cari baris untuk update
     if (materialData.id) {
       for (var i = 1; i < data.length; i++) {
-        if (String(data[i][idIndex]) === String(materialData.id)) {
+        if (String(data[i][idIndex]).trim() === String(materialData.id).trim()) {
           isUpdate = true;
           targetRow = i + 1; // 1-based row index
           break;
@@ -139,7 +171,8 @@ function saveMaterial(materialData, adminPin) {
     }
 
     var finalId = isUpdate ? materialData.id : 'STEM-' + Utilities.getUuid().substring(0, 8).toUpperCase();
-    var now = Utilities.formatDate(new Date(), 'Asia/Jakarta', 'yyyy-MM-dd HH:mm:ss');
+    var now = Utilities.formatDate(new Date(), 'Asia/Makassar', 'yyyy-MM-dd HH:mm:ss');
+    var existingCreatedAt = (isUpdate && targetRow > 1 && createdAtIdx !== -1) ? data[targetRow - 1][createdAtIdx] : null;
 
     var rowValues = [
       finalId,
@@ -153,7 +186,7 @@ function saveMaterial(materialData, adminPin) {
       materialData.mission_goals || '',
       materialData.mission_steps || '',
       materialData.mission_reflection || '',
-      isUpdate ? (data[targetRow - 1][headers.indexOf('created_at')] || now) : now
+      isUpdate ? (existingCreatedAt || now) : now
     ];
 
     if (isUpdate && targetRow > 1) {
@@ -180,16 +213,17 @@ function deleteMaterial(id, adminPin) {
     var pinCheck = verifyPin(adminPin);
     if (!pinCheck.success) return pinCheck;
 
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getActiveSpreadsheetSafe();
     var sheet = ss.getSheetByName(SHEET_MATERI);
     if (!sheet) return { success: false, error: 'Sheet Materi tidak ditemukan!' };
 
     var data = sheet.getDataRange().getValues();
-    var idIndex = data[0].indexOf('id');
+    var idIndex = findColumnIndex(data[0], 'id');
+    if (idIndex === -1) idIndex = 0;
     var foundRow = -1;
 
     for (var i = 1; i < data.length; i++) {
-      if (String(data[i][idIndex]) === String(id)) {
+      if (String(data[i][idIndex]).trim() === String(id).trim()) {
         foundRow = i + 1;
         break;
       }
@@ -214,7 +248,7 @@ function updateSettings(newSettings, adminPin) {
     var pinCheck = verifyPin(adminPin);
     if (!pinCheck.success) return pinCheck;
 
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getActiveSpreadsheetSafe();
     var sheet = ss.getSheetByName(SHEET_SETTINGS);
     if (!sheet) {
       initDatabaseIfEmpty();
@@ -256,7 +290,7 @@ function updateSettings(newSettings, adminPin) {
  * Mengambil daftar pengaturan dalam format objek Key-Value
  */
 function getSettingsMap() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getActiveSpreadsheetSafe();
   var sheet = ss.getSheetByName(SHEET_SETTINGS);
   if (!sheet) return {};
 
@@ -274,7 +308,7 @@ function getSettingsMap() {
  * Mengambil semua materi sebagai array of objects
  */
 function getMaterialsList() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getActiveSpreadsheetSafe();
   var sheet = ss.getSheetByName(SHEET_MATERI);
   if (!sheet) return [];
 
@@ -290,12 +324,12 @@ function getMaterialsList() {
 }
 
 /**
- * Format baris sheet menjadi objek JSON materi
+ * Format baris sheet menjadi objek JSON materi secara case-insensitive
  */
 function formatMaterialRow(headers, row) {
   var obj = {};
   for (var j = 0; j < headers.length; j++) {
-    var key = headers[j];
+    var key = String(headers[j]).trim().toLowerCase();
     var val = row[j];
     if (key === 'grade') {
       obj[key] = String(val);
@@ -310,7 +344,7 @@ function formatMaterialRow(headers, row) {
  * Inisialisasi sheet dan seed data awal jika spreadsheet masih kosong
  */
 function initDatabaseIfEmpty() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getActiveSpreadsheetSafe();
 
   // 1. Inisialisasi Sheet Settings
   var settingsSheet = ss.getSheetByName(SHEET_SETTINGS);
@@ -385,7 +419,7 @@ function forceSeedMaterials(adminPin) {
       if (!pinCheck.success) return pinCheck;
     }
     initDatabaseIfEmpty();
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getActiveSpreadsheetSafe();
     var sheet = ss.getSheetByName(SHEET_MATERI);
     if (!sheet) return { success: false, error: 'Sheet Materi tidak ditemukan!' };
 
@@ -397,7 +431,11 @@ function forceSeedMaterials(adminPin) {
     for (var i = 0; i < samples.length; i++) {
       sheet.appendRow(samples[i]);
     }
-    return { success: true, count: samples.length };
+    return { 
+      success: true, 
+      count: samples.length, 
+      message: 'Berhasil memuat ' + samples.length + ' materi kurikulum STEM SD!' 
+    };
   } catch (err) {
     return { success: false, error: err.toString() };
   }
