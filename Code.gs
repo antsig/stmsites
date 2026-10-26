@@ -20,7 +20,8 @@ function doGet(e) {
   // Inisialisasi spreadsheet jika tabel belum ada
   initDatabaseIfEmpty();
 
-  var template = HtmlService.createTemplateFromFile('index');
+  var page = (e && e.parameter && e.parameter.page === 'admin') ? 'admin' : 'index';
+  var template = HtmlService.createTemplateFromFile(page);
   return template.evaluate()
     .setTitle('Portal Pembelajaran STEM Sekolah')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')

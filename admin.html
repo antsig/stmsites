@@ -1,3 +1,787 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Dashboard Admin - Portal STEM Sekolah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <?!= include('styles'); ?>
+  <style>
+/* ==========================================================================
+   PORTAL PEMBELAJARAN STEM SEKOLAH - GOOGLE APPS SCRIPT STYLES (styles.html)
+   ========================================================================== */
+
+:root {
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --primary: #2563EB;
+  --primary-hover: #1D4ED8;
+  --primary-light: #EFF6FF;
+  
+  --stem-sci: #059669;
+  --stem-sci-bg: #ECFDF5;
+  --stem-tec: #0284C7;
+  --stem-tec-bg: #F0F9FF;
+  --stem-eng: #D97706;
+  --stem-eng-bg: #FFFBEB;
+  --stem-mat: #7C3AED;
+  --stem-mat-bg: #F5F3FF;
+
+  --bg-body: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --border-color: #E2E8F0;
+  --border-focus: #3B82F6;
+  
+  --success: #10B981;
+  --danger: #EF4444;
+  --warning: #F59E0B;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font-family: inherit; }
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+}
+
+.school-logo-img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  background: #FFF;
+}
+
+.brand-text { display: flex; flex-direction: column; }
+.brand-title { font-size: 1.05rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.02em; line-height: 1.2; }
+.brand-badge { font-size: 0.72rem; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.nav-links { display: flex; align-items: center; gap: 0.75rem; }
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: var(--transition);
+  background: transparent;
+  color: var(--text-main);
+}
+
+.nav-btn:hover { background: var(--primary-light); color: var(--primary); }
+.nav-btn.primary { background: var(--primary); color: #FFF; box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25); }
+.nav-btn.primary:hover { background: var(--primary-hover); box-shadow: 0 4px 8px rgba(37, 99, 235, 0.35); }
+.nav-btn.admin-btn { background: #F1F5F9; color: #334155; border: 1px solid #CBD5E1; }
+.nav-btn.admin-btn:hover { background: #E2E8F0; color: #0F172A; }
+
+.nav-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.35rem;
+  color: var(--text-main);
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.mobile-nav-dropdown {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+  z-index: 90;
+  display: none;
+  animation: slideDownMobile 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDownMobile {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #3B82F6 100%);
+  color: #FFFFFF;
+  padding: 2.75rem 0 3rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero-banner::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.hero-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.95rem;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero-title { font-size: 2.25rem; font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; max-width: 800px; }
+.hero-slogan { font-size: 1.05rem; color: #E0E7FF; max-width: 650px; font-weight: 500; }
+
+.hero-meta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #DBEAFE;
+}
+
+.hero-meta-item { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+.home-intro-caption { text-align: center; margin: 2.2rem 0 1.5rem; }
+.home-intro-caption h2 { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.35rem; }
+.home-intro-caption p { font-size: 0.95rem; color: var(--text-muted); max-width: 550px; margin: 0 auto; }
+
+.stem-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 3.5rem;
+}
+
+.stem-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.25rem;
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+  user-select: none;
+}
+
+.stem-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-xl); }
+.stem-card.sci { border-top: 5px solid var(--stem-sci); }
+.stem-card.sci:hover { background: var(--stem-sci-bg); border-color: var(--stem-sci); }
+.stem-card.sci .stem-icon-box { background: var(--stem-sci-bg); color: var(--stem-sci); }
+
+.stem-card.tec { border-top: 5px solid var(--stem-tec); }
+.stem-card.tec:hover { background: var(--stem-tec-bg); border-color: var(--stem-tec); }
+.stem-card.tec .stem-icon-box { background: var(--stem-tec-bg); color: var(--stem-tec); }
+
+.stem-card.eng { border-top: 5px solid var(--stem-eng); }
+.stem-card.eng:hover { background: var(--stem-eng-bg); border-color: var(--stem-eng); }
+.stem-card.eng .stem-icon-box { background: var(--stem-eng-bg); color: var(--stem-eng); }
+
+.stem-card.mat { border-top: 5px solid var(--stem-mat); }
+.stem-card.mat:hover { background: var(--stem-mat-bg); border-color: var(--stem-mat); }
+.stem-card.mat .stem-icon-box { background: var(--stem-mat-bg); color: var(--stem-mat); }
+
+.stem-header-row { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 0.85rem; }
+.stem-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: var(--transition);
+  overflow: hidden;
+}
+.stem-icon-img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-md); }
+.stem-badge-count { font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: var(--radius-full); background: rgba(0, 0, 0, 0.05); color: var(--text-muted); }
+.stem-name { font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.25rem; }
+.stem-subtitle { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.4; flex: 1; }
+.stem-action-indicator { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 700; color: var(--primary); margin-top: auto; }
+
+.category-subpage-header {
+  background: #FFF;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  margin: 1.75rem 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.category-subpage-title-box { display: flex; align-items: center; gap: 1rem; }
+.subpage-icon-box {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #FFF;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.btn-back-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.15rem;
+  background: #F1F5F9;
+  color: #1E293B;
+  border: 1px solid #CBD5E1;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-back-home:hover { background: var(--primary); color: #FFF; border-color: var(--primary); }
+
+.filter-panel {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.search-row { display: flex; gap: 0.85rem; flex-wrap: wrap; }
+.search-input-wrap { flex: 1; min-width: 260px; position: relative; }
+.search-input-wrap i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.95rem; }
+.search-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 1rem 0 2.5rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  outline: none;
+  transition: var(--transition);
+  background: var(--bg-body);
+}
+.search-input:focus { border-color: var(--border-focus); background: #FFF; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+
+.media-filter-select {
+  height: 44px;
+  padding: 0 1rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: var(--bg-body);
+  outline: none;
+  cursor: pointer;
+  min-width: 170px;
+  transition: var(--transition);
+}
+
+.grade-filter-bar { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.filter-label { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-right: 0.35rem; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.grade-pill {
+  border: 1px solid var(--border-color);
+  background: var(--bg-body);
+  padding: 0.38rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+}
+.grade-pill:hover { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+.grade-pill.active { background: var(--primary); color: #FFF; border-color: var(--primary); box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25); }
+.locked-grade-banner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; padding: 0.75rem 1.15rem; background: #EFF6FF; border: 1.5px solid #BFDBFE; border-radius: var(--radius-md); margin-top: 0.5rem; box-shadow: var(--shadow-sm); }
+.locked-grade-info { display: flex; align-items: center; gap: 0.6rem; color: #1E3A8A; font-size: 0.92rem; font-weight: 600; }
+.locked-grade-info i { color: var(--primary); font-size: 1.1rem; }
+.locked-grade-info strong { color: #1D4ED8; font-weight: 800; }
+.btn-change-grade { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.38rem 0.9rem; background: #FFF; border: 1px solid #93C5FD; border-radius: var(--radius-full); color: var(--primary); font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: var(--transition); }
+.btn-change-grade:hover { background: var(--primary); color: #FFF; border-color: var(--primary); box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2); }
+
+.filter-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #F1F5F9;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.active-filter-tags { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
+.filter-tag { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; background: #F1F5F9; border-radius: var(--radius-full); font-size: 0.78rem; font-weight: 600; color: #334155; }
+.filter-tag i { cursor: pointer; color: var(--text-muted); }
+.filter-tag i:hover { color: var(--danger); }
+.reset-filter-btn { background: none; border: none; color: var(--primary); font-size: 0.82rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; }
+
+.materials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.4rem; margin-bottom: 3.5rem; }
+.material-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+  position: relative;
+}
+.material-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-xl); border-color: #CBD5E1; }
+.card-thumb-wrap { position: relative; width: 100%; height: 165px; overflow: hidden; background: #E2E8F0; }
+.card-thumb-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.material-card:hover .card-thumb-img { transform: scale(1.05); }
+
+.card-stem-pill { position: absolute; top: 0.75rem; left: 0.75rem; padding: 0.25rem 0.65rem; border-radius: var(--radius-full); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: #FFF; box-shadow: var(--shadow-sm); }
+.card-stem-pill.Science { background: var(--stem-sci); }
+.card-stem-pill.Technology { background: var(--stem-tec); }
+.card-stem-pill.Engineering { background: var(--stem-eng); }
+.card-stem-pill.Mathematics { background: var(--stem-mat); }
+
+.card-grade-pill { position: absolute; top: 0.75rem; right: 0.75rem; background: rgba(15, 23, 42, 0.85); color: #FFF; backdrop-filter: blur(4px); padding: 0.25rem 0.65rem; border-radius: var(--radius-full); font-size: 0.72rem; font-weight: 700; }
+.card-media-badge { position: absolute; bottom: 0.75rem; left: 0.75rem; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(4px); color: var(--text-main); padding: 0.2rem 0.6rem; border-radius: var(--radius-sm); font-size: 0.72rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.35rem; box-shadow: var(--shadow-sm); }
+
+.card-body { padding: 1.25rem; display: flex; flex-direction: column; flex: 1; }
+.card-title { font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+.card-explore-btn { width: 100%; height: 42px; border-radius: var(--radius-md); border: none; background: #F1F5F9; color: var(--primary); font-size: 0.875rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; transition: var(--transition); margin-top: auto; }
+.card-explore-btn:hover { background: var(--primary); color: #FFF; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25); }
+
+.empty-state { grid-column: 1 / -1; text-align: center; padding: 3.5rem 1.5rem; background: var(--bg-card); border-radius: var(--radius-lg); border: 1.5px dashed var(--border-color); }
+.empty-state i { font-size: 3rem; color: #94A3B8; margin-bottom: 1rem; }
+
+.modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(6px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; opacity: 0; transition: opacity 0.25s ease; }
+.modal-backdrop.open { display: flex; opacity: 1; }
+.modal-container { background: #FFF; border-radius: var(--radius-lg); width: 100%; max-width: 680px; max-height: 90vh; display: flex; flex-direction: column; box-shadow: var(--shadow-xl); overflow: hidden; animation: modalSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+
+@keyframes modalSlideIn { from { transform: translateY(20px) scale(0.97); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+
+.modal-header { padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); background: #F8FAFC; }
+.modal-header-title { display: flex; align-items: center; gap: 0.65rem; font-size: 1.15rem; font-weight: 800; color: var(--text-main); }
+.modal-close-btn { background: none; border: none; font-size: 1.25rem; color: var(--text-muted); cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+.modal-close-btn:hover { background: #E2E8F0; color: var(--text-main); }
+.modal-body { padding: 1.5rem; overflow-y: auto; flex: 1; }
+.modal-footer { padding: 1.1rem 1.5rem; border-top: 1px solid var(--border-color); background: #F8FAFC; display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem; }
+
+.mission-badge-row { display: flex; gap: 0.5rem; margin-bottom: 0.85rem; }
+.mission-title { font-size: 1.35rem; font-weight: 800; line-height: 1.3; margin-bottom: 0.65rem; color: var(--text-main); }
+.mission-desc { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
+.mission-box { background: #F8FAFC; border-radius: var(--radius-md); padding: 1.15rem; border-left: 4px solid var(--primary); margin-bottom: 1.25rem; }
+.mission-box.goals { border-left-color: var(--stem-sci); background: #F0FDF4; }
+.mission-box.steps { border-left-color: var(--stem-tec); background: #F0F9FF; }
+.mission-box.reflection { border-left-color: var(--stem-mat); background: #FAF5FF; }
+.mission-box-title { font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.5rem; }
+.mission-box.goals .mission-box-title { color: var(--stem-sci); }
+.mission-box.steps .mission-box-title { color: var(--stem-tec); }
+.mission-box.reflection .mission-box-title { color: var(--stem-mat); }
+.mission-box-content { font-size: 0.88rem; line-height: 1.6; white-space: pre-line; color: #334155; }
+.mission-media-action { background: #FFF; border: 1.5px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; text-align: center; margin-bottom: 1.25rem; }
+.btn-media-open { display: inline-flex; align-items: center; gap: 0.5rem; background: #DC2626; color: #FFF; padding: 0.65rem 1.35rem; border-radius: var(--radius-full); font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.25); transition: var(--transition); }
+.btn-media-open:hover { background: #B91C1C; transform: translateY(-2px); }
+
+.guide-tabs { display: flex; border-bottom: 1.5px solid var(--border-color); gap: 0.5rem; margin-bottom: 1.25rem; overflow-x: auto; padding-bottom: 2px; }
+.guide-tab-btn { padding: 0.65rem 1.1rem; background: none; border: none; border-bottom: 3px solid transparent; font-size: 0.875rem; font-weight: 700; color: var(--text-muted); cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem; white-space: nowrap; transition: var(--transition); }
+.guide-tab-btn:hover { color: var(--primary); }
+.guide-tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+.guide-content-panel { display: none; }
+.guide-content-panel.active { display: block; }
+.step-card-guide { display: flex; gap: 1rem; margin-bottom: 1.1rem; background: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.1rem; }
+.step-number-badge { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #FFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; flex-shrink: 0; }
+.faq-item { border: 1px solid var(--border-color); border-radius: var(--radius-md); margin-bottom: 0.75rem; overflow: hidden; }
+.faq-question { padding: 0.85rem 1.1rem; background: #F8FAFC; font-weight: 700; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+.faq-answer { padding: 1rem 1.1rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; background: #FFF; border-top: 1px solid var(--border-color); }
+
+.admin-overlay-view { position: fixed; inset: 0; background: var(--bg-body); z-index: 150; display: none; flex-direction: column; overflow: hidden; }
+.admin-overlay-view.active { display: flex; }
+.admin-topbar { height: 64px; background: #0F172A; color: #FFF; display: flex; align-items: center; justify-content: space-between; padding: 0 1.25rem; border-bottom: 1px solid #1E293B; flex-shrink: 0; }
+.admin-topbar-left { display: flex; align-items: center; gap: 0.85rem; }
+.admin-sidebar-toggle { background: none; border: none; color: #94A3B8; font-size: 1.25rem; cursor: pointer; padding: 0.4rem; display: none; }
+.admin-topbar-title { font-size: 1.05rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; }
+.admin-main-wrapper { display: flex; flex: 1; overflow: hidden; position: relative; }
+.admin-sidemenu { width: 260px; background: #1E293B; color: #E2E8F0; display: flex; flex-direction: column; flex-shrink: 0; border-right: 1px solid #334155; transition: transform 0.3s ease; z-index: 60; }
+.admin-sidemenu-nav { padding: 1.25rem 0.85rem; display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
+.admin-nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 600; color: #94A3B8; cursor: pointer; transition: var(--transition); background: transparent; border: none; width: 100%; text-align: left; }
+.admin-nav-item:hover { background: #334155; color: #F8FAFC; }
+.admin-nav-item.active { background: var(--primary); color: #FFFFFF; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3); }
+.admin-nav-item i { width: 20px; font-size: 1rem; text-align: center; }
+.admin-sidemenu-footer { padding: 1rem 0.85rem; border-top: 1px solid #334155; }
+.admin-content-area { flex: 1; overflow-y: auto; padding: 1.75rem; background: #F8FAFC; }
+.admin-backdrop-mobile { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 55; display: none; }
+.admin-tab-pane { display: none; }
+.admin-tab-pane.active { display: block; }
+.admin-pane-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+.admin-pane-title h2 { font-size: 1.45rem; font-weight: 800; color: var(--text-main); }
+.admin-pane-title p { font-size: 0.875rem; color: var(--text-muted); }
+
+.table-container { background: #FFF; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); overflow: hidden; }
+.table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.admin-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem; }
+.admin-table th { background: #F8FAFC; padding: 0.85rem 1rem; font-weight: 700; color: #475569; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
+.admin-table td { padding: 0.85rem 1rem; border-bottom: 1px solid #F1F5F9; vertical-align: middle; }
+.admin-table tr:hover td { background: #F8FAFC; }
+.action-btn-group { display: flex; align-items: center; gap: 0.4rem; }
+.btn-icon { width: 34px; height: 34px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: #FFF; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); font-size: 0.85rem; }
+.btn-icon.edit:hover { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
+.btn-icon.delete:hover { background: #FEF2F2; color: var(--danger); border-color: var(--danger); }
+
+.form-group { margin-bottom: 1.2rem; }
+.form-label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text-main); }
+.form-control { width: 100%; padding: 0.65rem 0.95rem; border: 1.5px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.9rem; outline: none; transition: var(--transition); background: #FFF; }
+.form-control:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+textarea.form-control { min-height: 90px; resize: vertical; }
+.form-row-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.form-row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.settings-grid-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start; }
+.code-box-display { background: #0F172A; color: #E2E8F0; padding: 1.2rem; border-radius: var(--radius-md); font-family: monospace; font-size: 0.82rem; overflow-x: auto; position: relative; margin-bottom: 1.5rem; }
+
+.toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200; display: flex; flex-direction: column; gap: 0.5rem; pointer-events: none; }
+.toast-msg { background: #0F172A; color: #FFF; padding: 0.85rem 1.25rem; border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 600; box-shadow: var(--shadow-xl); display: flex; align-items: center; gap: 0.65rem; pointer-events: auto; animation: toastSlide 0.3s ease; }
+.toast-msg.success { border-left: 4px solid var(--success); }
+.toast-msg.error { border-left: 4px solid var(--danger); }
+
+@keyframes toastSlide { from { transform: translateX(50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+@media (max-width: 991px) {
+  .admin-sidemenu { position: absolute; top: 0; bottom: 0; left: 0; transform: translateX(-100%); }
+  .admin-sidemenu.open { transform: translateX(0); }
+  .admin-sidebar-toggle { display: block; }
+  .admin-backdrop-mobile.open { display: block; }
+  .form-row-4 { grid-template-columns: repeat(2, 1fr); }
+  .settings-grid-layout { grid-template-columns: 1fr !important; gap: 1.25rem; }
+}
+
+@media (max-width: 767px) {
+  .navbar .container { padding: 0.6rem 1rem; }
+  .nav-title { font-size: 0.92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 210px; }
+  .nav-logo { width: 34px; height: 34px; }
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: block; }
+
+  .hero-meta-bar { display: none !important; }
+  .hero-banner { padding: 1.5rem 1rem 1.65rem; }
+  .hero-badge-pill { font-size: 0.7rem; padding: 0.2rem 0.65rem; margin-bottom: 0.45rem; }
+  .hero-title { font-size: 1.35rem; line-height: 1.25; margin-bottom: 0.35rem; }
+  .hero-slogan { font-size: 0.82rem; line-height: 1.4; padding: 0 0.5rem; }
+
+  .home-intro-caption { margin: 1.25rem 0 1rem; padding: 0 0.5rem; }
+  .home-intro-caption h2 { font-size: 1.15rem; line-height: 1.3; }
+  .home-intro-caption p { font-size: 0.8rem; line-height: 1.4; }
+
+  .stem-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.65rem !important;
+    margin-bottom: 1.75rem;
+  }
+  .stem-card { padding: 0.85rem 0.75rem; border-radius: var(--radius-md); }
+  .stem-header-row { margin-bottom: 0.5rem; }
+  .stem-icon-box { width: 38px; height: 38px; font-size: 1.1rem; border-radius: 8px; }
+  .stem-badge-count { font-size: 0.68rem; padding: 0.15rem 0.45rem; }
+  .stem-name { font-size: 0.98rem; margin-bottom: 0.35rem; }
+  .stem-subtitle { display: none; }
+  .stem-action-indicator { font-size: 0.72rem; }
+
+  .category-subpage-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .category-subpage-title-box { gap: 0.65rem; }
+  .subpage-icon-box { width: 42px; height: 42px; font-size: 1.2rem; border-radius: 8px; }
+  #subpageCategoryTitle { font-size: 1.1rem !important; }
+  #subpageCategoryDesc { font-size: 0.76rem !important; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .btn-back-home { padding: 0.4rem 0.85rem; font-size: 0.78rem; white-space: nowrap; flex-shrink: 0; }
+
+  .filter-panel { padding: 0.85rem 1rem; gap: 0.75rem; margin-bottom: 1.25rem; }
+  .search-input { height: 40px; font-size: 0.82rem; padding-left: 2.2rem; }
+  .search-input-wrap i { font-size: 0.85rem; left: 0.85rem; }
+  .grade-filter-bar { gap: 0.4rem; }
+  .filter-label { font-size: 0.76rem; width: 100%; margin-bottom: 0.2rem; }
+  .grade-pill { padding: 0.3rem 0.65rem; font-size: 0.78rem; }
+  .locked-grade-banner { padding: 0.55rem 0.85rem; gap: 0.5rem; align-items: center; }
+  .locked-grade-info { font-size: 0.85rem; gap: 0.45rem; }
+  .locked-grade-info i { font-size: 0.95rem; }
+  .btn-change-grade { padding: 0.28rem 0.7rem; font-size: 0.76rem; white-space: nowrap; }
+
+  .materials-grid { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
+  .card-thumb-wrap { height: 155px; }
+  .card-body { padding: 1rem; }
+  .card-title { font-size: 0.98rem; line-height: 1.35; margin-bottom: 0.35rem; }
+  .card-desc { font-size: 0.8rem; line-height: 1.45; margin-bottom: 0.85rem; }
+  .card-explore-btn { height: 42px; font-size: 0.82rem; }
+
+  .modal-backdrop { padding: 0.5rem; }
+  .modal-container { max-height: 94vh; border-radius: var(--radius-md); }
+  .modal-header { padding: 0.85rem 1rem; }
+  .modal-header-title { font-size: 1rem; }
+  .modal-body { padding: 1rem; }
+  .modal-footer { padding: 0.75rem 1rem; }
+  .grade-selector-icon-badge { width: 48px; height: 48px; font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .grade-selector-title { font-size: 1.15rem; }
+  .grade-selector-subtitle { font-size: 0.8rem; line-height: 1.4; }
+  .grade-selector-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0.5rem; }
+  .grade-select-btn { padding: 0.7rem 0.4rem; }
+  .grade-select-btn .grade-num { font-size: 1.05rem; }
+  .grade-select-btn.all-grades { padding: 0.75rem; font-size: 0.85rem; }
+
+  /* Admin Responsiveness 1 Kolom */
+  .admin-content-area { padding: 1rem 0.85rem; }
+  .admin-pane-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; margin-bottom: 1.25rem; }
+  .admin-pane-header .nav-btn { width: 100%; justify-content: center; }
+  .admin-filter-bar { flex-direction: column !important; align-items: stretch !important; gap: 0.65rem !important; }
+  .admin-filter-bar input, .admin-filter-bar select { max-width: 100% !important; width: 100% !important; }
+  .admin-preview-sidebar { width: 100% !important; }
+  .table-container { border-radius: var(--radius-md); }
+
+  .form-row-2, .form-row-4 { grid-template-columns: 1fr; }
+}
+
+.grade-selector-header { text-align: center; margin-bottom: 1.25rem; }
+.grade-selector-icon-badge {
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-md);
+  margin: 0 auto 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  color: #FFF;
+  box-shadow: var(--shadow-md);
+}
+.grade-selector-title { font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.35rem; }
+.grade-selector-subtitle { font-size: 0.88rem; color: var(--text-muted); }
+.grade-selector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+.grade-select-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 0.5rem;
+  background: #F8FAFC;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 700;
+  color: var(--text-main);
+  user-select: none;
+}
+.grade-select-btn:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.grade-select-btn .grade-num { font-size: 1.15rem; font-weight: 800; }
+.grade-select-btn .grade-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.15rem; }
+.grade-select-btn.all-grades {
+  grid-column: 1 / -1;
+  background: var(--primary);
+  color: #FFF;
+  border-color: var(--primary);
+  flex-direction: row;
+  gap: 0.5rem;
+  padding: 0.85rem;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+.grade-select-btn.all-grades:hover { background: var(--primary-hover); color: #FFF; }
+@media (max-width: 480px) {
+  .grade-selector-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.site-footer {
+  margin-top: auto;
+  background: #0F172A;
+  color: #94A3B8;
+  border-top: 1px solid #1E293B;
+  padding: 1.75rem 1rem 1.5rem;
+  font-size: 0.875rem;
+  text-align: center;
+}
+.footer-centered-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+.footer-contacts { display: flex; align-items: center; justify-content: center; }
+.footer-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.15rem;
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: var(--radius-full);
+  color: #F8FAFC;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: var(--transition);
+  text-decoration: none;
+}
+.footer-contact-item:hover {
+  background: #22C55E;
+  color: #FFF;
+  border-color: #22C55E;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+.footer-copy {
+  font-size: 0.82rem;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+/* Deploy Code File Tabs */
+.deploy-file-tabs {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid var(--border-color);
+  -webkit-overflow-scrolling: touch;
+}
+.deploy-tab-btn {
+  padding: 0.55rem 0.95rem;
+  background: #F1F5F9;
+  border: 1.5px solid var(--border-color);
+  border-bottom: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.deploy-tab-btn:hover {
+  background: #E2E8F0;
+  color: var(--text-main);
+}
+.deploy-tab-btn.active {
+  background: #0F172A;
+  color: #FFF;
+  border-color: #0F172A;
+}
+</style>
+
+</head>
+<body>
+
 <!-- ========================================================================
      MODAL: AUTENTIKASI PIN ADMIN
      ======================================================================== -->
@@ -548,3 +1332,1320 @@
     </div>
   </div>
 </div>
+
+
+<div class="toast-container" id="toastContainer"></div>
+
+<?!= include('scripts'); ?>
+<script>
+/**
+ * ==============================================================================
+ * PORTAL PEMBELAJARAN STEM SEKOLAH - GOOGLE APPS SCRIPT SCRIPTS (scripts.html)
+ * ==============================================================================
+ */
+
+const DEFAULT_SETTINGS = {
+  school_name: "SD NEGERI HARAPAN BANGSA",
+  academic_year: "2026/2027",
+  slogan: "Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika Bersama!",
+  logo_url: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80",
+  contact_wa: "6281234567890",
+  contact_email: "stem.harapanbangsa@sekolah.sch.id",
+  logo_science: "",
+  logo_technology: "",
+  logo_engineering: "",
+  logo_mathematics: ""
+};
+
+const INITIAL_MATERIALS = [
+  // 1. SCIENCE
+  {
+    id: "STEM-SCI01",
+    stem_category: "Science",
+    title: "Petualangan Daur Hidup Kupu-kupu",
+    grade: "2",
+    media_type: "Video",
+    media_url: "https://www.youtube.com/watch?v=O1S8WzwLPlM",
+    thumbnail_url: "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=600&auto=format&fit=crop&q=80",
+    description: "Yuk amati metamorfosis sempurna dari telur, ulat yang rakus, kepompong tidur, hingga menjadi kupu-kupu bersayap indah!",
+    mission_goals: "1. Mengenal 4 tahap metamorfosis kupu-kupu.\n2. Menjelaskan perubahan bentuk ulat hingga menjadi kupu-kupu.",
+    mission_steps: "1. Tonton video animasi daur hidup kupu-kupu.\n2. Siapkan kertas origami atau plastisin.\n3. Buatlah 4 replika tahap metamorfosis dan susun berurutan di buku gambarmu!",
+    mission_reflection: "Mengapa ulat harus beristirahat di dalam kepompong sebelum sayapnya tumbuh indah?"
+  },
+  {
+    id: "STEM-SCI02",
+    stem_category: "Science",
+    title: "Eksplorasi Fotosintesis: Mengapa Daun Berwarna Hijau?",
+    grade: "4",
+    media_type: "Simulasi",
+    media_url: "https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light_all.html",
+    thumbnail_url: "https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop&q=80",
+    description: "Temukan bagaimana klorofil menyerap cahaya matahari dan mengubah air serta karbon dioksida menjadi oksigen segar!",
+    mission_goals: "1. Menjelaskan fungsi klorofil dalam proses fotosintesis.\n2. Mengidentifikasi peran penting tumbuhan bagi udara di bumi.",
+    mission_steps: "1. Ambil 2 helai daun tanaman di taman sekolah.\n2. Tutup salah satu bagian daun dengan kertas timah selama 2 hari.\n3. Amati perubahan warna daun saat terkena sinar matahari!",
+    mission_reflection: "Apa yang akan terjadi pada udara di bumi jika pohon-pohon hijau berkurang?"
+  },
+
+  // 2. TECHNOLOGY
+  {
+    id: "STEM-TEC01",
+    stem_category: "Technology",
+    title: "Logika Coding Dasar: Algoritma Robot Pembawa Pesan",
+    grade: "3",
+    media_type: "Simulasi",
+    media_url: "https://blockly.games/maze",
+    thumbnail_url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&auto=format&fit=crop&q=80",
+    description: "Belajar logika berpikir komputasional dengan menyusun blok perintah langkah demi langkah agar robot mencapai tujuan.",
+    mission_goals: "1. Memahami konsep urutan perintah (sequence) dalam pemrograman.\n2. Melatih logika pemecahan masalah secara runtut.",
+    mission_steps: "1. Buka simulasi labirin blok melalui tautan materi.\n2. Pandu robot agar berhasil keluar labirin dengan perintah: Maju, Belok Kiri, Belok Kanan.\n3. Tuliskan kode langkah terbaikmu di buku catatan!",
+    mission_reflection: "Mengapa komputer atau robot harus diberi perintah yang sangat runtut tanpa boleh ada yang terbalik?"
+  },
+  {
+    id: "STEM-TEC02",
+    stem_category: "Technology",
+    title: "Jelajah Internet Cerdas: Cara Mencari Fakta & Menghindari Hoaks",
+    grade: "5",
+    media_type: "Artikel",
+    media_url: "https://id.wikipedia.org/wiki/Literasi_digital",
+    thumbnail_url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80",
+    description: "Kiat aman berselancar di dunia maya, mengenali sumber informasi tepercaya, dan menjaga data privasi.",
+    mission_goals: "1. Siswa mampu membedakan informasi fakta dan berita bohong.\n2. Mengetahui pentingnya merahasiakan password dan data pribadi.",
+    mission_steps: "1. Baca artikel ringkasan literasi digital.\n2. Periksa sebuah berita online menggunakan rumus 5W+1H.\n3. Buat kartu pengingat: 3 Langkah Cek Fakta di Internet!",
+    mission_reflection: "Mengapa kita tidak boleh sembarangan mengklik tautan hadiah yang tidak jelas pengirimnya?"
+  },
+
+  // 3. ENGINEERING
+  {
+    id: "STEM-ENG01",
+    stem_category: "Engineering",
+    title: "Rekayasa Jembatan Kertas Kokoh Penahan Beban",
+    grade: "1",
+    media_type: "Praktikum",
+    media_url: "https://www.youtube.com/watch?v=7b7pS6X9V1g",
+    thumbnail_url: "https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&auto=format&fit=crop&q=80",
+    description: "Bagaimana melipat selembar kertas biasa agar mampu menahan beban koin atau mobil mainan? Temukan rahasia struktur lipatan!",
+    mission_goals: "1. Mengenal konsep dasar struktur teknik (lipatan zig-zag/akordeon).\n2. Melatih kreativitas rancang bangun dengan bahan sederhana.",
+    mission_steps: "1. Siapkan 3 lembar kertas HVS bekas dan 2 cangkir sebagai tiang penyangga.\n2. Buat jembatan pertama mendatar biasa, dan jembatan kedua dengan lipatan zig-zag.\n3. Letakkan koin satu demi satu di atas jembatan sampai roboh. Catat jembatan mana yang paling kokoh!",
+    mission_reflection: "Mengapa lipatan zig-zag dapat membuat kertas tipis menjadi jauh lebih kuat menahan beban?"
+  },
+  {
+    id: "STEM-ENG02",
+    stem_category: "Engineering",
+    title: "Desain Mobil Bertenaga Balon Udara (Hukum Gerak)",
+    grade: "6",
+    media_type: "Praktikum",
+    media_url: "https://www.youtube.com/watch?v=Kz6E1B6VvG8",
+    thumbnail_url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80",
+    description: "Rancang mobil balap ramah lingkungan dari botol bekas yang meluncur kencang akibat semburan udara dari balon!",
+    mission_goals: "1. Memahami prinsip aksi-reaksi (dorongan udara keluar menghasilkan gerak maju).\n2. Menguji coba aerodinamika bentuk bodi kendaraan sederhana.",
+    mission_steps: "1. Siapkan botol plastik bekas, sedotan, 4 tutup botol sebagai roda, dan 1 buah balon.\n2. Rakit poros roda menggunakan tusuk sate dan sedotan.\n3. Tiup balon di atas mobil, lalu lepaskan di lantai licin dan ukur jarak luncurnya!",
+    mission_reflection: "Bagaimana cara memodifikasi bentuk mobil agar meluncur lebih lurus dan jauh?"
+  },
+
+  // 4. MATHEMATICS
+  {
+    id: "STEM-MAT01",
+    stem_category: "Mathematics",
+    title: "Pecahan Pizza Lezat: Memahami 1/2, 1/4, dan 3/4",
+    grade: "3",
+    media_type: "Dokumen",
+    media_url: "https://phet.colorado.edu/sims/html/fractions-intro/latest/fractions-intro_all.html",
+    thumbnail_url: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80",
+    description: "Belajar pecahan jadi menyenangkan dengan memotong pizza khayalan bersama teman-teman!",
+    mission_goals: "1. Memvisualisasikan pecahan sederhana dalam bentuk potongan benda utuh.\n2. Membandingkan nilai pecahan yang berpenyebut sama.",
+    mission_steps: "1. Buka simulasi pecahan interaktif PhET.\n2. Bagi sebuah lingkaran pizza menjadi 4 bagian sama besar.\n3. Berikan 2 potong kepada teman, dan hitung berapa sisa pecahan yang kamu miliki!",
+    mission_reflection: "Jika sebuah kue dibagi sama rata untuk 4 anak, mengapa setiap anak mendapat nilai 1/4 bagian?"
+  },
+  {
+    id: "STEM-MAT02",
+    stem_category: "Mathematics",
+    title: "Detektif Sudut: Menemukan Sudut Siku-siku, Lancip, & Tumpul",
+    grade: "5",
+    media_type: "Video",
+    media_url: "https://www.youtube.com/watch?v=NVuMULQjb3o",
+    thumbnail_url: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80",
+    description: "Bawa penggaris busurmu dan jadilah detektif yang mencari sudut-sudut rahasia pada pintu, atap rumah, dan jam dinding!",
+    mission_goals: "1. Mengidentifikasi sudut siku-siku (90 derajat), lancip (<90 derajat), dan tumpul (>90 derajat).\n2. Melatih ketelitian dalam mengamati sudut pada objek di sekitar.",
+    mission_steps: "1. Ambil selembar kertas origami persegi yang memiliki sudut siku-siku 90°.\n2. Cocokkan ujung kertas pada 5 sudut benda di dalam kelas atau rumahmu.\n3. Catat di tabel: benda mana yang memiliki sudut siku-siku, lancip, atau tumpul!",
+    mission_reflection: "Mengapa kusen pintu dan jendela kebanyakan dirancang menggunakan sudut siku-siku?"
+  }
+];
+
+let appState = {
+  settings: Object.assign({}, DEFAULT_SETTINGS),
+  materials: [],
+  currentAdminPin: "123456",
+  selectedCategory: "",
+  selectedGrade: "",
+  selectedMediaType: "",
+  searchQuery: "",
+  isAdminLoggedIn: false,
+  pendingCategory: "",
+  isGradeLocked: false
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadInitialData();
+});
+
+function isRunningInGoogleAppsScript() {
+  return typeof google !== "undefined" && google.script && google.script.run;
+}
+
+function loadInitialData() {
+  if (isRunningInGoogleAppsScript()) {
+    google.script.run
+      .withSuccessHandler((response) => {
+        if (response && response.success) {
+          appState.settings = Object.assign({}, DEFAULT_SETTINGS, response.data.settings);
+          appState.materials = response.data.materials || [];
+        } else {
+          fallbackToLocalStorage();
+        }
+        renderApp();
+      })
+      .withFailureHandler(() => {
+        fallbackToLocalStorage();
+        renderApp();
+      })
+      .getInitialData();
+  } else {
+    fallbackToLocalStorage();
+    renderApp();
+  }
+}
+
+function fallbackToLocalStorage() {
+  const DATA_VERSION = "v1.3.1";
+  const currentVersion = localStorage.getItem("stem_data_version");
+  const savedSettings = localStorage.getItem("stem_settings");
+  const savedMaterials = localStorage.getItem("stem_materials");
+  const savedPin = localStorage.getItem("stem_admin_pin");
+
+  appState.settings = savedSettings ? JSON.parse(savedSettings) : Object.assign({}, DEFAULT_SETTINGS);
+
+  if (currentVersion !== DATA_VERSION) {
+    appState.materials = JSON.parse(JSON.stringify(INITIAL_MATERIALS));
+    localStorage.setItem("stem_materials", JSON.stringify(appState.materials));
+    localStorage.setItem("stem_data_version", DATA_VERSION);
+  } else {
+    appState.materials = savedMaterials ? JSON.parse(savedMaterials) : JSON.parse(JSON.stringify(INITIAL_MATERIALS));
+  }
+
+  appState.currentAdminPin = savedPin || "123456";
+}
+
+function saveToLocalStorage() {
+  localStorage.setItem("stem_settings", JSON.stringify(appState.settings));
+  localStorage.setItem("stem_materials", JSON.stringify(appState.materials));
+  localStorage.setItem("stem_admin_pin", appState.currentAdminPin);
+}
+
+function renderApp() {
+  renderSchoolIdentity();
+  renderCategoryLogosAndCounts();
+
+  const homeView = document.getElementById("viewHome");
+  const subCategoryView = document.getElementById("viewCategorySub");
+
+  if (!appState.selectedCategory) {
+    if (homeView) homeView.style.display = "block";
+    if (subCategoryView) subCategoryView.style.display = "none";
+  } else {
+    if (homeView) homeView.style.display = "none";
+    if (subCategoryView) subCategoryView.style.display = "block";
+    renderCategorySubpageHeader();
+    updateGradeFilterBarVisibility();
+    renderMaterialsGrid();
+    renderActiveFilterStatus();
+  }
+}
+
+function renderSchoolIdentity() {
+  const s = appState.settings;
+  const logoEl = document.getElementById("navSchoolLogo");
+  const navTitleEl = document.getElementById("navSchoolName");
+  const heroTitleEl = document.getElementById("heroSchoolName");
+  const heroYearEl = document.getElementById("heroAcademicYear");
+  const heroSloganEl = document.getElementById("heroSlogan");
+
+  if (logoEl && s.logo_url) logoEl.src = s.logo_url;
+  if (navTitleEl) navTitleEl.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
+  if (heroTitleEl) heroTitleEl.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
+  if (heroYearEl) heroYearEl.textContent = s.academic_year || "2026/2027";
+  if (heroSloganEl) heroSloganEl.textContent = s.slogan || "Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika!";
+
+  // Footer Resmi Sekolah (Kontak WA Langsung Nomor & Hak Cipta)
+  const footerSchoolBottom = document.getElementById("footerSchoolNameBottom");
+  const footerWaLink = document.getElementById("footerWaLink");
+  const footerWaText = document.getElementById("footerWaText");
+
+  if (footerSchoolBottom) footerSchoolBottom.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
+
+  if (footerWaLink && footerWaText) {
+    const rawWa = (s.contact_wa || "081234567890").trim();
+    const cleanDigits = rawWa.replace(/\D/g, "");
+    let waLinkNum = cleanDigits;
+    if (waLinkNum.startsWith("0")) {
+      waLinkNum = "62" + waLinkNum.slice(1);
+    }
+    footerWaLink.href = `https://wa.me/${waLinkNum}`;
+
+    // Tampilkan langsung nomor telepon tanpa teks awalan
+    let displayWa = rawWa;
+    if (!displayWa.startsWith("+") && !displayWa.startsWith("0")) {
+      displayWa = "+" + displayWa;
+    }
+    footerWaText.textContent = displayWa;
+  }
+}
+
+function renderCategoryLogosAndCounts() {
+  const counts = { Science: 0, Technology: 0, Engineering: 0, Mathematics: 0 };
+  appState.materials.forEach((m) => {
+    if (counts[m.stem_category] !== undefined) {
+      counts[m.stem_category]++;
+    }
+  });
+
+  for (const cat in counts) {
+    const countEl = document.getElementById(`count-${cat}`);
+    if (countEl) countEl.textContent = `${counts[cat]} Materi`;
+
+    const iconBox = document.getElementById(`icon-box-${cat}`);
+    if (iconBox) {
+      const customLogo = appState.settings[`logo_${cat.toLowerCase()}`];
+      if (customLogo) {
+        iconBox.innerHTML = `<img src="${escapeHtml(customLogo)}" class="stem-icon-img" alt="${cat}" onerror="renderDefaultIcon(this, '${cat}')">`;
+      } else {
+        iconBox.innerHTML = getDefaultCategoryIcon(cat);
+      }
+    }
+  }
+}
+
+function getDefaultCategoryIcon(category) {
+  switch (category) {
+    case "Science": return '<i class="fa-solid fa-flask-vial"></i>';
+    case "Technology": return '<i class="fa-solid fa-laptop-code"></i>';
+    case "Engineering": return '<i class="fa-solid fa-gears"></i>';
+    case "Mathematics": return '<i class="fa-solid fa-calculator"></i>';
+    default: return '<i class="fa-solid fa-shapes"></i>';
+  }
+}
+
+function renderDefaultIcon(imgEl, cat) {
+  if (imgEl && imgEl.parentElement) {
+    imgEl.parentElement.innerHTML = getDefaultCategoryIcon(cat);
+  }
+}
+
+function openGradeSelector(category) {
+  appState.pendingCategory = category;
+  const nameEl = document.getElementById("gradeSelectorCategoryName");
+  const badgeEl = document.getElementById("gradeSelectorBadge");
+  const colorMap = {
+    Science: "var(--stem-sci)",
+    Technology: "var(--stem-tec)",
+    Engineering: "var(--stem-eng)",
+    Mathematics: "var(--stem-mat)"
+  };
+
+  if (nameEl) nameEl.textContent = `Eksplorasi ${category}`;
+  if (badgeEl) {
+    badgeEl.style.background = colorMap[category] || "var(--primary)";
+    const customLogo = appState.settings[`logo_${category.toLowerCase()}`];
+    if (customLogo) {
+      badgeEl.innerHTML = `<img src="${escapeHtml(customLogo)}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" alt="${category}">`;
+    } else {
+      badgeEl.innerHTML = getDefaultCategoryIcon(category);
+    }
+  }
+
+  const modal = document.getElementById("gradeSelectorModal");
+  if (modal) modal.classList.add("open");
+}
+
+function closeGradeSelectorModal() {
+  const modal = document.getElementById("gradeSelectorModal");
+  if (modal) modal.classList.remove("open");
+}
+
+function chooseGradeAndExplore(grade) {
+  const cat = appState.pendingCategory || "Science";
+  closeGradeSelectorModal();
+  selectCategory(cat);
+  if (grade) {
+    appState.isGradeLocked = true;
+    setGradeFilter(grade);
+  } else {
+    appState.isGradeLocked = false;
+    setGradeFilter("");
+  }
+  updateGradeFilterBarVisibility();
+}
+
+function updateGradeFilterBarVisibility() {
+  const bar = document.getElementById("gradeFilterBar");
+  const banner = document.getElementById("lockedGradeBanner");
+  const text = document.getElementById("lockedGradeText");
+
+  if (appState.isGradeLocked && appState.selectedGrade) {
+    if (bar) bar.style.display = "none";
+    if (banner) banner.style.display = "flex";
+    if (text) text.textContent = `Kelas ${appState.selectedGrade} SD`;
+  } else {
+    if (bar) bar.style.display = "flex";
+    if (banner) banner.style.display = "none";
+  }
+}
+
+function selectCategory(category) {
+  appState.selectedCategory = category;
+  appState.selectedGrade = "";
+  appState.selectedMediaType = "";
+  appState.searchQuery = "";
+
+  const sInput = document.getElementById("searchInput");
+  if (sInput) sInput.value = "";
+  const mSelect = document.getElementById("mediaFilterSelect");
+  if (mSelect) mSelect.value = "";
+  document.querySelectorAll(".grade-pill").forEach((btn) => btn.classList.remove("active"));
+  const allBtn = document.getElementById("grade-all");
+  if (allBtn) allBtn.classList.add("active");
+
+  renderApp();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function backToHomeCategories() {
+  appState.selectedCategory = "";
+  appState.selectedGrade = "";
+  appState.selectedMediaType = "";
+  appState.searchQuery = "";
+  appState.isGradeLocked = false;
+  renderApp();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderCategorySubpageHeader() {
+  const cat = appState.selectedCategory;
+  const titleEl = document.getElementById("subpageCategoryTitle");
+  const descEl = document.getElementById("subpageCategoryDesc");
+  const iconBox = document.getElementById("subpageIconBox");
+
+  const meta = {
+    Science: {
+      title: "Eksplorasi Science (Sains Alam)",
+      desc: "Menjelajahi fenomena alam, makhluk hidup, ekosistem, fotosintesis, dan eksperimen ilmiah seru.",
+      color: "var(--stem-sci)",
+      bg: "var(--stem-sci)"
+    },
+    Technology: {
+      title: "Eksplorasi Technology (Teknologi Digital)",
+      desc: "Mengasah logika coding, algoritma robotika, literasi digital cerdas, dan dunia komputasi.",
+      color: "var(--stem-tec)",
+      bg: "var(--stem-tec)"
+    },
+    Engineering: {
+      title: "Eksplorasi Engineering (Rekayasa Struktur)",
+      desc: "Merancang bangun jembatan kokoh, mobil roket balon, aerodinamika, dan pemecahan masalah praktis.",
+      color: "var(--stem-eng)",
+      bg: "var(--stem-eng)"
+    },
+    Mathematics: {
+      title: "Eksplorasi Mathematics (Matematika & Geometri)",
+      desc: "Menemukan keindahan pola angka, pecahan pizza, pengukuran sudut, dan geometri interaktif.",
+      color: "var(--stem-mat)",
+      bg: "var(--stem-mat)"
+    }
+  };
+
+  const curr = meta[cat] || { title: cat, desc: "", color: "var(--primary)", bg: "var(--primary)" };
+  if (titleEl) titleEl.textContent = curr.title;
+  if (descEl) descEl.textContent = curr.desc;
+
+  if (iconBox) {
+    iconBox.style.background = curr.bg;
+    const customLogo = appState.settings[`logo_${cat.toLowerCase()}`];
+    if (customLogo) {
+      iconBox.innerHTML = `<img src="${escapeHtml(customLogo)}" class="stem-icon-img" alt="${cat}" onerror="renderDefaultIcon(this, '${cat}')">`;
+    } else {
+      iconBox.innerHTML = getDefaultCategoryIcon(cat);
+    }
+  }
+}
+
+function renderMaterialsGrid() {
+  const grid = document.getElementById("materialsGrid");
+  if (!grid) return;
+
+  const filtered = getFilteredMaterials();
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <i class="fa-solid fa-shapes"></i>
+        <h3>Tidak Ada Materi yang Cocok</h3>
+        <p>Cobalah mengganti kata kunci pencarian, memilih jenjang kelas lain, atau mengatur ulang filter.</p>
+        <button class="nav-btn primary" onclick="resetFiltersInSubpage()">
+          <i class="fa-solid fa-rotate-left"></i> Tampilkan Seluruh Materi ${appState.selectedCategory}
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((item) => {
+    const mediaIcon = getMediaIcon(item.media_type);
+    const thumb = item.thumbnail_url || 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600&auto=format&fit=crop&q=80';
+    return `
+      <div class="material-card">
+        <div class="card-thumb-wrap">
+          <img src="${escapeHtml(thumb)}" alt="${escapeHtml(item.title)}" class="card-thumb-img" onerror="this.src='https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600&auto=format&fit=crop&q=80'">
+          <span class="card-stem-pill ${item.stem_category}">${item.stem_category}</span>
+          <span class="card-grade-pill">Kelas ${item.grade}</span>
+          <span class="card-media-badge"><i class="${mediaIcon}"></i> ${item.media_type}</span>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">${escapeHtml(item.title)}</h4>
+          <p class="card-desc">${escapeHtml(item.description)}</p>
+          <button class="card-explore-btn" onclick="openMissionModal('${item.id}')">
+            <i class="fa-solid fa-rocket"></i> Mulai Eksplorasi
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function getFilteredMaterials() {
+  return appState.materials.filter((m) => {
+    if (m.stem_category !== appState.selectedCategory) return false;
+    if (appState.selectedGrade && String(m.grade) !== String(appState.selectedGrade)) return false;
+    if (appState.selectedMediaType && m.media_type !== appState.selectedMediaType) return false;
+    if (appState.searchQuery) {
+      const q = appState.searchQuery.toLowerCase();
+      const title = (m.title || "").toLowerCase();
+      const desc = (m.description || "").toLowerCase();
+      if (!title.includes(q) && !desc.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+function renderActiveFilterStatus() {
+  const container = document.getElementById("activeFilterTags");
+  const resetBtn = document.getElementById("resetFilterBtn");
+  if (!container) return;
+
+  const hasExtraFilters = appState.selectedMediaType || appState.searchQuery || (!appState.isGradeLocked && appState.selectedGrade);
+
+  if (!hasExtraFilters && (!appState.selectedGrade || appState.isGradeLocked)) {
+    const totalMatching = getFilteredMaterials().length;
+    if (appState.isGradeLocked) {
+      container.innerHTML = `<span><i class="fa-solid fa-list-check" style="color:var(--primary);"></i> Menampilkan seluruh materi Kelas ${appState.selectedGrade} SD (${totalMatching} sub-materi)</span>`;
+    } else {
+      const totalInCat = appState.materials.filter(m => m.stem_category === appState.selectedCategory).length;
+      container.innerHTML = `<span><i class="fa-solid fa-list-check" style="color:var(--primary);"></i> Menampilkan seluruh materi ${appState.selectedCategory} (${totalInCat} sub-materi)</span>`;
+    }
+    if (resetBtn) resetBtn.style.display = "none";
+    return;
+  }
+
+  if (resetBtn) resetBtn.style.display = "inline-flex";
+
+  let tagsHtml = [];
+  if (appState.selectedGrade) {
+    if (appState.isGradeLocked) {
+      tagsHtml.push(`<span class="filter-tag" style="background:#EFF6FF; border:1px solid #BFDBFE; color:#1E3A8A; font-weight:700;"><i class="fa-solid fa-lock" style="color:var(--primary);"></i> Kelas: ${appState.selectedGrade}</span>`);
+    } else {
+      tagsHtml.push(`<span class="filter-tag">Kelas: ${appState.selectedGrade} <i class="fa-solid fa-xmark" onclick="setGradeFilter('')"></i></span>`);
+    }
+  }
+  if (appState.selectedMediaType) {
+    tagsHtml.push(`<span class="filter-tag">Media: ${appState.selectedMediaType} <i class="fa-solid fa-xmark" onclick="clearMediaTypeFilter()"></i></span>`);
+  }
+  if (appState.searchQuery) {
+    tagsHtml.push(`<span class="filter-tag">Pencarian: "${escapeHtml(appState.searchQuery)}" <i class="fa-solid fa-xmark" onclick="clearSearchFilter()"></i></span>`);
+  }
+
+  container.innerHTML = tagsHtml.join(" ");
+}
+
+function getMediaIcon(mediaType) {
+  switch (mediaType) {
+    case "Video": return "fa-solid fa-circle-play";
+    case "Simulasi": return "fa-solid fa-gamepad";
+    case "Praktikum": return "fa-solid fa-flask";
+    case "Dokumen": return "fa-solid fa-file-pdf";
+    case "Artikel": return "fa-solid fa-newspaper";
+    default: return "fa-solid fa-arrow-up-right-from-square";
+  }
+}
+
+function setGradeFilter(grade) {
+  appState.selectedGrade = grade;
+  document.querySelectorAll(".grade-pill").forEach((btn) => btn.classList.remove("active"));
+  const target = grade ? document.getElementById(`grade-${grade}`) : document.getElementById("grade-all");
+  if (target) target.classList.add("active");
+  renderMaterialsGrid();
+  renderActiveFilterStatus();
+}
+
+function onSearchChange() {
+  const input = document.getElementById("searchInput");
+  appState.searchQuery = input ? input.value.trim() : "";
+  renderMaterialsGrid();
+  renderActiveFilterStatus();
+}
+
+function clearSearchFilter() {
+  const input = document.getElementById("searchInput");
+  if (input) input.value = "";
+  appState.searchQuery = "";
+  renderMaterialsGrid();
+  renderActiveFilterStatus();
+}
+
+function onMediaFilterChange() {
+  const select = document.getElementById("mediaFilterSelect");
+  appState.selectedMediaType = select ? select.value : "";
+  renderMaterialsGrid();
+  renderActiveFilterStatus();
+}
+
+function clearMediaTypeFilter() {
+  const select = document.getElementById("mediaFilterSelect");
+  if (select) select.value = "";
+  appState.selectedMediaType = "";
+  renderMaterialsGrid();
+  renderActiveFilterStatus();
+}
+
+function resetFiltersInSubpage() {
+  if (!appState.isGradeLocked) {
+    appState.selectedGrade = "";
+    document.querySelectorAll(".grade-pill").forEach((btn) => btn.classList.remove("active"));
+    const allBtn = document.getElementById("grade-all");
+    if (allBtn) allBtn.classList.add("active");
+  }
+  appState.selectedMediaType = "";
+  appState.searchQuery = "";
+
+  const sInput = document.getElementById("searchInput");
+  if (sInput) sInput.value = "";
+  const mSelect = document.getElementById("mediaFilterSelect");
+  if (mSelect) mSelect.value = "";
+
+  renderMaterialsGrid();
+  renderActiveFilterStatus();
+}
+
+function toggleMobileNavMenu() {
+  const menu = document.getElementById("mobileNavMenu");
+  if (!menu) return;
+  const isShown = menu.style.display === "block" || getComputedStyle(menu).display === "block";
+  menu.style.display = isShown ? "none" : "block";
+}
+
+function openMissionModal(id) {
+  const material = appState.materials.find((m) => m.id === id);
+  if (!material) return;
+
+  const body = document.getElementById("missionModalBody");
+  const mediaIcon = getMediaIcon(material.media_type);
+
+  body.innerHTML = `
+    <div class="mission-badge-row">
+      <span class="card-stem-pill ${material.stem_category}">${material.stem_category}</span>
+      <span class="card-grade-pill" style="position:static;">Kelas ${material.grade} SD</span>
+      <span class="card-media-badge" style="position:static;"><i class="${mediaIcon}"></i> ${material.media_type}</span>
+    </div>
+    
+    <h3 class="mission-title">${escapeHtml(material.title)}</h3>
+    <p class="mission-desc">${escapeHtml(material.description)}</p>
+
+    <div class="mission-media-action">
+      <p>Materi pembelajaran interaktif siap dieksplorasi:</p>
+      <a href="${escapeHtml(material.media_url)}" target="_blank" rel="noopener noreferrer" class="btn-media-open">
+        <i class="${mediaIcon}"></i> Buka ${material.media_type} Pembelajaran
+      </a>
+    </div>
+
+    ${material.mission_goals ? `
+      <div class="mission-box goals">
+        <div class="mission-box-title"><i class="fa-solid fa-bullseye"></i> Tujuan Pembelajaran</div>
+        <div class="mission-box-content">${escapeHtml(material.mission_goals)}</div>
+      </div>
+    ` : ''}
+
+    ${material.mission_steps ? `
+      <div class="mission-box steps">
+        <div class="mission-box-title"><i class="fa-solid fa-list-check"></i> Langkah Misi / Praktikum Seru</div>
+        <div class="mission-box-content">${escapeHtml(material.mission_steps)}</div>
+      </div>
+    ` : ''}
+
+    ${material.mission_reflection ? `
+      <div class="mission-box reflection">
+        <div class="mission-box-title"><i class="fa-solid fa-lightbulb"></i> Pertanyaan Refleksi Cepat</div>
+        <div class="mission-box-content">${escapeHtml(material.mission_reflection)}</div>
+      </div>
+    ` : ''}
+  `;
+
+  const modal = document.getElementById("missionModal");
+  if (modal) modal.classList.add("open");
+}
+
+function closeMissionModal() {
+  const modal = document.getElementById("missionModal");
+  if (modal) modal.classList.remove("open");
+}
+
+function celebrateMissionComplete() {
+  showToast("🌟 Luar Biasa! Kamu berhasil menyelesaikan misi eksplorasi ini! Teruslah bereksplorasi!", "success");
+  closeMissionModal();
+}
+
+function openUserGuideModal() {
+  const modal = document.getElementById("userGuideModal");
+  if (modal) modal.classList.add("open");
+}
+
+function closeUserGuideModal() {
+  const modal = document.getElementById("userGuideModal");
+  if (modal) modal.classList.remove("open");
+}
+
+function switchGuideTab(tabId) {
+  document.querySelectorAll(".guide-tab-btn").forEach((btn) => btn.classList.remove("active"));
+  document.querySelectorAll(".guide-content-panel").forEach((panel) => panel.classList.remove("active"));
+
+  const targetPanel = document.getElementById(tabId);
+  if (targetPanel) targetPanel.classList.add("active");
+
+  const clickedBtn = event.currentTarget;
+  if (clickedBtn) clickedBtn.classList.add("active");
+}
+
+function toggleFaq(el) {
+  const answer = el.nextElementSibling;
+  const icon = el.querySelector("i");
+  if (answer.style.display === "none" || !answer.style.display) {
+    answer.style.display = "block";
+    if (icon) icon.className = "fa-solid fa-chevron-up";
+  } else {
+    answer.style.display = "none";
+    if (icon) icon.className = "fa-solid fa-chevron-down";
+  }
+}
+
+function openAdminPinModal() {
+  if (appState.isAdminLoggedIn) {
+    openAdminView();
+    return;
+  }
+  const modal = document.getElementById("adminPinModal");
+  const pinInput = document.getElementById("inputAdminPin");
+  if (pinInput) pinInput.value = "";
+  if (modal) modal.classList.add("open");
+}
+
+function closeAdminPinModal() {
+  const modal = document.getElementById("adminPinModal");
+  if (modal) modal.classList.remove("open");
+}
+
+function fillDemoPin() {
+  const pinInput = document.getElementById("inputAdminPin");
+  if (pinInput) pinInput.value = "123456";
+}
+
+function submitAdminPin() {
+  const pinInput = document.getElementById("inputAdminPin");
+  const enteredPin = pinInput ? pinInput.value.trim() : "";
+
+  if (!enteredPin) {
+    showToast("Silakan masukkan PIN Admin terlebih dahulu!", "error");
+    return;
+  }
+
+  if (isRunningInGoogleAppsScript()) {
+    google.script.run
+      .withSuccessHandler((response) => {
+        if (response && response.success) {
+          appState.isAdminLoggedIn = true;
+          appState.currentAdminPin = enteredPin;
+          closeAdminPinModal();
+          openAdminView();
+          showToast("Autentikasi PIN Berhasil! Selamat datang Admin.", "success");
+        } else {
+          showToast(response.error || "PIN Admin Salah!", "error");
+        }
+      })
+      .withFailureHandler((err) => {
+        showToast("Gagal memverifikasi PIN: " + err, "error");
+      })
+      .verifyPin(enteredPin);
+  } else {
+    if (enteredPin === appState.currentAdminPin) {
+      appState.isAdminLoggedIn = true;
+      closeAdminPinModal();
+      openAdminView();
+      showToast("Autentikasi PIN Berhasil! Selamat datang Admin.", "success");
+    } else {
+      showToast("PIN Admin tidak sesuai! Coba klik tombol Isi PIN Demo.", "error");
+    }
+  }
+}
+
+function openAdminView() {
+  const view = document.getElementById("adminView");
+  if (view) view.classList.add("active");
+  renderAdminTable();
+  populateSettingsForm();
+  initCodeSnippets();
+}
+
+function closeAdminView() {
+  const view = document.getElementById("adminView");
+  if (view) view.classList.remove("active");
+  renderApp();
+}
+
+function logoutAdmin() {
+  appState.isAdminLoggedIn = false;
+  closeAdminView();
+  showToast("Anda telah keluar dari mode Admin.", "success");
+}
+
+function toggleAdminSidebar() {
+  const sidebar = document.getElementById("adminSidebar");
+  const backdrop = document.getElementById("adminBackdropMobile");
+  if (sidebar) sidebar.classList.toggle("open");
+  if (backdrop) backdrop.classList.toggle("open");
+}
+
+function switchAdminTab(tabId, btn) {
+  document.querySelectorAll(".admin-nav-item").forEach((el) => el.classList.remove("active"));
+  document.querySelectorAll(".admin-tab-pane").forEach((pane) => pane.classList.remove("active"));
+
+  if (btn) btn.classList.add("active");
+  const targetPane = document.getElementById(tabId);
+  if (targetPane) {
+    targetPane.classList.add("active");
+    if (tabId === "tab-deploy-gas") {
+      initDeployCodeViewer();
+    }
+  }
+
+  const sidebar = document.getElementById("adminSidebar");
+  const backdrop = document.getElementById("adminBackdropMobile");
+  if (sidebar) sidebar.classList.remove("open");
+  if (backdrop) backdrop.classList.remove("open");
+}
+
+function renderAdminTable() {
+  const tbody = document.getElementById("adminTableBody");
+  if (!tbody) return;
+
+  const q = (document.getElementById("adminSearchInput")?.value || "").toLowerCase();
+  const cat = document.getElementById("adminStemFilter")?.value || "";
+  const gr = document.getElementById("adminGradeFilter")?.value || "";
+
+  const filtered = appState.materials.filter((m) => {
+    if (cat && m.stem_category !== cat) return false;
+    if (gr && String(m.grade) !== String(gr)) return false;
+    if (q && !(m.title || "").toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:2rem; color:var(--text-muted);">Tidak ada data materi yang sesuai kriteria.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map((item) => `
+    <tr>
+      <td>
+        <img src="${escapeHtml(item.thumbnail_url || 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=100&auto=format&fit=crop&q=80')}" alt="" style="width:48px; height:48px; object-fit:cover; border-radius:var(--radius-sm); border:1px solid #E2E8F0;" onerror="this.src='https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=100&auto=format&fit=crop&q=80'">
+      </td>
+      <td>
+        <strong>${escapeHtml(item.title)}</strong>
+        <div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml((item.description || '').substring(0, 60))}...</div>
+      </td>
+      <td><span class="card-stem-pill ${item.stem_category}" style="position:static; font-size:0.7rem; padding:0.2rem 0.5rem;">${item.stem_category}</span></td>
+      <td><strong>Kelas ${item.grade}</strong></td>
+      <td><span class="card-media-badge" style="position:static; font-size:0.7rem;"><i class="${getMediaIcon(item.media_type)}"></i> ${item.media_type}</span></td>
+      <td style="text-align:right;">
+        <div class="action-btn-group" style="justify-content:flex-end;">
+          <button class="btn-icon edit" title="Edit Materi" onclick="openEditMaterialModal('${item.id}')"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn-icon delete" title="Hapus Materi" onclick="confirmDeleteMaterial('${item.id}')"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </td>
+    </tr>
+  `).join("");
+}
+
+function openAddMaterialModal() {
+  document.getElementById("materialFormModalTitle").textContent = "Tambah Sub-Card Materi STEM";
+  document.getElementById("formMaterialId").value = "";
+  document.getElementById("formStemCategory").value = appState.selectedCategory || "Science";
+  document.getElementById("formGrade").value = "1";
+  document.getElementById("formTitle").value = "";
+  document.getElementById("formMediaType").value = "Video";
+  document.getElementById("formMediaUrl").value = "";
+  document.getElementById("formThumbnailUrl").value = "";
+  document.getElementById("formDescription").value = "";
+  document.getElementById("formMissionGoals").value = "";
+  document.getElementById("formMissionSteps").value = "";
+  document.getElementById("formMissionReflection").value = "";
+
+  const modal = document.getElementById("materialFormModal");
+  if (modal) modal.classList.add("open");
+}
+
+function openEditMaterialModal(id) {
+  const item = appState.materials.find((m) => m.id === id);
+  if (!item) return;
+
+  document.getElementById("materialFormModalTitle").textContent = "Edit Sub-Card Materi STEM";
+  document.getElementById("formMaterialId").value = item.id;
+  document.getElementById("formStemCategory").value = item.stem_category || "Science";
+  document.getElementById("formGrade").value = item.grade || "1";
+  document.getElementById("formTitle").value = item.title || "";
+  document.getElementById("formMediaType").value = item.media_type || "Video";
+  document.getElementById("formMediaUrl").value = item.media_url || "";
+  document.getElementById("formThumbnailUrl").value = item.thumbnail_url || "";
+  document.getElementById("formDescription").value = item.description || "";
+  document.getElementById("formMissionGoals").value = item.mission_goals || "";
+  document.getElementById("formMissionSteps").value = item.mission_steps || "";
+  document.getElementById("formMissionReflection").value = item.mission_reflection || "";
+
+  const modal = document.getElementById("materialFormModal");
+  if (modal) modal.classList.add("open");
+}
+
+function closeMaterialFormModal() {
+  const modal = document.getElementById("materialFormModal");
+  if (modal) modal.classList.remove("open");
+}
+
+function submitMaterialForm() {
+  const title = document.getElementById("formTitle").value.trim();
+  const mediaUrl = document.getElementById("formMediaUrl").value.trim();
+
+  if (!title) {
+    showToast("Judul materi wajib diisi!", "error");
+    return;
+  }
+  if (!mediaUrl) {
+    showToast("URL Tautan media pembelajaran wajib diisi!", "error");
+    return;
+  }
+
+  const id = document.getElementById("formMaterialId").value.trim();
+  const materialPayload = {
+    id: id || undefined,
+    stem_category: document.getElementById("formStemCategory").value,
+    grade: document.getElementById("formGrade").value,
+    title: title,
+    media_type: document.getElementById("formMediaType").value,
+    media_url: mediaUrl,
+    thumbnail_url: document.getElementById("formThumbnailUrl").value.trim() || 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600&auto=format&fit=crop&q=80',
+    description: document.getElementById("formDescription").value.trim(),
+    mission_goals: document.getElementById("formMissionGoals").value.trim(),
+    mission_steps: document.getElementById("formMissionSteps").value.trim(),
+    mission_reflection: document.getElementById("formMissionReflection").value.trim()
+  };
+
+  if (isRunningInGoogleAppsScript()) {
+    showToast("Menyimpan ke Google Sheets...", "success");
+    google.script.run
+      .withSuccessHandler((response) => {
+        if (response && response.success) {
+          showToast(response.message || "Materi berhasil disimpan!", "success");
+          closeMaterialFormModal();
+          loadInitialData();
+        } else {
+          showToast(response.error || "Gagal menyimpan materi", "error");
+        }
+      })
+      .withFailureHandler((err) => {
+        showToast("Error simpan GAS: " + err, "error");
+      })
+      .saveMaterial(materialPayload, appState.currentAdminPin);
+  } else {
+    if (id) {
+      const idx = appState.materials.findIndex((m) => m.id === id);
+      if (idx !== -1) {
+        appState.materials[idx] = Object.assign({}, appState.materials[idx], materialPayload);
+      }
+    } else {
+      materialPayload.id = "STEM-" + Math.random().toString(36).substring(2, 9).toUpperCase();
+      appState.materials.unshift(materialPayload);
+    }
+    saveToLocalStorage();
+    showToast("Materi berhasil disimpan!", "success");
+    closeMaterialFormModal();
+    renderAdminTable();
+    renderApp();
+  }
+}
+
+function confirmDeleteMaterial(id) {
+  if (!confirm("Apakah Anda yakin ingin menghapus sub-card materi ini?")) return;
+
+  if (isRunningInGoogleAppsScript()) {
+    showToast("Menghapus dari Google Sheets...", "success");
+    google.script.run
+      .withSuccessHandler((response) => {
+        if (response && response.success) {
+          showToast(response.message || "Materi berhasil dihapus!", "success");
+          loadInitialData();
+        } else {
+          showToast(response.error || "Gagal menghapus materi", "error");
+        }
+      })
+      .withFailureHandler((err) => {
+        showToast("Error hapus GAS: " + err, "error");
+      })
+      .deleteMaterial(id, appState.currentAdminPin);
+  } else {
+    appState.materials = appState.materials.filter((m) => m.id !== id);
+    saveToLocalStorage();
+    showToast("Materi berhasil dihapus!", "success");
+    renderAdminTable();
+    renderApp();
+  }
+}
+
+function populateSettingsForm() {
+  const s = appState.settings;
+  document.getElementById("settingSchoolName").value = s.school_name || "";
+  document.getElementById("settingAcademicYear").value = s.academic_year || "";
+  document.getElementById("settingSlogan").value = s.slogan || "";
+  document.getElementById("settingLogoUrl").value = s.logo_url || "";
+  document.getElementById("settingContactWa").value = s.contact_wa || "";
+  document.getElementById("settingContactEmail").value = s.contact_email || "";
+  document.getElementById("settingAdminPin").value = "";
+
+  document.getElementById("settingLogoSci").value = s.logo_science || "";
+  document.getElementById("settingLogoTec").value = s.logo_technology || "";
+  document.getElementById("settingLogoEng").value = s.logo_engineering || "";
+  document.getElementById("settingLogoMat").value = s.logo_mathematics || "";
+
+  previewSettings();
+}
+
+function previewSettings() {
+  const name = document.getElementById("settingSchoolName").value.trim() || "SD NEGERI HARAPAN BANGSA";
+  const year = document.getElementById("settingAcademicYear").value.trim() || "2026/2027";
+  const slogan = document.getElementById("settingSlogan").value.trim() || "Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika!";
+  const logo = document.getElementById("settingLogoUrl").value.trim() || "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80";
+
+  document.getElementById("previewSchoolName").textContent = name;
+  document.getElementById("previewAcademicYear").textContent = `Tahun Ajaran ${year}`;
+  document.getElementById("previewSlogan").textContent = slogan;
+  document.getElementById("previewLogoImg").src = logo;
+
+  updateCategoryIconPreview("previewIconSci", document.getElementById("settingLogoSci").value.trim(), "Science");
+  updateCategoryIconPreview("previewIconTec", document.getElementById("settingLogoTec").value.trim(), "Technology");
+  updateCategoryIconPreview("previewIconEng", document.getElementById("settingLogoEng").value.trim(), "Engineering");
+  updateCategoryIconPreview("previewIconMat", document.getElementById("settingLogoMat").value.trim(), "Mathematics");
+}
+
+function updateCategoryIconPreview(elementId, url, cat) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  if (url) {
+    el.innerHTML = `<img src="${escapeHtml(url)}" style="width:100%; height:100%; object-fit:cover; border-radius:4px;" onerror="renderDefaultIcon(this, '${cat}')">`;
+  } else {
+    el.innerHTML = getDefaultCategoryIcon(cat);
+  }
+}
+
+function saveSchoolSettings() {
+  const name = document.getElementById("settingSchoolName").value.trim();
+  const year = document.getElementById("settingAcademicYear").value.trim();
+  const slogan = document.getElementById("settingSlogan").value.trim();
+  const logo = document.getElementById("settingLogoUrl").value.trim();
+  const wa = document.getElementById("settingContactWa").value.trim();
+  const email = document.getElementById("settingContactEmail").value.trim();
+  const newPin = document.getElementById("settingAdminPin").value.trim();
+
+  const logoSci = document.getElementById("settingLogoSci").value.trim();
+  const logoTec = document.getElementById("settingLogoTec").value.trim();
+  const logoEng = document.getElementById("settingLogoEng").value.trim();
+  const logoMat = document.getElementById("settingLogoMat").value.trim();
+
+  const newSettingsPayload = {
+    school_name: name || DEFAULT_SETTINGS.school_name,
+    academic_year: year || DEFAULT_SETTINGS.academic_year,
+    slogan: slogan || DEFAULT_SETTINGS.slogan,
+    logo_url: logo || DEFAULT_SETTINGS.logo_url,
+    contact_wa: wa || DEFAULT_SETTINGS.contact_wa,
+    contact_email: email || DEFAULT_SETTINGS.contact_email,
+    logo_science: logoSci,
+    logo_technology: logoTec,
+    logo_engineering: logoEng,
+    logo_mathematics: logoMat
+  };
+
+  if (newPin) {
+    if (newPin.length < 4) {
+      showToast("PIN Admin minimal 4 digit!", "error");
+      return;
+    }
+    newSettingsPayload.admin_pin = newPin;
+  }
+
+  if (isRunningInGoogleAppsScript()) {
+    showToast("Menyimpan pengaturan ke Google Sheets...", "success");
+    google.script.run
+      .withSuccessHandler((response) => {
+        if (response && response.success) {
+          if (newPin) appState.currentAdminPin = newPin;
+          appState.settings = Object.assign({}, appState.settings, response.data);
+          showToast("Pengaturan sekolah berhasil disimpan!", "success");
+          renderApp();
+        } else {
+          showToast(response.error || "Gagal menyimpan pengaturan", "error");
+        }
+      })
+      .withFailureHandler((err) => {
+        showToast("Error update pengaturan GAS: " + err, "error");
+      })
+      .updateSettings(newSettingsPayload, appState.currentAdminPin);
+  } else {
+    if (newPin) appState.currentAdminPin = newPin;
+    appState.settings = Object.assign({}, appState.settings, newSettingsPayload);
+    saveToLocalStorage();
+    showToast("Pengaturan sekolah berhasil disimpan!", "success");
+    renderApp();
+  }
+}
+
+// ==============================================================================
+// MODUL PANDUAN DEPLOY & CODE VIEWER (5 BERKAS GOOGLE APPS SCRIPT)
+// ==============================================================================
+let currentDeployFileName = 'Code.gs';
+const DEPLOY_FILE_METAS = {
+  'Code.gs': {
+    type: 'Script (.gs)',
+    appsScriptName: 'Code.gs',
+    desc: 'Backend Controller, Database Google Sheets, & API Engine'
+  },
+  'index.html': {
+    type: 'HTML',
+    appsScriptName: 'index',
+    desc: 'Template Shell Utama Aplikasi Web (Ketik nama "index" di Apps Script)'
+  },
+  'styles.html': {
+    type: 'HTML',
+    appsScriptName: 'styles',
+    desc: 'Desain Visual CSS Responsif Modern (Ketik nama "styles" di Apps Script)'
+  },
+  'admin.html': {
+    type: 'HTML',
+    appsScriptName: 'admin',
+    desc: 'Markup Tampilan Dashboard Panel Admin (Ketik nama "admin" di Apps Script)'
+  },
+  'scripts.html': {
+    type: 'HTML',
+    appsScriptName: 'scripts',
+    desc: 'Logika Interaktif JavaScript Frontend (Ketik nama "scripts" di Apps Script)'
+  }
+};
+
+const deployFileCache = {};
+
+function getCompleteCodeGsSource() {
+  return "/**\n * ==============================================================================\n * PORTAL PEMBELAJARAN STEM SEKOLAH BERBASIS GOOGLE APPS SCRIPT (GAS)\n * Backend Script - Code.gs\n * ==============================================================================\n * Dijalankan di Google Apps Script yang terhubung ke Google Sheets sebagai database.\n */\n\n// Konfigurasi Nama Sheet\nvar SHEET_SETTINGS = 'Settings';\nvar SHEET_MATERI = 'Materi';\n\n// Default PIN Admin\nvar DEFAULT_PIN = '123456';\n\n/**\n * Entry point Web App (GET Request)\n */\nfunction doGet(e) {\n  // Inisialisasi spreadsheet jika tabel belum ada\n  initDatabaseIfEmpty();\n\n  var template = HtmlService.createTemplateFromFile('index');\n  return template.evaluate()\n    .setTitle('Portal Pembelajaran STEM Sekolah')\n    .addMetaTag('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')\n    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);\n}\n\n/**\n * Menyertakan file HTML parsial jika diperlukan (misal: CSS / JS terpisah)\n */\nfunction include(filename) {\n  return HtmlService.createHtmlOutputFromFile(filename).getContent();\n}\n\n/**\n * Mengambil data awal untuk klien (Settings + Daftar Materi)\n */\nfunction getInitialData() {\n  try {\n    initDatabaseIfEmpty();\n    var settings = getSettingsMap();\n    var materials = getMaterialsList();\n\n    // Sembunyikan PIN admin di respon publik\n    var safeSettings = Object.assign({}, settings);\n    delete safeSettings.admin_pin;\n\n    return {\n      success: true,\n      data: {\n        settings: safeSettings,\n        materials: materials\n      }\n    };\n  } catch (err) {\n    return {\n      success: false,\n      error: err.toString()\n    };\n  }\n}\n\n/**\n * Verifikasi PIN Admin\n */\nfunction verifyPin(inputPin) {\n  try {\n    var settings = getSettingsMap();\n    var currentPin = settings.admin_pin || DEFAULT_PIN;\n    if (String(inputPin).trim() === String(currentPin).trim()) {\n      return { success: true };\n    }\n    return { success: false, error: 'PIN Admin tidak sesuai! Silakan periksa kembali.' };\n  } catch (err) {\n    return { success: false, error: err.toString() };\n  }\n}\n\n/**\n * Menyimpan (Tambah baru atau Update) Sub-Card Materi STEM\n */\nfunction saveMaterial(materialData, adminPin) {\n  try {\n    // Validasi Keamanan PIN\n    var pinCheck = verifyPin(adminPin);\n    if (!pinCheck.success) return pinCheck;\n\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n    var sheet = ss.getSheetByName(SHEET_MATERI);\n    if (!sheet) {\n      initDatabaseIfEmpty();\n      sheet = ss.getSheetByName(SHEET_MATERI);\n    }\n\n    var data = sheet.getDataRange().getValues();\n    var headers = data[0];\n    var idIndex = headers.indexOf('id');\n\n    var isUpdate = false;\n    var targetRow = -1;\n\n    // Jika ID diberikan, cari baris untuk update\n    if (materialData.id) {\n      for (var i = 1; i < data.length; i++) {\n        if (String(data[i][idIndex]) === String(materialData.id)) {\n          isUpdate = true;\n          targetRow = i + 1; // 1-based row index\n          break;\n        }\n      }\n    }\n\n    var finalId = isUpdate ? materialData.id : 'STEM-' + Utilities.getUuid().substring(0, 8).toUpperCase();\n    var now = Utilities.formatDate(new Date(), 'Asia/Jakarta', 'yyyy-MM-dd HH:mm:ss');\n\n    var rowValues = [\n      finalId,\n      materialData.stem_category || 'Science',\n      materialData.title || '',\n      materialData.grade || '1',\n      materialData.media_type || 'Video',\n      materialData.media_url || '',\n      materialData.thumbnail_url || '',\n      materialData.description || '',\n      materialData.mission_goals || '',\n      materialData.mission_steps || '',\n      materialData.mission_reflection || '',\n      isUpdate ? (data[targetRow - 1][headers.indexOf('created_at')] || now) : now\n    ];\n\n    if (isUpdate && targetRow > 1) {\n      sheet.getRange(targetRow, 1, 1, rowValues.length).setValues([rowValues]);\n    } else {\n      sheet.appendRow(rowValues);\n    }\n\n    return {\n      success: true,\n      message: isUpdate ? 'Materi berhasil diperbarui!' : 'Materi baru berhasil ditambahkan!',\n      data: formatMaterialRow(headers, rowValues)\n    };\n  } catch (err) {\n    return { success: false, error: err.toString() };\n  }\n}\n\n/**\n * Menghapus Sub-Card Materi berdasarkan ID\n */\nfunction deleteMaterial(id, adminPin) {\n  try {\n    var pinCheck = verifyPin(adminPin);\n    if (!pinCheck.success) return pinCheck;\n\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n    var sheet = ss.getSheetByName(SHEET_MATERI);\n    if (!sheet) return { success: false, error: 'Sheet Materi tidak ditemukan!' };\n\n    var data = sheet.getDataRange().getValues();\n    var idIndex = data[0].indexOf('id');\n    var foundRow = -1;\n\n    for (var i = 1; i < data.length; i++) {\n      if (String(data[i][idIndex]) === String(id)) {\n        foundRow = i + 1;\n        break;\n      }\n    }\n\n    if (foundRow > 1) {\n      sheet.deleteRow(foundRow);\n      return { success: true, message: 'Materi berhasil dihapus!' };\n    }\n\n    return { success: false, error: 'Materi dengan ID tersebut tidak ditemukan.' };\n  } catch (err) {\n    return { success: false, error: err.toString() };\n  }\n}\n\n/**\n * Memperbarui Pengaturan Sekolah & Logo\n */\nfunction updateSettings(newSettings, adminPin) {\n  try {\n    var pinCheck = verifyPin(adminPin);\n    if (!pinCheck.success) return pinCheck;\n\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n    var sheet = ss.getSheetByName(SHEET_SETTINGS);\n    if (!sheet) {\n      initDatabaseIfEmpty();\n      sheet = ss.getSheetByName(SHEET_SETTINGS);\n    }\n\n    var data = sheet.getDataRange().getValues();\n    var existingKeys = {};\n    for (var i = 1; i < data.length; i++) {\n      existingKeys[data[i][0]] = i + 1;\n    }\n\n    // Perbarui key yang diberikan\n    for (var key in newSettings) {\n      if (newSettings.hasOwnProperty(key)) {\n        var val = newSettings[key];\n        if (existingKeys[key]) {\n          sheet.getRange(existingKeys[key], 2).setValue(val);\n        } else {\n          sheet.appendRow([key, val]);\n        }\n      }\n    }\n\n    var updatedSettings = getSettingsMap();\n    delete updatedSettings.admin_pin; // Jangan kirimkan PIN kembali\n\n    return {\n      success: true,\n      message: 'Pengaturan sekolah berhasil disimpan!',\n      data: updatedSettings\n    };\n  } catch (err) {\n    return { success: false, error: err.toString() };\n  }\n}\n\n/**\n * Mengambil daftar pengaturan dalam format objek Key-Value\n */\nfunction getSettingsMap() {\n  var ss = SpreadsheetApp.getActiveSpreadsheet();\n  var sheet = ss.getSheetByName(SHEET_SETTINGS);\n  if (!sheet) return {};\n\n  var data = sheet.getDataRange().getValues();\n  var settings = {};\n  for (var i = 1; i < data.length; i++) {\n    var k = String(data[i][0]).trim();\n    var v = data[i][1];\n    if (k) settings[k] = v;\n  }\n  return settings;\n}\n\n/**\n * Mengambil semua materi sebagai array of objects\n */\nfunction getMaterialsList() {\n  var ss = SpreadsheetApp.getActiveSpreadsheet();\n  var sheet = ss.getSheetByName(SHEET_MATERI);\n  if (!sheet) return [];\n\n  var data = sheet.getDataRange().getValues();\n  if (data.length <= 1) return [];\n\n  var headers = data[0];\n  var list = [];\n  for (var i = 1; i < data.length; i++) {\n    list.push(formatMaterialRow(headers, data[i]));\n  }\n  return list;\n}\n\n/**\n * Format baris sheet menjadi objek JSON materi\n */\nfunction formatMaterialRow(headers, row) {\n  var obj = {};\n  for (var j = 0; j < headers.length; j++) {\n    var key = headers[j];\n    var val = row[j];\n    if (key === 'grade') {\n      obj[key] = String(val);\n    } else {\n      obj[key] = val !== undefined && val !== null ? String(val) : '';\n    }\n  }\n  return obj;\n}\n\n/**\n * Inisialisasi sheet dan seed data awal jika spreadsheet masih kosong\n */\nfunction initDatabaseIfEmpty() {\n  var ss = SpreadsheetApp.getActiveSpreadsheet();\n\n  // 1. Inisialisasi Sheet Settings\n  var settingsSheet = ss.getSheetByName(SHEET_SETTINGS);\n  if (!settingsSheet) {\n    settingsSheet = ss.insertSheet(SHEET_SETTINGS);\n    settingsSheet.appendRow(['key', 'value']);\n    var defaultSettings = [\n      ['school_name', 'SD NEGERI HARAPAN BANGSA'],\n      ['academic_year', '2026/2027'],\n      ['slogan', 'Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika Bersama!'],\n      ['logo_url', 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80'],\n      ['contact_wa', '6281234567890'],\n      ['contact_email', 'stem.harapanbangsa@sekolah.sch.id'],\n      ['admin_pin', DEFAULT_PIN],\n      ['logo_science', ''],\n      ['logo_technology', ''],\n      ['logo_engineering', ''],\n      ['logo_mathematics', '']\n    ];\n    for (var s = 0; s < defaultSettings.length; s++) {\n      settingsSheet.appendRow(defaultSettings[s]);\n    }\n    settingsSheet.getRange(1, 1, 1, 2).setFontWeight('bold').setBackground('#E2E8F0');\n  }\n\n  // 2. Inisialisasi Sheet Materi\n  var materiSheet = ss.getSheetByName(SHEET_MATERI);\n  if (!materiSheet) {\n    materiSheet = ss.insertSheet(SHEET_MATERI);\n    var materiHeaders = [\n      'id', 'stem_category', 'title', 'grade', 'media_type', 'media_url',\n      'thumbnail_url', 'description', 'mission_goals', 'mission_steps',\n      'mission_reflection', 'created_at'\n    ];\n    materiSheet.appendRow(materiHeaders);\n\n    // Seed contoh materi STEM untuk Kelas 1 s.d. 6\n    var sampleMaterials = [\n      // 1. Science\n      [\n        'STEM-SCI01', 'Science', 'Petualangan Daur Hidup Kupu-kupu', '2', 'Video',\n        'https://www.youtube.com/watch?v=O1S8WzwLPlM',\n        'https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=600&auto=format&fit=crop&q=80',\n        'Yuk amati metamorfosis sempurna dari telur, ulat yang rakus, kepompong tidur, hingga menjadi kupu-kupu bersayap indah!',\n        '1. Mengenal 4 tahap metamorfosis kupu-kupu.\\n2. Menjelaskan perubahan bentuk ulat hingga menjadi kupu-kupu.',\n        '1. Tonton video animasi daur hidup kupu-kupu.\\n2. Siapkan kertas origami atau plastisin.\\n3. Buatlah 4 replika tahap metamorfosis dan susun berurutan di buku gambarmu!',\n        'Mengapa ulat harus beristirahat di dalam kepompong sebelum sayapnya tumbuh indah?',\n        '2026-10-25 08:00:00'\n      ],\n      [\n        'STEM-SCI02', 'Science', 'Eksplorasi Fotosintesis: Mengapa Daun Berwarna Hijau?', '4', 'Simulasi',\n        'https://phet.colorado.edu/sims/html/molecules-and-light/latest/molecules-and-light_all.html',\n        'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&auto=format&fit=crop&q=80',\n        'Temukan bagaimana klorofil menyerap cahaya matahari dan mengubah air serta karbon dioksida menjadi oksigen segar!',\n        '1. Menjelaskan fungsi klorofil dalam proses fotosintesis.\\n2. Mengidentifikasi peran penting tumbuhan bagi udara di bumi.',\n        '1. Ambil 2 helai daun tanaman di taman sekolah.\\n2. Tutup salah satu bagian daun dengan kertas timah selama 2 hari.\\n3. Amati perubahan warna daun saat terkena sinar matahari!',\n        'Apa yang akan terjadi pada udara di bumi jika pohon-pohon hijau berkurang?',\n        '2026-10-25 08:15:00'\n      ],\n      // 2. Technology\n      [\n        'STEM-TEC01', 'Technology', 'Logika Coding Dasar: Algoritma Robot Pembawa Pesan', '3', 'Simulasi',\n        'https://blockly.games/maze',\n        'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&auto=format&fit=crop&q=80',\n        'Belajar logika berpikir komputasional dengan menyusun blok perintah langkah demi langkah agar robot mencapai tujuan.',\n        '1. Memahami konsep urutan perintah (sequence) dalam pemrograman.\\n2. Melatih logika pemecahan masalah secara runtut.',\n        '1. Buka simulasi labirin blok melalui tautan materi.\\n2. Pandu robot agar berhasil keluar labirin dengan perintah: Maju, Belok Kiri, Belok Kanan.\\n3. Tuliskan kode langkah terbaikmu di buku catatan!',\n        'Mengapa komputer atau robot harus diberi perintah yang sangat runtut tanpa boleh ada yang terbalik?',\n        '2026-10-25 08:30:00'\n      ],\n      [\n        'STEM-TEC02', 'Technology', 'Jelajah Internet Cerdas: Cara Mencari Fakta & Menghindari Hoaks', '5', 'Artikel',\n        'https://id.wikipedia.org/wiki/Literasi_digital',\n        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80',\n        'Kiat aman berselancar di dunia maya, mengenali sumber informasi tepercaya, dan menjaga data privasi.',\n        '1. Siswa mampu membedakan informasi fakta dan berita bohong.\\n2. Mengetahui pentingnya merahasiakan password dan data pribadi.',\n        '1. Baca artikel ringkasan literasi digital.\\n2. Periksa sebuah berita online menggunakan rumus 5W+1H.\\n3. Buat kartu pengingat: 3 Langkah Cek Fakta di Internet!',\n        'Mengapa kita tidak boleh sembarangan mengklik tautan hadiah yang tidak jelas pengirimnya?',\n        '2026-10-25 08:45:00'\n      ],\n      // 3. Engineering\n      [\n        'STEM-ENG01', 'Engineering', 'Rekayasa Jembatan Kertas Kokoh Penahan Beban', '1', 'Praktikum',\n        'https://www.youtube.com/watch?v=7b7pS6X9V1g',\n        'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&auto=format&fit=crop&q=80',\n        'Bagaimana melipat selembar kertas biasa agar mampu menahan beban koin atau mobil mainan? Temukan rahasia struktur lipatan!',\n        '1. Mengenal konsep dasar struktur teknik (lipatan zig-zag/akordeon).\\n2. Melatih kreativitas rancang bangun dengan bahan sederhana.',\n        '1. Siapkan 3 lembar kertas HVS bekas dan 2 cangkir sebagai tiang penyangga.\\n2. Buat jembatan pertama mendatar biasa, dan jembatan kedua dengan lipatan zig-zag.\\n3. Letakkan koin satu demi satu di atas jembatan sampai roboh. Catat jembatan mana yang paling kokoh!',\n        'Mengapa lipatan zig-zag dapat membuat kertas tipis menjadi jauh lebih kuat menahan beban?',\n        '2026-10-25 09:00:00'\n      ],\n      [\n        'STEM-ENG02', 'Engineering', 'Desain Mobil Bertenaga Balon Udara (Hukum Gerak)', '6', 'Praktikum',\n        'https://www.youtube.com/watch?v=Kz6E1B6VvG8',\n        'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop&q=80',\n        'Rancang mobil balap ramah lingkungan dari botol bekas yang meluncur kencang akibat semburan udara dari balon!',\n        '1. Memahami prinsip aksi-reaksi (dorongan udara keluar menghasilkan gerak maju).\\n2. Menguji coba aerodinamika bentuk bodi kendaraan sederhana.',\n        '1. Siapkan botol plastik bekas, sedotan, 4 tutup botol sebagai roda, dan 1 buah balon.\\n2. Rakit poros roda menggunakan tusuk sate dan sedotan.\\n3. Tiup balon di atas mobil, lalu lepaskan di lantai licin dan ukur jarak luncurnya!',\n        'Bagaimana cara memodifikasi bentuk mobil agar meluncur lebih lurus dan jauh?',\n        '2026-10-25 09:15:00'\n      ],\n      // 4. Mathematics\n      [\n        'STEM-MAT01', 'Mathematics', 'Pecahan Pizza Lezat: Memahami 1/2, 1/4, dan 3/4', '3', 'Dokumen',\n        'https://phet.colorado.edu/sims/html/fractions-intro/latest/fractions-intro_all.html',\n        'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80',\n        'Belajar pecahan jadi menyenangkan dengan memotong pizza khayalan bersama teman-teman!',\n        '1. Memvisualisasikan pecahan sederhana dalam bentuk potongan benda utuh.\\n2. Membandingkan nilai pecahan yang berpenyebut sama.',\n        '1. Buka simulasi pecahan interaktif PhET.\\n2. Bagi sebuah lingkaran pizza menjadi 4 bagian sama besar.\\n3. Berikan 2 potong kepada teman, dan hitung berapa sisa pecahan yang kamu miliki!',\n        'Jika sebuah kue dibagi sama rata untuk 4 anak, mengapa setiap anak mendapat nilai 1/4 bagian?',\n        '2026-10-25 09:30:00'\n      ],\n      [\n        'STEM-MAT02', 'Mathematics', 'Detektif Sudut: Menemukan Sudut Siku-siku, Lancip, & Tumpul', '5', 'Video',\n        'https://www.youtube.com/watch?v=NVuMULQjb3o',\n        'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80',\n        'Bawa penggaris busurmu dan jadilah detektif yang mencari sudut-sudut rahasia pada pintu, atap rumah, dan jam dinding!',\n        '1. Mengidentifikasi sudut siku-siku (90 derajat), lancip (<90 derajat), dan tumpul (>90 derajat).\\n2. Melatih ketelitian dalam mengamati sudut pada objek di sekitar.',\n        '1. Ambil selembar kertas origami persegi yang memiliki sudut siku-siku 90°.\\n2. Cocokkan ujung kertas pada 5 sudut benda di dalam kelas atau rumahmu.\\n3. Catat di tabel: benda mana yang memiliki sudut siku-siku, lancip, atau tumpul!',\n        'Mengapa kusen pintu dan jendela kebanyakan dirancang menggunakan sudut siku-siku?',\n        '2026-10-25 09:45:00'\n      ]\n    ];\n\n    for (var m = 0; m < sampleMaterials.length; m++) {\n      materiSheet.appendRow(sampleMaterials[m]);\n    }\n    materiSheet.getRange(1, 1, 1, materiHeaders.length).setFontWeight('bold').setBackground('#E2E8F0');\n  }\n}\n";
+}
+
+async function initDeployCodeViewer() {
+  await selectDeployFile('Code.gs');
+}
+
+async function selectDeployFile(filename) {
+  currentDeployFileName = filename;
+  const meta = DEPLOY_FILE_METAS[filename] || { type: 'File', appsScriptName: filename, desc: '' };
+
+  document.querySelectorAll('.deploy-tab-btn').forEach((btn) => {
+    if (btn.textContent.includes(filename)) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  const badgeEl = document.getElementById('deployFileMetaBadge');
+  if (badgeEl) {
+    badgeEl.textContent = 'Tipe: ' + meta.type + ' | Nama di Apps Script: ' + meta.appsScriptName + ' (cukup ketik nama tanpa .html)';
+  }
+
+  const viewer = document.getElementById('deployCodeViewer');
+  if (!viewer) return;
+
+  if (deployFileCache[filename]) {
+    viewer.value = deployFileCache[filename];
+    updateDeployCharCount(viewer.value);
+    return;
+  }
+
+  viewer.value = 'Memuat skrip lengkap berkas ' + filename + '...';
+
+  let content = '';
+  if (filename === 'Code.gs') {
+    content = getCompleteCodeGsSource();
+  } else if (isRunningInGoogleAppsScript()) {
+    try {
+      content = await new Promise((resolve) => {
+        google.script.run
+          .withSuccessHandler((res) => {
+            if (res && res.success) resolve(res.content);
+            else resolve(getLocalDomContent(filename));
+          })
+          .withFailureHandler(() => {
+            resolve(getLocalDomContent(filename));
+          })
+          .getDeployFileCode(filename);
+      });
+    } catch (e) {
+      content = getLocalDomContent(filename);
+    }
+  } else {
+    try {
+      const res = await fetch(filename);
+      if (res.ok) {
+        content = await res.text();
+      } else {
+        content = getLocalDomContent(filename);
+      }
+    } catch (e) {
+      content = getLocalDomContent(filename);
+    }
+  }
+
+  deployFileCache[filename] = content;
+  viewer.value = content;
+  updateDeployCharCount(content);
+}
+
+function updateDeployCharCount(text) {
+  const charEl = document.getElementById('deployCodeCharCount');
+  if (charEl) {
+    const lines = (text || '').split('\n').length;
+    const chars = (text || '').length;
+    charEl.textContent = lines + ' baris • ' + chars.toLocaleString() + ' karakter';
+  }
+}
+
+function getLocalDomContent(filename) {
+  if (filename === 'styles.html') {
+    const st = document.querySelector('style[data-gas-style="true"]') || document.querySelector('style');
+    return st ? '<style>\n' + st.textContent.trim() + '\n</style>' : '<!-- styles.html -->';
+  }
+  if (filename === 'admin.html') {
+    const adm = document.getElementById('adminModuleContainer') || document.getElementById('adminView');
+    return adm ? adm.innerHTML.trim() : '<!-- admin.html -->';
+  }
+  if (filename === 'scripts.html') {
+    const sc = document.querySelector('script:not([src])');
+    return sc ? '<script>\n' + sc.textContent.trim() + '\n<' + '/script>' : '<script>// scripts.html<' + '/script>';
+  }
+  if (filename === 'index.html') {
+    return `<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Portal Pembelajaran STEM Sekolah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <?!= include('styles'); ?>
+</head>
+<body>
+  <div id="adminModuleContainer">
+    <?!= include('admin'); ?>
+  </div>
+  <?!= include('scripts'); ?>
+</body>
+</html>`;
+  }
+  return '';
+}
+
+function copyCurrentDeployCode() {
+  const viewer = document.getElementById('deployCodeViewer');
+  const code = viewer ? viewer.value : '';
+  if (!code) {
+    showToast('Tidak ada kode untuk disalin!', 'error');
+    return;
+  }
+
+  navigator.clipboard.writeText(code).then(() => {
+    const meta = DEPLOY_FILE_METAS[currentDeployFileName] || { appsScriptName: currentDeployFileName };
+    showToast('Kode ' + meta.appsScriptName + ' (' + code.length.toLocaleString() + ' karakter) berhasil disalin! Tempelkan ke Apps Script.', 'success');
+
+    const btnText = document.getElementById('copyDeployBtnText');
+    const btnIcon = document.getElementById('copyDeployBtnIcon');
+    if (btnText) btnText.textContent = 'Tersalin! ✅';
+    if (btnIcon) btnIcon.className = 'fa-solid fa-check';
+
+    setTimeout(() => {
+      if (btnText) btnText.textContent = 'Salin Kode Ini';
+      if (btnIcon) btnIcon.className = 'fa-solid fa-copy';
+    }, 2500);
+  }).catch(() => {
+    if (viewer) {
+      viewer.select();
+      document.execCommand('copy');
+      showToast('Kode berhasil disalin via seleksi teks!', 'success');
+    }
+  });
+}
+
+function showToast(message, type = "success") {
+  const container = document.getElementById("toastContainer");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = `toast-msg ${type}`;
+  toast.innerHTML = `<i class="${type === 'success' ? 'fa-solid fa-circle-check' : 'fa-solid fa-circle-exclamation'}"></i> <span>${escapeHtml(message)}</span>`;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transition = "opacity 0.3s ease";
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+</script>
+
+
+<script>
+  // Otomatis buka form PIN Admin jika admin.html dibuka langsung
+  window.addEventListener('DOMContentLoaded', () => {
+    if (typeof openAdminPinModal === 'function') {
+      openAdminPinModal();
+    }
+  });
+</script>
+</body>
+</html>

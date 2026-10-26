@@ -3,6 +3,17 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.4.1] - 2026-10-26
+
+### Fixed & Enhanced
+- **Perbaikan Total Masalah Klik Tombol & Link pada Mode Offline Lokal**:
+  - **Kemandirian Penuh `admin.html` (*Standalone-Ready*)**: Berkas [admin.html](file:///f:/repository/stemsites/admin.html) kini dilengkapi dengan struktur dokumen HTML lengkap, font, styling CSS terpadu, dan skrip JavaScript mandiri. Pengguna dapat membuka `admin.html` langsung di browser dengan double click: modal PIN otomatis terbuka, tombol *"Isi PIN Demo"*, *"Masuk Admin"*, perpindahan tab, dan salin kode deploy kini berfungsi 100%.
+  - **Bebas Blokir Keamanan CORS Browser pada `index.html`**: Menghilangkan ketergantungan `fetch()` lokal pada protokol `file:///` di [index.html](file:///f:/repository/stemsites/index.html) dengan menyematkan styling dan skrip mandiri bebas CORS, sembari tetap menjaga kompatibilitas murni Google Apps Script.
+  - **Dukungan Server Lokal `http://localhost:3000`**: Disediakan berkas `server.js` ringan yang berjalan di background untuk memberikan pengalaman pengujian lokal di browser tanpa pembatasan origin file.
+  - **Dukungan Routing URL GAS**: Fungsi `doGet(e)` pada [Code.gs](file:///f:/repository/stemsites/Code.gs) diperbarui untuk mendukung akses langsung halaman admin melalui parameter `?page=admin`.
+
+---
+
 ## [1.4.0] - 2026-10-26
 
 ### Added & Enhanced

@@ -106,10 +106,25 @@ Dokumen ini berisi panduan pengujian dan bukti verifikasi fungsional untuk **Por
 
 ---
 
+### 9. Pengujian Klik Link/Tombol Mode Offline Mandiri (admin.html & index.html)
+- [x] **Langkah 1 (Uji admin.html Standalone)**: Buka file [admin.html](file:///f:/repository/stemsites/admin.html) langsung di browser (protokol `file:///`).
+  - Modal PIN otomatis muncul.
+  - Klik tombol *"Isi PIN Demo (123456)"* -> PIN terisi otomatis.
+  - Klik tombol *"Masuk Admin"* -> Dashboard admin terbuka mulus.
+  - Seluruh tombol menu, tombol salin kode, dan link dapat diklik 100% tanpa error `is not defined`.
+- [x] **Langkah 2 (Uji index.html Bebas CORS)**: Buka file [index.html](file:///f:/repository/stemsites/index.html) langsung di browser (protokol `file:///`).
+  - Klik kartu STEM *Science* -> Pop-up pemilihan kelas langsung muncul tanpa terblokir CORS.
+  - Klik *Tampilkan Semua Kelas* -> Masuk ke halaman sub-materi dengan mulus.
+- [x] **Langkah 3 (Uji Server Lokal)**: Buka alamat [http://localhost:3000](http://localhost:3000) di browser.
+  - Halaman portal pembelajaran STEM terbuka lancar melalui server lokal.
+
+---
+
 ## 🛡️ Bukti Berkas Modular Google Apps Script
 - [styles.html](file:///f:/repository/stemsites/styles.html): Modular CSS murni GAS (`<style>...</style>`).
 - [scripts.html](file:///f:/repository/stemsites/scripts.html): Modular JavaScript murni GAS (`<script>...</script>`).
-- [admin.html](file:///f:/repository/stemsites/admin.html): Modular Admin View & Form markup murni GAS.
-- [index.html](file:///f:/repository/stemsites/index.html): Modular Public Page Template & Include Loader.
+- [admin.html](file:///f:/repository/stemsites/admin.html): Modular Admin View & Form markup murni GAS (Standalone-Ready).
+- [index.html](file:///f:/repository/stemsites/index.html): Modular Public Page Template & Include Loader (Offline-Ready).
 - [Code.gs](file:///f:/repository/stemsites/Code.gs): Backend Google Apps Script dengan fungsi `include()`, `doGet()`, dan `getDeployFileCode()`.
 - [PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md](file:///f:/repository/stemsites/docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md): Panduan lengkap deploy dan kode sumber.
+- [server.js](file:///f:/repository/stemsites/server.js): Server HTTP lokal untuk pengujian di `http://localhost:3000`.
