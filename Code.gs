@@ -20,11 +20,20 @@ function doGet(e) {
   // Inisialisasi spreadsheet jika tabel belum ada
   initDatabaseIfEmpty();
 
-  var template = HtmlService.createTemplateFromFile('index');
-  return template.evaluate()
-    .setTitle('Portal Pembelajaran STEM Sekolah')
-    .addMetaTag('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  // 1. Prioritaskan penyajian berkas index.html mandiri secara langsung (tanpa overhead template parser)
+  try {
+    return HtmlService.createHtmlOutputFromFile('index')
+      .setTitle('Portal Pembelajaran STEM Sekolah')
+      .addMetaTag('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  } catch (err) {
+    // 2. Fallback tangguh jika pengguna masih menggunakan template scriptlet parsial
+    var template = HtmlService.createTemplateFromFile('index');
+    return template.evaluate()
+      .setTitle('Portal Pembelajaran STEM Sekolah')
+      .addMetaTag('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
 }
 
 /**

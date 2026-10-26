@@ -14,25 +14,16 @@
 
 Anda dapat memilih salah satu dari 2 metode berikut:
 
-### 🌟 Opsi A: Metode Standalone (PALING DIREKOMENDASIKAN - HANYA 2 BERKAS)
+### 🌟 Opsi A: Metode Standalone 1-Berkas (STANDAR UTAMA v1.5.7 - HANYA 2 BERKAS)
 Hanya butuh membuat **2 berkas** di Google Apps Script:
-1. **`Code.gs`** (Script)
-2. **`index.html`** (HTML) — *Salin dari berkas `dist/index.html` yang sudah menggabungkan seluruh tampilan, CSS, dan JavaScript secara otomatis!*
-> ✅ **Keuntungan**: Tidak perlu membuat `styles`, `admin`, atau `scripts`. Bebas dari risiko salah penamaan berkas atau error `include()`.
-
----
-
-### 🗂️ Opsi B: Metode Modular (5 Berkas Terpisah)
-Jika Anda ingin kode tetap terpisah rapi menjadi 5 berkas:
-| No | Tipe Berkas di Apps Script | Nama Berkas di Apps Script | Fungsi & Deskripsi |
-|:---:|:---:|:---:|---|
-| 1 | **Script (`.gs`)** | `Code` | Backend Controller, Autentikasi PIN, Akses Google Sheets Database, API CRUD. |
-| 2 | **HTML (`.html`)** | `index` | Shell utama antarmuka siswa, beranda kategori STEM, dan modal popup. |
-| 3 | **HTML (`.html`)** | `styles` | Seluruh desain visual CSS modern, layout 2 kolom mobile, dan tema warna sekolah. |
-| 4 | **HTML (`.html`)** | `admin` | Antarmuka panel kendali guru, kelola materi, pengaturan logo, dan panduan. |
-| 5 | **HTML (`.html`)** | `scripts` | Logika interaktif JavaScript, pemfilter materi, state management, dan pemutihan cache. |
-
-> ⚠️ **PENTING UNTUK OPSI B**: Di Google Apps Script, saat membuat file HTML (tombol `+` > `HTML`), **cukup ketik namanya saja tanpa `.html`** (misal ketik `index`, `styles`, `admin`, `scripts`). Google Apps Script akan otomatis memberikan ekstensi `.html`.
+1. **`Code.gs`** (Script) — Salin seluruh isi berkas `Code.gs`.
+2. **`index.html`** (HTML) — Salin seluruh isi berkas `index.html` (di root proyek) yang sudah menggabungkan seluruh markup antarmuka, CSS modern, dan JavaScript interaktif secara mandiri!
+> ✅ **Keuntungan**:
+> - Tidak perlu membuat `styles`, `admin`, atau `scripts`.
+> - 100% bebas dari risiko salah penamaan berkas atau error `include()`.
+> - Performa loading jauh lebih cepat karena disajikan langsung via `HtmlService.createHtmlOutputFromFile('index')`.
+> 
+> ⚠️ **PENTING**: Jika di editor Google Apps Script Anda sebelumnya sudah terlanjur ada berkas `styles.html`, `admin.html`, atau `scripts.html`, silakan **HAPUS** (klik titik tiga di sebelah nama berkas > *Hapus*). Cukup sisakan **2 berkas**: `Code.gs` dan `index.html`! Hal ini untuk mencegah error benturan skrip lama seperti `SyntaxError: Unexpected identifier 'count'`.
 
 ---
 

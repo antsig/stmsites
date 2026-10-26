@@ -3,6 +3,17 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.5.7] - 2026-10-26
+
+### Fixed & Optimized
+- **Resolusi Tuntas `SyntaxError: Unexpected identifier 'count'` & Optimasi Penyajian GAS**:
+  - **Refactor `renderCategoryLogosAndCounts()`**: Mengeliminasi seluruh penggunaan template literals ES6 (backtick) pada pemanggilan selector counter ID (`'count-' + cat`) dan interpolasi teks kuantitas materi (`(categoryCounts[cat] || 0) + ' Materi'`) di [index.html](file:///f:/repository/stemsites/index.html).
+  - **Pencegahan Error Sintaks Browser & Iframe**: Menggunakan perulangan array standar ES5 `['Science', 'Technology', 'Engineering', 'Mathematics']` serta perlindungan defensive check pada `appState.materials` dan `appState.settings`.
+  - **Penyajian Cepat Tanpa Template Parser di `Code.gs`**: Memperbarui `doGet()` untuk langsung menyajikan `HtmlService.createHtmlOutputFromFile('index')` secara mandiri, mengeliminasi overhead evaluasi template engine server-side yang rawan memicu interferensi parser.
+  - **Penghapusan Berkas Modular Lama pada Apps Script**: Menegaskan di [PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md](file:///f:/repository/stemsites/docs/04-deployment/PANDUAN-DEPLOY-GOOGLE-APPS-SCRIPT.md) langkah penghapusan `scripts.html`, `styles.html`, dan `admin.html` di editor Google Apps Script agar sistem hanya menjalankan 2 file utama (`Code.gs` dan `index.html`).
+
+---
+
 ## [1.5.6] - 2026-10-26
 
 ### Removed & Refactored
