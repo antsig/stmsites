@@ -3,6 +3,16 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.5.6] - 2026-10-26
+
+### Removed & Refactored
+- **Pembersihan Berkas Modular Lokal Menjadi Standalone 1:1**:
+  - **Eliminasi Berkas Parsial Redundan**: Menghapus berkas modular `styles.html`, `admin.html`, `scripts.html`, `bundle.js`, dan direktori `dist/` dari repositori lokal.
+  - **Promosi Standalone ke Root `index.html`**: Menjadikan root [index.html](file:///f:/repository/stemsites/index.html) sebagai satu-satunya berkas antarmuka mandiri utuh (HTML + CSS + modal admin + JavaScript) yang siap dipasang langsung ke Google Apps Script.
+  - **Struktur Proyek 1:1 dengan Apps Script**: Repositori lokal kini hanya berfokus pada dua berkas kode utama: [Code.gs](file:///f:/repository/stemsites/Code.gs) (backend) dan [index.html](file:///f:/repository/stemsites/index.html) (frontend).
+
+---
+
 ## [1.5.5] - 2026-10-26
 
 ### Fixed & Added
