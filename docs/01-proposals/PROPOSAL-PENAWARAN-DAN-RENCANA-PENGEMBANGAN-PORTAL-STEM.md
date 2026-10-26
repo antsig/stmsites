@@ -137,31 +137,15 @@ graph LR
 
 ## 3. Rincian Estimasi Biaya Berdasarkan Peran & Fitur
 
-Struktur estimasi investasi dirancang secara transparan, akuntabel, dan terukur berdasarkan alokasi peran tim rekayasa perangkat lunak serta komponen fitur aplikasi, dengan **Total Anggaran Tetap: Rp 3.500.000,- (Tiga Juta Lima Ratus Ribu Rupiah)**:
+Struktur estimasi investasi dirancang secara transparan, akuntabel, dan terukur dengan mengintegrasikan peran teknis spesialis, fitur yang dikerjakan, dan uraian tugas konkret, dengan **Total Anggaran Tetap: Rp 3.500.000,- (Tiga Juta Lima Ratus Ribu Rupiah)**:
 
-### 3.1 Rincian Estimasi Biaya Berdasarkan Komponen Fitur Aplikasi
-
-| No | Modul & Komponen Fitur | Spesifikasi Pekerjaan & Deliverables | Bobot | Alokasi Biaya (IDR) |
-|:---:|---|---|:---:|:---:|
-| 1 | **Modul Frontend Portal Siswa** | Formasi 2 kolom mobile, selektor kelas 1–6 SD, modal misi praktikum terstruktur, integrasi simulasi PhET/Blockly/Video, fluid typography. | 24,3% | **Rp 850.000,-** |
-| 2 | **Modul Dashboard Admin Guru & Keamanan** | Autentikasi PIN guard, topbar mobile 1 baris, CRUD materi STEM, filter tabel 1 baris kompak, tombol aksi di bawah formulir (*thumb-zone*). | 27,1% | **Rp 950.000,-** |
-| 3 | **Modul Kustomisasi Sekolah & Backend GAS** | Integrasi Google Sheets database, otomatisasi skema tabel, kustomisasi logo & identitas sekolah dengan *live preview real-time*, mode offline standalone CORS-free. | 21,4% | **Rp 750.000,-** |
-| 4 | **Pusat Panduan Deploy & Interactive Code Viewer** | Panduan deploy 7 langkah bergambar di panel admin, penampil kode 5 berkas sumber (`Code.gs`, `index.html`, `styles.html`, `admin.html`, `scripts.html`), tombol salin 1-klik. | 12,9% | **Rp 450.000,-** |
-| 5 | **Quality Assurance, Pelatihan Guru & Garansi** | Pengujian responsivitas lintas perangkat (smartphone, tablet, laptop), sesi pelatihan daring guru (2 jam), panduan operasional PDF, dan garansi bug-free 3 bulan. | 14,3% | **Rp 500.000,-** |
-| **TOTAL** | **Seluruh Komponen Fitur Aplikasi** | **Sistem Lengkap Siap Pakai (v1.4.3 Ready-to-Use)** | **100%** | **Rp 3.500.000,-** |
-
----
-
-### 3.2 Rincian Estimasi Biaya Berdasarkan Peran Tim Rekayasa Perangkat Lunak
-
-| No | Peran Spesialis Tim | Tanggung Jawab & Lingkup Tugas | Alokasi Waktu | Alokasi Biaya (IDR) |
-|:---:|---|---|:---:|:---:|
-| 1 | **Solution Architect & Project Lead** | Desain arsitektur serverless Google Apps Script, perancangan skema relasi Google Sheets, tata kelola keamanan PIN, dan supervisi integrasi. | 6 Jam | **Rp 900.000,-** |
-| 2 | **Senior Frontend & Mobile UI/UX Engineer** | Pengembangan CSS universal mobile-first, formasi 2 kolom kartu STEM, filter 1 baris kompak, topbar 1 baris no-wrap, dan ergonomi sentuh jempol. | 8 Jam | **Rp 1.050.000,-** |
-| 3 | **Backend & GAS Integration Specialist** | Logika mikro-servis `Code.gs`, routing web app `doGet`, serialisasi data Sheets API, penanganan offline CORS standalone, dan optimasi performa V8. | 6 Jam | **Rp 750.000,-** |
-| 4 | **EdTech Specialist & Curriculum Curator** | Kurasi 12 materi awal STEM ramah anak SD, penulisan langkah praktikum mandiri, serta kurasi tautan resmi simulasi PhET & video edukasi. | 4 Jam | **Rp 450.000,-** |
-| 5 | **QA Tester & Deployment Facilitator** | Uji coba fungsional lintas peramban/perangkat, penyusunan berkas panduan deploy, fasilitasi setup di akun sekolah, dan pemanduan sesi pelatihan guru. | 4 Jam | **Rp 350.000,-** |
-| **TOTAL** | **Virtual Engineering Team** | **Total Alokasi Tim Terintegrasi (28 Jam Kerja)** | **28 Jam** | **Rp 3.500.000,-** |
+| PERAN TEKNIS | FITUR YANG DIKERJAKAN | URAIAN PEKERJAAN | BIAYA (RP) |
+|---|---|---|:---:|
+| **UI/UX & Frontend Developer** | **Portal Siswa & Antarmuka Responsif Mobile** | • Pembuatan antarmuka visual beranda ramah anak dengan kartu 4 pilar STEM (Science, Technology, Engineering, Mathematics).<br>• Desain kartu interaktif formasi 2 kolom proporsional pada layar ponsel (*mobile-friendly*).<br>• Perancangan selektor jenjang kelas (*Grade-Locking Mechanism*) Kelas 1–6 SD.<br>• Pembuatan jendela modal misi eksplorasi praktikum interaktif (Tujuan, Langkah Praktikum, Tautan Video, Simulasi PhET/Blockly/Games, dan Refleksi).<br>• Optimasi tipografi dan tata letak universal responsif bebas *horizontal overflow*. | **1.200.000** |
+| **Backend & Script Engineer** | **Dashboard Admin Guru, Alur Data & Keamanan PIN** | • Penulisan skrip backend Google Apps Script (`Code.gs`) dengan V8 runtime engine.<br>• Pembuatan dashboard admin guru terpadu dengan autentikasi proteksi PIN Keamanan (`123456` dan kustomisasi PIN baru).<br>• Mekanisme manajemen konten sub-card materi STEM (CRUD: Tambah, Edit, Hapus) terhubung Google Sheets.<br>• Optimasi topbar admin mobile terkunci 1 baris (*no-wrap*) dan filter tabel 1 baris kompak.<br>• Penataan tombol aksi di bawah formulir (*thumb-zone ergonomics*) untuk kemudahan sentuh di ponsel.<br>• Penanganan CORS-free untuk mode luring mandiri (*standalone*). | **1.350.000** |
+| **Data & EdTech Specialist** | **Integrasi Google Sheets, Kustomisasi & Kurasi STEM** | • Perancangan struktur database Google Sheets (`Settings` & `Materi`) dan inisialisasi tabel otomatis.<br>• Pembuatan formulir kustomisasi nama sekolah, slogan, kontak WhatsApp, dan logo sekolah serta 4 logo pilar STEM dengan *Live Preview* real-time.<br>• Kurasi dan input 12 data awal materi praktikum STEM SD terhubung ke simulasi resmi PhET dan video edukasi.<br>• Optimasi tautan hosting aset dan thumbnail di Google Drive sekolah. | **550.000** |
+| **QA Specialist & Deployment Facilitator** | **Pengujian Sistem, Panduan Deploy & Pelatihan Guru** | • Pengujian fungsionalitas menyeluruh dan kompatibilitas lintas peramban/perangkat (Android, iOS, PC).<br>• Pembuatan modul *Interactive Code Viewer* 5 berkas proyek (`Code.gs`, `index.html`, `styles.html`, `admin.html`, `scripts.html`) dengan tombol salin 1-klik.<br>• Penyusunan dokumen panduan penerapan 7 langkah (*Deployment Guide*) dan buku petunjuk operasional guru (*User Manual*).<br>• Pelaksanaan 1 sesi pelatihan daring bagi guru dan staf IT sekolah (durasi 2 jam) serta pendampingan masa garansi 3 bulan. | **400.000** |
+| **TOTAL (GOOGLE APPS SCRIPT READY-TO-USE)** | | | **Rp3.500.000** |
 
 ---
 

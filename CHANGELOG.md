@@ -12,8 +12,7 @@ Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https:/
   - Menyesuaikan ukuran font judul navbar admin menjadi `0.82rem` dengan `white-space: nowrap !important; text-overflow: ellipsis;` agar seimbang dan nyaman dipandang.
 - **Perampingan Tombol Navigasi Portal**:
 - **Pembaruan Dokumen Proposal Sesuai Status Riil Sistem (v1.4.3 Siap Pakai)**:
-  - Memutakhirkan dokumen [PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md](file:///f:/repository/stemsites/docs/01-proposals/PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md) dengan menambahkan batasan tegas **Ruang Lingkup Aplikasi (*In-Scope vs Out-of-Scope*)** dan **Bab 3: Rincian Estimasi Biaya Berdasarkan Peran & Fitur** dengan total anggaran **Rp 3.500.000,-**.
-  - Menyajikan transparansi alokasi biaya berdasarkan modul fitur aplikasi (Portal Siswa, Dashboard Admin, Backend GAS/Sheets, Self-Deployment Hub, QA/Pelatihan Guru) dan peran tim spesialis rekayasa perangkat lunak (Architect, Frontend, Backend, EdTech, QA).
+  - Memutakhirkan dokumen [PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md](file:///f:/repository/stemsites/docs/01-proposals/PROPOSAL-PENAWARAN-DAN-RENCANA-PENGEMBANGAN-PORTAL-STEM.md) dengan menambahkan batasan tegas **Ruang Lingkup Aplikasi (*In-Scope vs Out-of-Scope*)** dan format matriks tunggal terpadu 4 kolom pada **Bab 3: Rincian Estimasi Biaya Berdasarkan Peran & Fitur** (`PERAN TEKNIS | FITUR YANG DIKERJAKAN | URAIAN PEKERJAAN | BIAYA (RP)`) dengan total anggaran **Rp 3.500.000,-**.
 
 ---
 
