@@ -3,6 +3,19 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.6.1] - 2026-10-27
+
+### Fixed & Hardened
+- **Ketahanan Interaksi Modal Jenjang Kelas & Isolasi Error Boundary Komponen**:
+  - **Guaranteed Modal Dismissal**: Membungkus logika pemilihan kelas di `chooseGradeAndExplore` dalam blok `try...catch...finally` dengan `closeGradeSelectorModal()` di dalam `finally`, menjamin modal selalu tertutup dan tidak membeku di layar meskipun ada runtime error minor.
+  - **Isolasi Error Boundary per Sub-Render**: Membungkus setiap sub-render pada `renderApp()` (`renderSchoolIdentity`, `renderCategoryLogosAndCounts`, `renderCategorySubpageHeader`, `updateGradeFilterBarVisibility`, `renderMaterialsGrid`, `renderActiveFilterStatus`) dalam `try...catch` mandiri sehingga kegagalan satu komponen tidak membatalkan transisi view ke sub-kategori.
+  - **Force View Transition Fallback**: Menambahkan penanganan kesalahan dan fallback langsung pada `selectCategory()` untuk memastikan `#viewHome` disembunyikan dan `#viewCategorySub` ditampilkan.
+  - **Defensive Modal Display & Metadata Parsing**: Menambahkan fallback aman pada `openGradeSelector()` jika modal tidak ditemukan di DOM, serta memastikan modal ditampilkan dengan properti CSS prioritas tinggi (`display: flex !important; opacity: 1`).
+  - **Resilient Active Filter Status**: Memperbaiki `renderActiveFilterStatus()` dengan fallback `INITIAL_MATERIALS` dan normalisasi kategori standar untuk mencegah potensi `TypeError` pada data array yang kosong atau belum siap.
+  - **Passing Event Parameter**: Menyelaraskan seluruh pemanggilan `openGradeSelector(..., event)` pada kartu STEM dan tombol ganti kelas.
+
+---
+
 ## [1.6.0] - 2026-10-27
 
 ### Fixed & Enhanced

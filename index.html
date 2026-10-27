@@ -977,7 +977,7 @@ textarea.form-control { min-height: 90px; resize: vertical; }
       <div class="stem-cards-grid">
 
         <!-- 1. Science -->
-        <div class="stem-card sci" onclick="openGradeSelector('Science')">
+        <div class="stem-card sci" onclick="openGradeSelector('Science', event)">
           <div class="stem-header-row">
             <div class="stem-icon-box" id="icon-box-Science">
               <i class="fa-solid fa-flask-vial"></i>
@@ -992,7 +992,7 @@ textarea.form-control { min-height: 90px; resize: vertical; }
         </div>
 
         <!-- 2. Technology -->
-        <div class="stem-card tec" onclick="openGradeSelector('Technology')">
+        <div class="stem-card tec" onclick="openGradeSelector('Technology', event)">
           <div class="stem-header-row">
             <div class="stem-icon-box" id="icon-box-Technology">
               <i class="fa-solid fa-laptop-code"></i>
@@ -1007,7 +1007,7 @@ textarea.form-control { min-height: 90px; resize: vertical; }
         </div>
 
         <!-- 3. Engineering -->
-        <div class="stem-card eng" onclick="openGradeSelector('Engineering')">
+        <div class="stem-card eng" onclick="openGradeSelector('Engineering', event)">
           <div class="stem-header-row">
             <div class="stem-icon-box" id="icon-box-Engineering">
               <i class="fa-solid fa-gears"></i>
@@ -1022,7 +1022,7 @@ textarea.form-control { min-height: 90px; resize: vertical; }
         </div>
 
         <!-- 4. Mathematics -->
-        <div class="stem-card mat" onclick="openGradeSelector('Mathematics')">
+        <div class="stem-card mat" onclick="openGradeSelector('Mathematics', event)">
           <div class="stem-header-row">
             <div class="stem-icon-box" id="icon-box-Mathematics">
               <i class="fa-solid fa-calculator"></i>
@@ -1103,7 +1103,7 @@ textarea.form-control { min-height: 90px; resize: vertical; }
             <i class="fa-solid fa-graduation-cap"></i>
             <span><strong id="lockedGradeText">Kelas 1 SD</strong></span>
           </div>
-          <button class="btn-change-grade" type="button" onclick="openGradeSelector(appState.selectedCategory)">
+          <button class="btn-change-grade" type="button" onclick="openGradeSelector(appState.selectedCategory, event)">
             <i class="fa-solid fa-arrows-rotate"></i> Ganti Kelas
           </button>
         </div>
@@ -2421,8 +2421,8 @@ function saveToLocalStorage() {
 }
 
 function renderApp() {
-  renderSchoolIdentity();
-  renderCategoryLogosAndCounts();
+  try { renderSchoolIdentity(); } catch (e) { console.warn("renderSchoolIdentity error:", e); }
+  try { renderCategoryLogosAndCounts(); } catch (e) { console.warn("renderCategoryLogosAndCounts error:", e); }
 
   const homeView = document.getElementById("viewHome");
   const subCategoryView = document.getElementById("viewCategorySub");
@@ -2433,10 +2433,10 @@ function renderApp() {
   } else {
     if (homeView) homeView.style.display = "none";
     if (subCategoryView) subCategoryView.style.display = "block";
-    renderCategorySubpageHeader();
-    updateGradeFilterBarVisibility();
-    renderMaterialsGrid();
-    renderActiveFilterStatus();
+    try { renderCategorySubpageHeader(); } catch (e) { console.warn("renderCategorySubpageHeader error:", e); }
+    try { updateGradeFilterBarVisibility(); } catch (e) { console.warn("updateGradeFilterBarVisibility error:", e); }
+    try { renderMaterialsGrid(); } catch (e) { console.warn("renderMaterialsGrid error:", e); }
+    try { renderActiveFilterStatus(); } catch (e) { console.warn("renderActiveFilterStatus error:", e); }
   }
 }
 
@@ -2547,33 +2547,45 @@ function renderDefaultIcon(imgEl, cat) {
   }
 }
 
-function openGradeSelector(category) {
-  appState.pendingCategory = category;
-  const nameEl = document.getElementById("gradeSelectorCategoryName");
-  const badgeEl = document.getElementById("gradeSelectorBadge");
-  const colorMap = {
-    Science: "var(--stem-sci)",
-    Technology: "var(--stem-tec)",
-    Engineering: "var(--stem-eng)",
-    Mathematics: "var(--stem-mat)"
-  };
+function openGradeSelector(category, event) {
+  if (event) {
+    if (typeof event.stopPropagation === "function") event.stopPropagation();
+  }
+  const safeCat = normalizeCategoryName(category) || "Science";
+  appState.pendingCategory = safeCat;
 
-  if (nameEl) nameEl.textContent = "Eksplorasi " + category;
-  if (badgeEl) {
-    badgeEl.style.background = colorMap[category] || "var(--primary)";
-    const customLogo = (appState.settings && appState.settings['logo_' + category.toLowerCase()]) ? appState.settings['logo_' + category.toLowerCase()] : '';
-    if (customLogo) {
-      badgeEl.innerHTML = '<img src="' + escapeHtml(customLogo) + '" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" alt="' + category + '">';
-    } else {
-      badgeEl.innerHTML = getDefaultCategoryIcon(category);
+  try {
+    const nameEl = document.getElementById("gradeSelectorCategoryName");
+    const badgeEl = document.getElementById("gradeSelectorBadge");
+    const colorMap = {
+      Science: "var(--stem-sci)",
+      Technology: "var(--stem-tec)",
+      Engineering: "var(--stem-eng)",
+      Mathematics: "var(--stem-mat)"
+    };
+
+    if (nameEl) nameEl.textContent = "Eksplorasi " + safeCat;
+    if (badgeEl) {
+      badgeEl.style.background = colorMap[safeCat] || "var(--primary)";
+      const customLogo = (appState && appState.settings && appState.settings['logo_' + safeCat.toLowerCase()]) ? appState.settings['logo_' + safeCat.toLowerCase()] : '';
+      if (customLogo) {
+        badgeEl.innerHTML = '<img src="' + escapeHtml(customLogo) + '" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" alt="' + safeCat + '">';
+      } else {
+        badgeEl.innerHTML = getDefaultCategoryIcon(safeCat);
+      }
     }
+  } catch (err) {
+    console.warn("Non-fatal error in openGradeSelector metadata:", err);
   }
 
   const modal = document.getElementById("gradeSelectorModal");
   if (modal) {
     modal.classList.add("open");
     modal.classList.add("active");
-    modal.style.display = "flex";
+    modal.style.setProperty("display", "flex", "important");
+    modal.style.opacity = "1";
+  } else {
+    selectCategory(safeCat);
   }
 }
 
@@ -2582,7 +2594,8 @@ function closeGradeSelectorModal() {
   if (modal) {
     modal.classList.remove("open");
     modal.classList.remove("active");
-    modal.style.display = "none";
+    modal.style.setProperty("display", "none", "important");
+    modal.style.opacity = "0";
   }
 }
 
@@ -2591,17 +2604,22 @@ function chooseGradeAndExplore(grade, event) {
     if (typeof event.preventDefault === "function") event.preventDefault();
     if (typeof event.stopPropagation === "function") event.stopPropagation();
   }
-  const cat = appState.pendingCategory || "Science";
-  selectCategory(cat);
-  if (grade) {
-    appState.isGradeLocked = true;
-    setGradeFilter(grade);
-  } else {
-    appState.isGradeLocked = false;
-    setGradeFilter("");
+  try {
+    const cat = appState.pendingCategory || "Science";
+    selectCategory(cat);
+    if (grade) {
+      appState.isGradeLocked = true;
+      setGradeFilter(grade);
+    } else {
+      appState.isGradeLocked = false;
+      setGradeFilter("");
+    }
+    updateGradeFilterBarVisibility();
+  } catch (err) {
+    console.error("Error in chooseGradeAndExplore:", err);
+  } finally {
+    closeGradeSelectorModal();
   }
-  updateGradeFilterBarVisibility();
-  closeGradeSelectorModal();
 }
 
 function updateGradeFilterBarVisibility() {
@@ -2620,24 +2638,34 @@ function updateGradeFilterBarVisibility() {
 }
 
 function selectCategory(category) {
-  appState.selectedCategory = category;
-  appState.selectedGrade = "";
-  appState.selectedMediaType = "";
-  appState.searchQuery = "";
-
-  const sInput = document.getElementById("searchInput");
-  if (sInput) sInput.value = "";
-  const mSelect = document.getElementById("mediaFilterSelect");
-  if (mSelect) mSelect.value = "";
-  document.querySelectorAll(".grade-pill").forEach((btn) => btn.classList.remove("active"));
-  const allBtn = document.getElementById("grade-all");
-  if (allBtn) allBtn.classList.add("active");
-
-  renderApp();
   try {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  } catch (e) {
-    window.scrollTo(0, 0);
+    const safeCat = normalizeCategoryName(category) || "Science";
+    appState.selectedCategory = safeCat;
+    appState.selectedGrade = "";
+    appState.selectedMediaType = "";
+    appState.searchQuery = "";
+
+    const sInput = document.getElementById("searchInput");
+    if (sInput) sInput.value = "";
+    const mSelect = document.getElementById("mediaFilterSelect");
+    if (mSelect) mSelect.value = "";
+    document.querySelectorAll(".grade-pill").forEach((btn) => btn.classList.remove("active"));
+    const allBtn = document.getElementById("grade-all");
+    if (allBtn) allBtn.classList.add("active");
+
+    renderApp();
+    try {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e) {
+      window.scrollTo(0, 0);
+    }
+  } catch (err) {
+    console.error("Error in selectCategory:", err);
+    // Hard fallback: pastikan subCategoryView tetap tampil jika terjadi error tak terduga
+    const homeView = document.getElementById("viewHome");
+    const subCategoryView = document.getElementById("viewCategorySub");
+    if (homeView) homeView.style.display = "none";
+    if (subCategoryView) subCategoryView.style.display = "block";
   }
 }
 
@@ -2770,7 +2798,7 @@ function getFilteredMaterials() {
     // 2. Filter Jenjang Kelas (Normalisasi digit murni "1", 1, "Kelas 1", "1 SD")
     if (targetGradeDigit) {
       const itemGradeDigit = normalizeGradeDigit(m.grade);
-      if (itemGradeDigit && itemGradeDigit !== targetGradeDigit) return false;
+      if (itemGradeDigit !== targetGradeDigit) return false;
     }
 
     // 3. Filter Jenis Media
@@ -2801,7 +2829,11 @@ function renderActiveFilterStatus() {
     if (appState.isGradeLocked) {
       container.innerHTML = `<span><i class="fa-solid fa-list-check" style="color:var(--primary);"></i> Menampilkan seluruh materi Kelas ${appState.selectedGrade} SD (${totalMatching} sub-materi)</span>`;
     } else {
-      const totalInCat = appState.materials.filter(m => m.stem_category === appState.selectedCategory).length;
+      const materialsPool = (appState && Array.isArray(appState.materials) && appState.materials.length > 0)
+        ? appState.materials
+        : INITIAL_MATERIALS;
+      const targetCatNorm = normalizeCategoryName(appState.selectedCategory);
+      const totalInCat = materialsPool.filter(m => normalizeCategoryName(m.stem_category) === targetCatNorm).length;
       container.innerHTML = `<span><i class="fa-solid fa-list-check" style="color:var(--primary);"></i> Menampilkan seluruh materi ${appState.selectedCategory} (${totalInCat} sub-materi)</span>`;
     }
     if (resetBtn) resetBtn.style.display = "none";
