@@ -3,6 +3,30 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.6.0] - 2026-10-27
+
+### Fixed & Enhanced
+- **Resolusi Masalah Navigasi Pilihan Kelas & Penampilan Sub-Materi STEM di GAS**:
+  - **Pencegahan Event Bubbling & Fallthrough Klik Modal**:
+    - Menambahkan `type="button"` dan pemanggilan `chooseGradeAndExplore('X', event)` pada ke-7 tombol jenjang kelas di `#gradeSelectorModal` pada [index.html](file:///f:/repository/stemsites/index.html).
+    - Memanggil `event.stopPropagation()` dan `event.preventDefault()` pada handler `chooseGradeAndExplore` dan `backToHomeCategories` untuk menghentikan perambatan klik yang sebelumnya menembus ke navbar atau card bawah di dalam sandboxed iframe GAS.
+    - Memperbaiki urutan transisi: mengatur state `selectedCategory` dan filter kelas terlebih dahulu sebelum menutup backdrop modal.
+  - **Filter Materi Cerdas & Toleran (`getFilteredMaterials`)**:
+    - Menambahkan fungsi `normalizeCategoryName()` yang toleran terhadap huruf kecil, spasi, dan sinonim dwi-bahasa (Science/Sains/IPA, Technology/Teknologi, Engineering/Rekayasa, Mathematics/Matematika).
+    - Menambahkan fungsi `normalizeGradeDigit()` yang mengekstrak digit angka murni (`replace(/\D/g, '')`) sehingga `"1"`, `1`, `"Kelas 1"`, dan `"1 SD"` saling cocok 100%.
+    - Menjamin ketersediaan data dengan fallback otomatis ke `INITIAL_MATERIALS` jika array materi kosong atau belum selesai di-fetch.
+  - **Perbaikan Reset Filter Sub-Halaman**:
+    - Memperbarui `resetFiltersInSubpage()` agar membuka kunci `appState.isGradeLocked` dan mereset `selectedGrade` menjadi kosong, sehingga tombol *"Tampilkan Seluruh Materi"* benar-benar merender seluruh materi kategori aktif saat ditekan.
+  - **Ketahanan Backend Spreadsheet Parser (`Code.gs`)**:
+    - Memperluas `formatMaterialRow()` dengan kamus sinonim header Google Sheets (`Kategori STEM`, `Kategori`, `Kelas`, `Jenjang`, dll) dan pembersihan spasi/karakter pemisah.
+    - Menambahkan auto-seed 24 materi kurikulum otomatis pada `getInitialData()` jika sheet materi kosong.
+  - **Keamanan Scroll di Iframe**:
+    - Membungkus seluruh pemanggilan `window.scrollTo({ top: 0, behavior: "smooth" })` dengan blok `try...catch` agar tidak melempar `SecurityError` / `DOMException` di peramban tertentu saat berada di dalam iframe GAS.
+  - **Sinkronisasi Generator Kode Deploy**:
+    - Menyelaraskan fungsi `getCompleteCodeGsSource()` di [index.html](file:///f:/repository/stemsites/index.html) dengan kode backend [Code.gs](file:///f:/repository/stemsites/Code.gs) terbaru.
+
+---
+
 ## [1.5.9] - 2026-10-27
 
 ### Fixed & Hardened

@@ -103,6 +103,16 @@ function getInitialData() {
     var settings = getSettingsMap();
     var materials = getMaterialsList();
 
+    // Jika daftar materi masih kosong (misal sheet baru dibuat), lakukan auto-seed 24 materi
+    if (!materials || materials.length === 0) {
+      try {
+        forceSeedMaterials();
+        materials = getMaterialsList();
+      } catch (seedErr) {
+        console.warn('Auto-seed fallback: ' + seedErr);
+      }
+    }
+
     // Sembunyikan PIN admin di respon publik
     var safeSettings = Object.assign({}, settings);
     delete safeSettings.admin_pin;
@@ -341,12 +351,42 @@ function getMaterialsList() {
 function formatMaterialRow(headers, row) {
   var obj = {};
   for (var j = 0; j < headers.length; j++) {
-    var key = String(headers[j]).trim().toLowerCase();
+    var rawKey = String(headers[j]).trim().toLowerCase().replace(/[\s\-_]/g, '');
     var val = row[j];
-    if (key === 'grade') {
-      obj[key] = String(val);
+    var strVal = val !== undefined && val !== null ? String(val).trim() : '';
+
+    var standardKey = rawKey;
+    if (rawKey === 'id' || rawKey === 'kode' || rawKey === 'kodemateri') standardKey = 'id';
+    else if (rawKey === 'stemcategory' || rawKey === 'category' || rawKey === 'kategori' || rawKey === 'kategoristem') standardKey = 'stem_category';
+    else if (rawKey === 'title' || rawKey === 'judul' || rawKey === 'namamateri' || rawKey === 'materi') standardKey = 'title';
+    else if (rawKey === 'grade' || rawKey === 'kelas' || rawKey === 'jenjang') standardKey = 'grade';
+    else if (rawKey === 'mediatype' || rawKey === 'jenismedia' || rawKey === 'tipemedia' || rawKey === 'media') standardKey = 'media_type';
+    else if (rawKey === 'mediaurl' || rawKey === 'linkmedia' || rawKey === 'url' || rawKey === 'link') standardKey = 'media_url';
+    else if (rawKey === 'thumbnailurl' || rawKey === 'thumbnail' || rawKey === 'gambar' || rawKey === 'foto') standardKey = 'thumbnail_url';
+    else if (rawKey === 'description' || rawKey === 'deskripsi' || rawKey === 'ringkasan' || rawKey === 'keterangan') standardKey = 'description';
+    else if (rawKey === 'missiongoals' || rawKey === 'tujuan' || rawKey === 'tujuanmisi') standardKey = 'mission_goals';
+    else if (rawKey === 'missionsteps' || rawKey === 'langkah' || rawKey === 'langkahmisi') standardKey = 'mission_steps';
+    else if (rawKey === 'missionreflection' || rawKey === 'refleksi' || rawKey === 'pertanyaanrefleksi') standardKey = 'mission_reflection';
+    else if (rawKey === 'createdat' || rawKey === 'tanggal' || rawKey === 'waktu') standardKey = 'created_at';
+
+    if (standardKey === 'grade') {
+      var digitMatch = strVal.match(/\d+/);
+      obj['grade'] = digitMatch ? digitMatch[0] : strVal;
+    } else if (standardKey === 'stem_category') {
+      var catLow = strVal.toLowerCase();
+      if (catLow.indexOf('sci') !== -1 || catLow.indexOf('sains') !== -1 || catLow.indexOf('ipa') !== -1 || catLow.indexOf('alam') !== -1) {
+        obj['stem_category'] = 'Science';
+      } else if (catLow.indexOf('tec') !== -1 || catLow.indexOf('tekno') !== -1 || catLow.indexOf('komput') !== -1 || catLow.indexOf('coding') !== -1) {
+        obj['stem_category'] = 'Technology';
+      } else if (catLow.indexOf('eng') !== -1 || catLow.indexOf('rekayasa') !== -1 || catLow.indexOf('teknik') !== -1 || catLow.indexOf('robot') !== -1) {
+        obj['stem_category'] = 'Engineering';
+      } else if (catLow.indexOf('mat') !== -1 || catLow.indexOf('hitung') !== -1 || catLow.indexOf('angka') !== -1) {
+        obj['stem_category'] = 'Mathematics';
+      } else {
+        obj['stem_category'] = strVal || 'Science';
+      }
     } else {
-      obj[key] = val !== undefined && val !== null ? String(val) : '';
+      obj[standardKey] = strVal;
     }
   }
   return obj;
