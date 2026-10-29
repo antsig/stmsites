@@ -290,6 +290,26 @@ function deleteMaterial(id, adminPin) {
 }
 
 /**
+ * Normalisasi nama key pengaturan secara fleksibel dan toleran
+ */
+function normalizeSettingKey(k) {
+  if (!k) return '';
+  var raw = String(k).trim().toLowerCase().replace(/[\s\-_]/g, '');
+  if (raw === 'schoolname' || raw === 'namasekolah' || raw === 'sekolah') return 'school_name';
+  if (raw === 'academicyear' || raw === 'tahunajaran' || raw === 'tahun') return 'academic_year';
+  if (raw === 'slogan' || raw === 'tagline' || raw === 'motto') return 'slogan';
+  if (raw === 'logourl' || raw === 'logo' || raw === 'logosekolah') return 'logo_url';
+  if (raw === 'contactwa' || raw === 'kontakwa' || raw === 'wa' || raw === 'whatsapp' || raw === 'nowa' || raw === 'nomorwa' || raw === 'telepon' || raw === 'nohp') return 'contact_wa';
+  if (raw === 'contactemail' || raw === 'kontakemail' || raw === 'email' || raw === 'emailsekolah' || raw === 'surel') return 'contact_email';
+  if (raw === 'adminpin' || raw === 'pin' || raw === 'pinadmin') return 'admin_pin';
+  if (raw === 'logoscience' || raw === 'logosains' || raw === 'logoipa') return 'logo_science';
+  if (raw === 'logotechnology' || raw === 'logoteknologi') return 'logo_technology';
+  if (raw === 'logoengineering' || raw === 'logorekayasa' || raw === 'logoteknik') return 'logo_engineering';
+  if (raw === 'logomathematics' || raw === 'logomatematika' || raw === 'logomtk') return 'logo_mathematics';
+  return String(k).trim();
+}
+
+/**
  * Memperbarui Pengaturan Sekolah & Logo
  */
 function updateSettings(newSettings, adminPin) {
@@ -304,20 +324,28 @@ function updateSettings(newSettings, adminPin) {
       sheet = ss.getSheetByName(SHEET_SETTINGS);
     }
 
-    var data = sheet.getDataRange().getValues();
+    var displayData = sheet.getDataRange().getDisplayValues();
     var existingKeys = {};
-    for (var i = 1; i < data.length; i++) {
-      existingKeys[data[i][0]] = i + 1;
+    for (var i = 1; i < displayData.length; i++) {
+      var rowKey = String(displayData[i][0] || '').trim();
+      if (rowKey) {
+        existingKeys[rowKey] = i + 1;
+        var norm = normalizeSettingKey(rowKey);
+        if (norm) existingKeys[norm] = i + 1;
+      }
     }
 
-    // Perbarui key yang diberikan
+    // Perbarui key yang diberikan dengan format teks murni (@)
     for (var key in newSettings) {
       if (newSettings.hasOwnProperty(key)) {
-        var val = newSettings[key];
-        if (existingKeys[key]) {
-          sheet.getRange(existingKeys[key], 2).setValue(val);
+        var val = String(newSettings[key] !== undefined && newSettings[key] !== null ? newSettings[key] : '').trim();
+        var targetRow = existingKeys[key] || existingKeys[normalizeSettingKey(key)];
+        if (targetRow) {
+          sheet.getRange(targetRow, 2).setNumberFormat('@').setValue(val);
         } else {
           sheet.appendRow([key, val]);
+          var newRow = sheet.getLastRow();
+          sheet.getRange(newRow, 2).setNumberFormat('@').setValue(val);
         }
       }
     }
@@ -336,19 +364,28 @@ function updateSettings(newSettings, adminPin) {
 }
 
 /**
- * Mengambil daftar pengaturan dalam format objek Key-Value
+ * Mengambil daftar pengaturan dalam format objek Key-Value (Teks Murni)
  */
 function getSettingsMap() {
   var ss = getActiveSpreadsheetSafe();
   var sheet = ss.getSheetByName(SHEET_SETTINGS);
   if (!sheet) return {};
 
-  var data = sheet.getDataRange().getValues();
+  var displayData = sheet.getDataRange().getDisplayValues();
+  var rawData = sheet.getDataRange().getValues();
   var settings = {};
-  for (var i = 1; i < data.length; i++) {
-    var k = String(data[i][0]).trim();
-    var v = data[i][1];
-    if (k) settings[k] = v;
+  for (var i = 1; i < displayData.length; i++) {
+    var rawKey = String(displayData[i][0] || '').trim();
+    if (!rawKey) continue;
+    var normKey = normalizeSettingKey(rawKey);
+    var val = String(displayData[i][1] || '').trim();
+    if (!val && rawData[i] && rawData[i][1] !== undefined && rawData[i][1] !== null) {
+      val = String(rawData[i][1]).trim();
+    }
+    settings[normKey] = val;
+    if (normKey !== rawKey) {
+      settings[rawKey] = val;
+    }
   }
   return settings;
 }
@@ -430,23 +467,41 @@ function initDatabaseIfEmpty() {
   if (!settingsSheet) {
     settingsSheet = ss.insertSheet(SHEET_SETTINGS);
     settingsSheet.appendRow(['key', 'value']);
-    var defaultSettings = [
-      ['school_name', 'SD NEGERI HARAPAN BANGSA'],
-      ['academic_year', '2026/2027'],
-      ['slogan', 'Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika Bersama!'],
-      ['logo_url', 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80'],
-      ['contact_wa', '6281234567890'],
-      ['contact_email', 'stem.harapanbangsa@sekolah.sch.id'],
-      ['admin_pin', DEFAULT_PIN],
-      ['logo_science', ''],
-      ['logo_technology', ''],
-      ['logo_engineering', ''],
-      ['logo_mathematics', '']
-    ];
-    for (var s = 0; s < defaultSettings.length; s++) {
-      settingsSheet.appendRow(defaultSettings[s]);
-    }
     settingsSheet.getRange(1, 1, 1, 2).setFontWeight('bold').setBackground('#E2E8F0');
+  }
+
+  // Auto-Repair: Pastikan semua baris pengaturan dasar terdaftar di sheet Settings
+  var currentDisplay = settingsSheet.getDataRange().getDisplayValues();
+  var registeredKeys = {};
+  for (var k = 1; k < currentDisplay.length; k++) {
+    var rawK = String(currentDisplay[k][0] || '').trim();
+    if (rawK) {
+      registeredKeys[rawK.toLowerCase()] = true;
+      registeredKeys[normalizeSettingKey(rawK).toLowerCase()] = true;
+    }
+  }
+
+  var defaultSettings = [
+    ['school_name', 'SD NEGERI HARAPAN BANGSA'],
+    ['academic_year', '2026/2027'],
+    ['slogan', 'Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika Bersama!'],
+    ['logo_url', 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80'],
+    ['contact_wa', '6281234567890'],
+    ['contact_email', 'stem.harapanbangsa@sekolah.sch.id'],
+    ['admin_pin', DEFAULT_PIN],
+    ['logo_science', ''],
+    ['logo_technology', ''],
+    ['logo_engineering', ''],
+    ['logo_mathematics', '']
+  ];
+
+  for (var s = 0; s < defaultSettings.length; s++) {
+    var dKey = defaultSettings[s][0];
+    if (!registeredKeys[dKey.toLowerCase()]) {
+      settingsSheet.appendRow(defaultSettings[s]);
+      var addedRow = settingsSheet.getLastRow();
+      settingsSheet.getRange(addedRow, 2).setNumberFormat('@').setValue(defaultSettings[s][1]);
+    }
   }
 
   // 2. Inisialisasi Sheet Materi

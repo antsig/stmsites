@@ -3789,8 +3789,13 @@
       const heroYearEl = document.getElementById("heroAcademicYear");
       const heroSloganEl = document.getElementById("heroSlogan");
 
-      if (s.logo_url) {
-        const formattedLogo = formatGoogleDriveImageUrl(s.logo_url);
+      const schoolName = String(s.school_name !== undefined && s.school_name !== null ? s.school_name : DEFAULT_SETTINGS.school_name).trim();
+      const academicYear = String(s.academic_year !== undefined && s.academic_year !== null ? s.academic_year : DEFAULT_SETTINGS.academic_year).trim();
+      const slogan = String(s.slogan !== undefined && s.slogan !== null ? s.slogan : DEFAULT_SETTINGS.slogan).trim();
+      const logoUrl = String(s.logo_url || "").trim();
+
+      if (logoUrl) {
+        const formattedLogo = formatGoogleDriveImageUrl(logoUrl);
         const fallbackLogo = DEFAULT_SETTINGS.logo_url || "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80";
         if (logoEl) {
           logoEl.src = formattedLogo;
@@ -3807,10 +3812,10 @@
           };
         }
       }
-      if (navTitleEl) navTitleEl.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
-      if (heroTitleEl) heroTitleEl.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
-      if (heroYearEl) heroYearEl.textContent = s.academic_year || "2026/2027";
-      if (heroSloganEl) heroSloganEl.textContent = s.slogan || "Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika!";
+      if (navTitleEl) navTitleEl.textContent = schoolName || "SD NEGERI HARAPAN BANGSA";
+      if (heroTitleEl) heroTitleEl.textContent = schoolName || "SD NEGERI HARAPAN BANGSA";
+      if (heroYearEl) heroYearEl.textContent = academicYear || "2026/2027";
+      if (heroSloganEl) heroSloganEl.textContent = slogan || "Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika!";
 
       // Footer Resmi Sekolah (Kontak WA, Email & Hak Cipta - Sinkron Realtime)
       const footerSchoolBottom = document.getElementById("footerSchoolNameBottom");
@@ -3819,31 +3824,31 @@
       const footerEmailLink = document.getElementById("footerEmailLink");
       const footerEmailText = document.getElementById("footerEmailText");
 
-      if (footerSchoolBottom) footerSchoolBottom.textContent = s.school_name || "SD NEGERI HARAPAN BANGSA";
+      if (footerSchoolBottom) footerSchoolBottom.textContent = schoolName || "SD NEGERI HARAPAN BANGSA";
 
-      // 1. Sinkronisasi WhatsApp
+      // 1. Sinkronisasi WhatsApp (Konversi String Defensif)
+      const rawWa = String(s.contact_wa !== undefined && s.contact_wa !== null ? s.contact_wa : (DEFAULT_SETTINGS.contact_wa || "6281234567890")).trim();
       if (footerWaLink && footerWaText) {
-        const rawWa = (s.contact_wa || DEFAULT_SETTINGS.contact_wa || "6281234567890").trim();
         const cleanDigits = rawWa.replace(/\D/g, "");
         let waLinkNum = cleanDigits;
         if (waLinkNum.startsWith("0")) {
           waLinkNum = "62" + waLinkNum.slice(1);
         }
-        footerWaLink.href = "https://wa.me/" + waLinkNum;
+        footerWaLink.href = "https://wa.me/" + (waLinkNum || "6281234567890");
 
         let displayWa = rawWa;
-        if (!displayWa.startsWith("+") && !displayWa.startsWith("0")) {
+        if (displayWa && !displayWa.startsWith("+") && !displayWa.startsWith("0")) {
           displayWa = "+" + displayWa;
         }
-        footerWaText.textContent = displayWa;
+        footerWaText.textContent = displayWa || "-";
         footerWaLink.style.display = rawWa ? "inline-flex" : "none";
       }
 
-      // 2. Sinkronisasi Email Bantuan
+      // 2. Sinkronisasi Email Bantuan (Konversi String Defensif)
+      const email = String(s.contact_email !== undefined && s.contact_email !== null ? s.contact_email : (DEFAULT_SETTINGS.contact_email || "stem.harapanbangsa@sekolah.sch.id")).trim();
       if (footerEmailLink && footerEmailText) {
-        const email = (s.contact_email || DEFAULT_SETTINGS.contact_email || "stem.harapanbangsa@sekolah.sch.id").trim();
         footerEmailLink.href = "mailto:" + email;
-        footerEmailText.textContent = email;
+        footerEmailText.textContent = email || "-";
         footerEmailLink.style.display = email ? "inline-flex" : "none";
       }
     }
@@ -4513,6 +4518,7 @@
             // tetap izinkan masuk admin jika PIN cocok dengan default '123456'
             if (enteredPin === (appState.currentAdminPin || "123456") || enteredPin === "123456") {
               appState.isAdminLoggedIn = true;
+              appState.currentAdminPin = enteredPin;
               closeAdminPinModal();
               openAdminView();
               showToast("Autentikasi PIN Berhasil! (Mode Mandiri)", "info");
@@ -4524,6 +4530,7 @@
       } else {
         if (enteredPin === appState.currentAdminPin || enteredPin === "123456") {
           appState.isAdminLoggedIn = true;
+          appState.currentAdminPin = enteredPin;
           closeAdminPinModal();
           openAdminView();
           showToast("Autentikasi PIN Berhasil! Selamat datang Admin.", "success");
@@ -4818,7 +4825,7 @@
       const s = Object.assign({}, DEFAULT_SETTINGS, appState.settings || {});
       const setVal = (id, val) => {
         const el = document.getElementById(id);
-        if (el) el.value = (val !== undefined && val !== null) ? val : "";
+        if (el) el.value = (val !== undefined && val !== null) ? String(val) : "";
       };
 
       setVal("settingSchoolName", s.school_name);
@@ -4924,7 +4931,8 @@
           .withSuccessHandler((response) => {
             if (response && response.success) {
               if (newPin) appState.currentAdminPin = newPin;
-              appState.settings = Object.assign({}, appState.settings, response.data);
+              appState.settings = Object.assign({}, appState.settings, response.data || newSettingsPayload);
+              saveToLocalStorage();
               showToast("Pengaturan sekolah berhasil disimpan!", "success");
               renderApp();
             } else {

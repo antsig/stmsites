@@ -3,6 +3,17 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.6.6] - 2026-10-29
+
+### Fixed & Hardened
+- **Ketahanan Tipe Data Pengaturan & Sinkronisasi Penuh Footer Portal**:
+  - **Defensive String Wrapping pada `renderSchoolIdentity()`**: Membungkus seluruh properti pengaturan (`contact_wa`, `contact_email`, `school_name`, `academic_year`, `slogan`) dengan `String(...)` sebelum pemanggilan method `.trim()`, menuntaskan kendala fatal `TypeError: (s.contact_wa || ...).trim is not a function` yang terjadi ketika Google Sheets mengembalikan nomor telepon bertipe angka (`Number`).
+  - **Pembacaan Teks Tampilan Murni pada `Code.gs` (`getSettingsMap`)**: Menggunakan `getDisplayValues()` agar Google Sheets menyajikan nilai nomor telepon dan teks persis seperti yang tampil di sel tanpa terpotong atau terkonversi ke notasi eksponensial.
+  - **Auto-Repair Baris Pengaturan (`initDatabaseIfEmpty`)**: Menambahkan pemeriksaan otomatis pada sheet `Settings` lama untuk mendaftarkan baris kunci default (`contact_wa`, `contact_email`, dll.) yang belum ada dengan format teks murni (`setNumberFormat('@')`).
+  - **Konsistensi State PIN Admin**: Memastikan `appState.currentAdminPin = enteredPin;` selalu tersimpan pada seluruh cabang autentikasi PIN di `submitAdminPin()`.
+
+---
+
 ## [1.6.5] - 2026-10-29
 
 ### Added & Enhanced
