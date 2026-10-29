@@ -3,6 +3,17 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.6.3] - 2026-10-29
+
+### Added & Enhanced
+- **Logo Sekolah Resmi pada Navbar Dashboard Admin**:
+  - **Elemen `#adminNavSchoolLogo`**: Menambahkan elemen logo sekolah di dalam bilah atas (*topbar*) Dashboard Admin, tepat di sebelah kiri judul *"Dashboard Admin"*.
+  - **Sinkronisasi Dinamis Otomatis**: Menyelaraskan sumber gambar `#adminNavSchoolLogo` dengan logo utama sekolah aktif di `renderSchoolIdentity()`, termasuk dukungan langsung untuk tautan Google Drive CDN yang baru di-upload.
+  - **Responsivitas Universal**: Menambahkan kelas CSS `.admin-school-logo-img` berukuran 34px × 34px di desktop dan otomatis menyesuaikan ke 26px × 26px pada perangkat mobile (< 768px) tanpa menimbulkan overflow horizontal.
+  - **Pencegahan Error Boundary**: Dilengkapi atribut fallback `onerror` otomatis ke logo default jika terjadi gangguan koneksi atau perubahan URL.
+
+---
+
 ## [1.6.2] - 2026-10-29
 
 ### Fixed & Enhanced
