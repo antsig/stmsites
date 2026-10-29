@@ -3,6 +3,22 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.6.5] - 2026-10-29
+
+### Added & Enhanced
+- **Fitur View/Hide Nilai PIN Admin (Password Visibility Toggle)**:
+  - **Tombol Intip Kata Sandi pada Modal Login (`#inputAdminPin`)**: Menambahkan tombol `.password-toggle-btn` dengan ikon mata Font Awesome (`fa-solid fa-eye` / `fa-solid fa-eye-slash`) di sisi kanan input PIN admin dengan wrapper `.input-password-wrapper`.
+  - **Dukungan pada Form Pengaturan Admin (`#settingAdminPin`)**: Menerapkan struktur tombol intip yang sama pada input *"Ganti PIN Admin Baru"* di tab Pengaturan Admin untuk keselarasan UX portal.
+  - **Fungsi Dinamis `togglePasswordVisibility()`**: Logika JavaScript universal untuk beralih antara `type="password"` dan `type="text"` lengkap dengan pembaruan atribut aksesibilitas `aria-label` dan `title`.
+  - **Auto-Reset Keamanan**: Menambahkan `resetPasswordToggle()` pada pembukaan dan penutupan modal login admin untuk memastikan nilai input dan ikon selalu kembali ke mode tersembunyi (`type="password"`).
+
+### Removed
+- **Penghapusan Permanen Tombol PIN Demo**:
+  - Menghapus tombol *"Isi PIN Demo (123456)"* dari modal autentikasi login admin sesuai instruksi pengguna.
+  - Menghapus fungsi skrip `fillDemoPin()` dan menyesuaikan pesan error login menjadi standar aman (*"PIN Admin tidak sesuai! Silakan periksa kembali."*).
+
+---
+
 ## [1.6.4] - 2026-10-29
 
 ### Fixed & Enhanced
