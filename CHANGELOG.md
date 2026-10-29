@@ -3,6 +3,26 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.6.4] - 2026-10-29
+
+### Fixed & Enhanced
+- **Pemulihan Tampilan Data Materi & Form Pengaturan Admin**:
+  - **Emergency Fallback pada `Code.gs`**: Memperbarui fungsi `getInitialData()` agar selalu menyertakan `DEFAULT_SETTINGS` dan 24 materi kurikulum STEM SD lengkap sekalipun koneksi Google Sheets tertunda atau dalam proses otorisasi, mencegah respon `{ success: false }` yang mengosongkan state klien.
+  - **Perbaikan Inisialisasi Klien**: Memanggil `populateSettingsForm()` dan `renderAdminTable()` secara andal di `loadInitialData()` dan `fallbackToLocalStorage()`, serta memperbarui versi penyimpanan lokal ke `"v1.6.4"` dengan merger defensif `DEFAULT_SETTINGS`.
+  - **Defensive Form Population**: Mengamankan `populateSettingsForm()` dan `previewSettings()` dengan selektor null-safe dan fallback default sehingga form pengaturan admin terisi lengkap dan tidak pernah kosong.
+  - **Pemulihan Demo PIN Helper**: Menambahkan kembali tombol *"Isi PIN Demo (123456)"* pada modal login admin untuk memudahkan pengujian.
+
+- **Sinkronisasi Dinamis Kontak Bantuan Footer**:
+  - **Kontak Ganda WhatsApp & Email**: Menambahkan elemen `#footerWaLink` dan `#footerEmailLink` di footer portal (`.footer-contacts`) lengkap dengan ikon interaktif dan styling responsif.
+  - **Pembaruan Real-Time**: Menghubungkan kontak footer dengan fungsi `renderSchoolIdentity()` sehingga setiap perubahan pada nomor WhatsApp atau Email di pengaturan admin langsung ter-update seketika di footer portal siswa (`wa.me/...` dan `mailto:...`).
+
+- **Pembersihan Modul Deploy Apps Script**:
+  - Memastikan section deploy tetap terhapus dari sidemenu dan panel admin sesuai instruksi.
+  - Menghapus pemanggilan `initDeployCodeViewer()` di `switchAdminTab()`.
+  - Menghapus seluruh dead code JavaScript terkait viewer deploy berkas (`DEPLOY_FILE_METAS`, `getCompleteCodeGsSource`, `selectDeployFile`, `copyCurrentDeployCode`, dsb.).
+
+---
+
 ## [1.6.3] - 2026-10-29
 
 ### Added & Enhanced

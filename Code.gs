@@ -121,13 +121,40 @@ function getInitialData() {
       success: true,
       data: {
         settings: safeSettings,
-        materials: materials
+        materials: (materials && materials.length > 0) ? materials : []
       }
     };
   } catch (err) {
+    console.warn('getInitialData fallback: ' + err);
+    var defaultSettings = {
+      school_name: 'SD NEGERI HARAPAN BANGSA',
+      academic_year: '2026/2027',
+      slogan: 'Eksplorasi Sains, Teknologi, Rekayasa, dan Matematika Bersama!',
+      logo_url: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=150&auto=format&fit=crop&q=80',
+      contact_wa: '6281234567890',
+      contact_email: 'stem.harapanbangsa@sekolah.sch.id',
+      logo_science: '',
+      logo_technology: '',
+      logo_engineering: '',
+      logo_mathematics: ''
+    };
+    var fallbackMaterials = [];
+    try {
+      var sampleRows = getCurriculumSampleMaterials();
+      var headers = ['id', 'stem_category', 'title', 'grade', 'media_type', 'media_url', 'thumbnail_url', 'description', 'mission_goals', 'mission_steps', 'mission_reflection', 'created_at'];
+      for (var k = 0; k < sampleRows.length; k++) {
+        fallbackMaterials.push(formatMaterialRow(headers, sampleRows[k]));
+      }
+    } catch (e) {}
+
     return {
-      success: false,
-      error: err.toString()
+      success: true,
+      isFallback: true,
+      error: err.toString(),
+      data: {
+        settings: defaultSettings,
+        materials: fallbackMaterials
+      }
     };
   }
 }
