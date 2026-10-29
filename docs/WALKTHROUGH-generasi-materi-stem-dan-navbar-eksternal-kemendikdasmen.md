@@ -104,3 +104,4 @@ Seluruh permintaan pengguna telah tuntas diimplementasikan:
 - ✅ Seluruh tautan materi terverifikasi 100% *Zero-Login* (bebas akses tanpa login/registrasi akun).
 - ✅ Tiga tautan eksternal resmi Kemendikdasmen (Sumber Belajar, Sumber Buku, Latihan) terpasang di navbar beranda desktop dan mobile.
 - ✅ Modal Panduan Pengguna diperbarui untuk Siswa, Guru, Orang Tua, dan FAQ.
+
