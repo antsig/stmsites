@@ -3,6 +3,26 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.7.0] - 2026-10-29
+
+### Added & Enhanced
+- **Bank Data Materi Kurikulum STEM Lengkap (144 Materi Interaktif Bebas Login)**:
+  - **Perluasan Jenjang Penuh (Kelas 1 s.d. 6 SD)**: Menghasilkan 6 modul materi pembelajaran per jenjang kelas pada setiap pilar STEM ($6 \text{ kelas} \times 4 \text{ kategori} \times 6 \text{ materi} = \mathbf{144\text{ materi}}$ kurikulum interaktif).
+  - **100% Zero-Login / Bebas Akses**: Seluruh 144 materi terintegrasi dengan direktori media pembelajaran interaktif yang dapat langsung diakses siswa tanpa perlu login/akun (PhET Interactive Simulations, Blockly Games, Scratch MIT Editor, GeoGebra Classic & Geometry, Mathigon Polypad, NASA Eyes, dan Google Earth Web).
+  - **Sinkronisasi Kode Master**: Memperbarui `getCurriculumSampleMaterials()` di `Code.gs` dan `INITIAL_MATERIALS` di `index.html`, serta memperbarui `DATA_VERSION` ke `"v1.7.0"` agar cache browser lokal otomatis ter-refresh.
+- **Integrasi Tautan Navigasi Eksternal Kemendikdasmen di Navbar**:
+  - Menambahkan 3 tombol navigasi eksternal resmi di navbar desktop (`.nav-links`) dan drawer mobile (`#mobileNavMenu`):
+    - 🎓 **Sumber Belajar**: `https://murid.kemendikdasmen.go.id/sumber-belajar`
+    - 📖 **Sumber Buku**: `https://buku.kemendikdasmen.go.id/katalog`
+    - ✍️ **Latihan**: `https://murid.kemendikdasmen.go.id/latihan-soal`
+  - Dilengkapi atribut `target="_blank" rel="noopener noreferrer"`, ikon eksternal `fa-arrow-up-right-from-square`, dan CSS responsif yang rapi di semua resolusi layar.
+- **Pembaruan Modal Panduan Pengguna (*User Guide Modal*)**:
+  - Memperbarui tab **Siswa SD**, **Orang Tua / Wali**, **Guru Kelas**, dan **Tanya Jawab (FAQ)** untuk memandu pemanfaatan bank 144 materi dan navigasi ke portal Kemendikdasmen.
+- **Pembaruan Label & Dialog Admin**:
+  - Menyesuaikan tombol, konfirmasi, dan toast sinkronisasi Google Sheets dari *"24 Materi"* menjadi *"144 Materi SD"*.
+
+---
+
 ## [1.6.6] - 2026-10-29
 
 ### Fixed & Hardened
