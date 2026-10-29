@@ -3,6 +3,18 @@
 Semua perubahan pada proyek **Portal Pembelajaran STEM Sekolah Berbasis Google Apps Script** dicatat di dokumen ini.
 Format penomoran versi mengacu pada [Semantic Versioning (SemVer 2.0.0)](https://semver.org/).
 
+## [1.6.2] - 2026-10-29
+
+### Fixed & Enhanced
+- **Dukungan Penuh Logo Google Drive & Direct Image CDN Converter**:
+  - **Auto-Converter Cerdas Google Drive (`formatGoogleDriveImageUrl`)**: Menambahkan parser URL cerdas pada [index.html](file:///f:/repository/stemsites/index.html) yang secara otomatis mengekstrak ID berkas dari tautan Google Drive (`/file/d/{ID}/view`, `/open?id={ID}`, `uc?export=view&id={ID}`, `thumbnail?id={ID}`) dan mengonversinya ke format CDN resmi Google `https://lh3.googleusercontent.com/d/{ID}` sehingga gambar dapat di-render langsung oleh elemen `<img>` tanpa terhalang antarmuka web viewer.
+  - **Live Preview Instan pada Form Pengaturan Admin**: Mengintegrasikan auto-converter ke event `input` dan `change` pada input logo sekolah (`#settingLogoUrl`) dan ke-4 logo kategori STEM (`#settingLogoSci`, `#settingLogoTec`, `#settingLogoEng`, `#settingLogoMat`). Gambar pratinjau langsung tampil seketika saat tautan di-paste.
+  - **Sinkronisasi Otomatis Penyimpanan**: Nilai yang disimpan ke Google Sheets maupun LocalStorage otomatis dinormalisasi dalam format CDN gambar siap pakai.
+  - **Defensive Error Fallback (`onerror`)**: Menambahkan handler `onerror` pada logo navbar (`#navSchoolLogo`) dan gambar pratinjau (`#previewLogoImg`) dengan fallback otomatis ke logo default sekolah serta menampilkan kotak notifikasi peringatan jika hak akses berkas di Google Drive belum diatur ke *"Siapa saja yang memiliki link"*.
+  - **Pembaruan Petunjuk Admin**: Menyelaraskan teks instruksi pada Tab Pengaturan Logo dan Tab Panduan Penggunaan Admin.
+
+---
+
 ## [1.6.1] - 2026-10-27
 
 ### Fixed & Hardened
